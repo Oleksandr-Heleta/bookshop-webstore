@@ -1,6 +1,6 @@
 "use client"
 
-import { Product } from "@/type";
+import { ProdAgeGroup, Product } from "@/type";
 import Currency from "@/components/ui/currency";
 import Button from "./ui/button";
 import { ShoppingCart } from "lucide-react";
@@ -27,15 +27,12 @@ const Info: React.FC<InfoProps> = ({ data }) => {
       <hr className="my-4" />
       <div className="flex flex-col gap-y-6">
         <div className="flex items-center gap-x-4">
-          <h3 className="font-semibold text-black">Size:</h3>
-          <div>{data?.size?.value}</div>
+          <h3 className="font-semibold text-black">Вік:</h3>
+          {data?.ageGroups?.map((age:ProdAgeGroup) => (<div key={age.ageGroupId}>{age.ageGroupName}</div>) )}
         </div>
         <div className="flex items-center gap-x-4">
-          <h3 className="font-semibold text-black">Collor:</h3>
-          <div
-            className="w-8 h-8 rounded-full border border-gray-600"
-            style={{ backgroundColor: data?.collor?.value }}
-          ></div>
+          <h3 className="font-semibold text-black">Видавництво:</h3>
+          <div>{data?.publishing?.name}</div>
         </div>
         <div className="mt-10 flex items-center gap-x-3">
             <Button onClick={addToCart} className="flex items-center gap-x-2">

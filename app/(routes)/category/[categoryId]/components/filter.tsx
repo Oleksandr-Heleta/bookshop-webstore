@@ -1,13 +1,13 @@
 "use client";
 
 import qs from "query-string";
-import { Collor, Size } from "@/type";
+import { AgeGroup, Publishing } from "@/type";
 import { useSearchParams, useRouter } from "next/navigation";
 import Button from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 interface FilterProps {
-    data:(Size | Collor)[];
+    data:(Publishing | AgeGroup)[];
     name: string;
     valueKey: string;
 };

@@ -2,18 +2,18 @@
 
 import Button from "@/components/ui/button";
 import IconButton from "@/components/ui/icon-button";
-import { Collor, Size } from "@/type";
+import { AgeGroup, Publishing } from "@/type";
 import { Dialog } from "@headlessui/react";
 import { Plus, X } from "lucide-react";
 import { useState } from "react";
 import Filter from "./filter";
 
 interface MobileFiltersProps {
-  sizes: Size[];
-  collors: Collor[];
+  ageGroups: AgeGroup[];
+  publishings: Publishing[];
 }
 
-const MobileFilters: React.FC<MobileFiltersProps> = ({ sizes, collors }) => {
+const MobileFilters: React.FC<MobileFiltersProps> = ({ ageGroups, publishings }) => {
   const [open, setOpen] = useState(false);
 
   const onOpen = () => setOpen(true);
@@ -39,8 +39,8 @@ const MobileFilters: React.FC<MobileFiltersProps> = ({ sizes, collors }) => {
             </div>
 
             <div className="p-4">
-              <Filter valueKey="sizeId" name="Sizes" data={sizes} />
-              <Filter valueKey="collorId" name="Collor" data={collors} />
+              <Filter valueKey="ageGroupId" name="Вік" data={ageGroups} />
+              <Filter valueKey="publishingId" name="Видавництво" data={publishings} />
             </div>
           </Dialog.Panel>
         </div>

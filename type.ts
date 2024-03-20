@@ -12,13 +12,18 @@ export interface Billboard {
 
   export interface Product {
     id: string;
-    category: Category;
     name: string;
+    images: Image[];
     price: string;
+    quantity: number;
+    categories: ProdCategory[];
+    ageGroups: ProdAgeGroup[];
+    publishing: Publishing;
+    isSale: boolean;
+    isNew: boolean;
     isFeatured: boolean;
-    size: Size;
-    collor: Collor;
-    images: Image[]
+    isArchived: boolean;
+    isLowQuantity: boolean;
   };
 
   export interface Image {
@@ -26,14 +31,30 @@ export interface Billboard {
     url: string;
   }
 
-  export interface Size {
-    id: string;
-    name: string;
-    value: string;
+  export interface AgeGroup {
+    id: string
+  name: string
+  value: string
   };
   
-  export interface Collor {
+  export interface Publishing {
     id: string;
     name: string;
     value: string;
   };
+
+export interface ProdAgeGroup {
+  id: string;
+  ageGroupName: string;
+  ageGroupId: string;
+  productId: string;
+};
+
+
+export interface ProdCategory {
+  id: string;
+  categoryId: string;
+  categoryName: string;
+  productId: string;
+};
+  
