@@ -9,6 +9,7 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Contacts from "./ui/contacts";
 
 interface MobileNavProps {
   data: Category[];
@@ -63,6 +64,9 @@ const MobileNav: React.FC<MobileNavProps> = ({ data }) => {
                 </Link>
               ))}
             </nav>
+            <div className="flex items-center justify-center mt-auto">
+            <Contacts/>
+            </div>
           </Dialog.Panel>
         </div>
       </Dialog>

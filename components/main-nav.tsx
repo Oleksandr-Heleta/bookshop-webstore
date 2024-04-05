@@ -3,24 +3,22 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Category } from "@/type";
+import { Category, AgeGroup } from "@/type";
+import Contacts from "./ui/contacts";
+import MenuItem from "./nav-item";
 
 interface MainNavProps {
-  data: Category[];
+  categories: Category[];
+  ageGroups: AgeGroup[];
 }
 
-const MainNav: React.FC<MainNavProps> = ({ data }) => {
+const MainNav: React.FC<MainNavProps> = ({ categories, ageGroups }) => {
   const pathname = usePathname();
 
-  const routes = data.map((route) => ({
-    href: `/category/${route.id}`,
-    label: route.name,
-    active: pathname === `/category/${route.id}`,
-  }));
 
   return (
     <nav className="hidden  mx-6 md:flex lg:flex items-center space-x-4 lg:space-x-6">
-      {routes.map((route) => (
+      {/* {routes.map((route) => (
         <Link
          key={route.href}
          href={route.href}
@@ -30,7 +28,25 @@ const MainNav: React.FC<MainNavProps> = ({ data }) => {
          )}>
           {route.label}
         </Link>
-      ))}
+      ))} */}
+      <MenuItem
+        links={categories.map((route) => ({
+          href: `/category/${route.id}`,
+          label: route.name,
+          active: pathname === `/category/${route.id}`,
+        }))}
+        name="Категорії"
+      />
+       <MenuItem
+        links={ageGroups.map((route) => ({
+          href: `/age-groups/${route.id}`,
+          label: route.name,
+          active: pathname === `/age-groups/${route.id}`,
+        }))}
+        name="Вік"
+      />
+
+      <Contacts />
     </nav>
   );
 };

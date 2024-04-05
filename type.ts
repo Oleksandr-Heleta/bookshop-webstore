@@ -19,6 +19,7 @@ export interface Billboard {
     categories: ProdCategory[];
     ageGroups: ProdAgeGroup[];
     publishing: Publishing;
+    description: string;
     isSale: boolean;
     isNew: boolean;
     isFeatured: boolean;

@@ -51,6 +51,13 @@ const Summary = () => {
                 </div>
                 <Currency value={totalPrice}/>
             </div>
+            <form className="mt-6">
+                <div>
+                    <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">П.І.Б.</label>
+                    <input type="text" name="name" className="block flex-1 border-1 rounded-full bg-white w-full py-1.5 pl-2 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"/>
+                </div>
+                
+            </form>
 
         </div>
         <Button disabled={items.length === 0} onClick={onCheckout} className="w-full mt-6">
