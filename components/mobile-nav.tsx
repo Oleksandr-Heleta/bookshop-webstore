@@ -2,37 +2,51 @@
 
 import Button from "@/components/ui/button";
 import IconButton from "@/components/ui/icon-button";
-import { Category } from "@/type";
-import { Dialog } from "@headlessui/react";
+import { Category, AgeGroup, Publishing } from "@/type";
+import { Dialog, Transition } from "@headlessui/react";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Contacts from "./ui/contacts";
+import MobileItem from "./mobile-item";
 
 interface MobileNavProps {
-  data: Category[];
+  categories: Category[];
+  ageGroups: AgeGroup[];
+  publishings: Publishing[];
 }
 
-const MobileNav: React.FC<MobileNavProps> = ({ data }) => {
+const MobileNav: React.FC<MobileNavProps> = ({
+  categories,
+  ageGroups,
+  publishings,
+}) => {
   const [open, setOpen] = useState(false);
 
   const pathname = usePathname();
-
-  const routes = data.map((route) => ({
-    href: `/category/${route.id}`,
-    label: route.name,
-    active: pathname === `/category/${route.id}`,
-  }));
 
   const onOpen = () => setOpen(true);
   const onClose = () => setOpen(false);
   return (
     <>
-      <Button onClick={onOpen} className="flex items-center gap-x-2 bg-white  text-black md:hidden">
+      <Button
+        onClick={onOpen}
+        className="flex items-center gap-x-2 bg-white  text-black md:hidden"
+      >
         <Menu size={20} />
       </Button>
+      {/* <Transition
+      show={open}
+      enter="transition duration-100 ease-out"
+      enterFrom="transform scale-95 opacity-0"
+      enterTo="transform scale-100 opacity-100"
+      leave="transition duration-75 ease-out"
+      leaveFrom="transform scale-100 opacity-100"
+      leaveTo="transform scale-95 opacity-0"
+      as={Fragment}
+    > */}
 
       <Dialog
         open={open}
@@ -48,7 +62,17 @@ const MobileNav: React.FC<MobileNavProps> = ({ data }) => {
             </div>
 
             <nav className="p-4 flex flex-col">
-              {routes.map((route) => (
+              <MobileItem
+                links={categories.map((route) => ({
+                  href: `/category/${route.id}`,
+                  label: route.name,
+                  active: pathname === `/category/${route.id}`,
+                }))}
+                name="Категорії"
+                action={onClose}
+              />
+
+              {/* {routes.map((route) => (
                 <Link
                
                   key={route.href}
@@ -59,17 +83,48 @@ const MobileNav: React.FC<MobileNavProps> = ({ data }) => {
                     route.active ? "text-black" : "text-neutral-500"
                   )}
                 >
-                  {route.label}
-                  <hr className="my-4"/>
-                </Link>
-              ))}
+                  {route.label} 
+                   </Link>
+              ))} */}
+              <hr className="my-1" />
+              <MobileItem
+                links={ageGroups.map((route) => ({
+                  href: `/age-groups/${route.id}`,
+                  label: route.name,
+                  active: pathname === `/age-groups/${route.id}`,
+                }))}
+                name="Вік"
+                action={onClose}
+              />
+              <hr className="my-1" />
+              <MobileItem
+                links={publishings.map((route) => ({
+                  href: `/publishings/${route.id}`,
+                  label: route.name,
+                  active: pathname === `/publishings/${route.id}`,
+                }))}
+                name="Видавництва"
+                action={onClose}
+              />
+              <hr className="my-1" />
+              <Link
+                href="/delivery"
+                onClick={onClose}
+                className={cn(
+                  "font-semibold text-lg transition-colors pl-4 pt-4 hover:text-black",
+                  pathname === "/delivery" ? "text-black" : "text-neutral-500"
+                )}
+              >
+                Доставка і оплата
+              </Link>
             </nav>
             <div className="flex items-center justify-center mt-auto">
-            <Contacts/>
+              <Contacts />
             </div>
           </Dialog.Panel>
         </div>
       </Dialog>
+      {/* </Transition> */}
     </>
   );
 };
