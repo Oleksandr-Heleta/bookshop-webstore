@@ -3,6 +3,7 @@
 import Container from "@/components/ui/container";
 import MainNav from "@/components/main-nav";
 import Link from "next/link";
+import Image from "next/image";
 import getCategories from "@/actions/get-categories";
 import getAgeGroups from "@/actions/get-age-groups";
 import getPublishings from "@/actions/get-publishing";
@@ -22,7 +23,13 @@ const Navbar = async () => {
         <div className="relative px-4 sm:px-6 lg:px-8 flex h-16 items-center">
           <MobileNav categories={categories}  ageGroups={ageGroups} publishings={publishings} />
           <Link href="/" className="ml-4 flex lg:ml-0 gap-x-2">
+            <Image src="/logo.webp" alt="logo" width={50} height={50} />
+            {/* <div className="w-[50px]"> */}
             <p className="font-bold text-xl">Мишка</p>
+            {/* <p className="text-xs text-neutral-500 text-justify">магазин</p>
+            <p className="text-xs text-neutral-500 text-justify">дитячих</p>
+            <p className="text-xs text-neutral-500 text-justify">книг</p> */}
+            {/* </div> */}
           </Link>
           <MainNav categories={categories}  ageGroups={ageGroups} publishings={publishings} />
           {/* <Contacts/> */}

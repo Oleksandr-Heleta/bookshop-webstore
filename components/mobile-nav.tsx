@@ -33,7 +33,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
     <>
       <Button
         onClick={onOpen}
-        className="flex items-center gap-x-2 bg-white  text-black md:hidden"
+        className="flex items-center gap-x-2 bg-white  text-black lg:hidden"
       >
         <Menu size={20} />
       </Button>
