@@ -70,7 +70,7 @@ type SliderProps = {
   };
 
  const Slider: React.FC<SliderProps> = ({slides}) => {
-    const [currentSlide, setCurrentSlide] = React.useState(0)
+    const [currentSlide, setCurrentSlide] = useState(0)
     const [loaded, setLoaded] = useState(false)
   const [sliderRef, instanceRef] = useKeenSlider({
     initial: 0,
@@ -97,12 +97,14 @@ type SliderProps = {
       <div ref={sliderRef} className="keen-slider relative flex aspect-square cursor-pointer items-center rounded-md bg-white">
         {slides?.map((slide, idx) => (
         <div key={idx} className="keen-slider__slide absolute h-full w-full aspect-square inset-0 overflow-hidden rounded-md ">
-            <Image
-                src={slide}
-                alt="Image"
-                fill
-                className="object-cover object-center"
-            />
+          <Image
+            src={slide}
+            alt="Image"
+            fill
+            className="object-cover object-center"
+            priority={idx === 0}
+            onLoad={() => instanceRef.current?.update()}
+          />
         </div>))}
       
         {loaded && instanceRef.current && (
@@ -128,9 +130,9 @@ type SliderProps = {
         )}
      </div>
 
-      <div ref={thumbnailRef} className="keen-slider thumbnail gap-1 mx-auto mt-6 hidden w-full md:h-[140px] h-[78px] max-w-2xl sm:block lg:max-w-none">
+      <div ref={thumbnailRef} className="keen-slider thumbnail gap-1 mx-auto mt-6   w-full  overflow-hidden max-w-2xl sm:block lg:max-w-none">
       {slides?.map((slide, idx) => (
-        <div key={idx} className="keen-slider__slide cursor-pointer ">
+        <div key={idx} className="keen-slider__slide cursor-pointer aspect-square ">
             <Image
                 src={slide}
                 alt="Image"
