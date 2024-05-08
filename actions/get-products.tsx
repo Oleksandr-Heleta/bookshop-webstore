@@ -8,6 +8,12 @@ interface Query {
     ageGroupId?: string;
     publishingId?: string;
     isFeatured?: boolean;
+    isSale?: boolean;
+    isNew?: boolean;
+    name?: string;
+    maxPrice?: number;
+    minPrice?: number;
+
 }
 
 const getProducts = async (query:Query): Promise<Product[]> => {
@@ -18,6 +24,11 @@ const getProducts = async (query:Query): Promise<Product[]> => {
             ageGroupId: query.ageGroupId,
             categoryId: query.categoryId,
             isFeatured: query.isFeatured,
+            isSale: query.isSale,
+            isNew: query.isNew,
+            name: query.name,
+            maxPrice: query.maxPrice,
+            minPrice: query.minPrice,
         },
     })
     

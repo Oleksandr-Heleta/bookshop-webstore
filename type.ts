@@ -14,7 +14,7 @@ export interface Billboard {
     id: string;
     name: string;
     images: Image[];
-    price: string;
+    price: number;
     quantity: number;
     categories: ProdCategory[];
     ageGroups: ProdAgeGroup[];
@@ -24,6 +24,7 @@ export interface Billboard {
     sheets: number;
     size: string;
     isSale: boolean;
+    sale: number;
     isNew: boolean;
     isFeatured: boolean;
     isArchived: boolean;
@@ -61,4 +62,22 @@ export interface ProdCategory {
   categoryName: string;
   productId: string;
 };
-  
+ 
+export interface Order {
+  id: string;
+  items: OrderItem[];
+  total: number;
+  name: string;
+  totalPrice:  number;
+  orderStatus: string;
+  orderState:  string; 
+  isPaid: boolean;
+  phone: string;
+  address: string; 
+};
+
+export interface OrderItem {
+ product: Product;
+  productId: string;
+  quantity: number;
+};

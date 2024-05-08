@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.17",
+    "@headlessui/react": "^1.7.19",
     "axios": "^1.6.2",
     "clsx": "^2.0.0",
     "keen-slider": "^6.8.6",

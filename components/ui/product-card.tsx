@@ -8,6 +8,7 @@ import Currency from "@/components/ui/currency";
 import { MouseEventHandler } from "react";
 import usePreviewModal from "@/hooks/use-preview-modal";
 import useCart from "@/hooks/use-cart";
+import ChechSale from "./check-sale";
 
 interface ProductCardProps {
   data: Product;
@@ -32,11 +33,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
   };
 
   return (
-    <div
-      
-      className="bg-white group  rounded-xl border p-3 space-y-4"
-    >
+    <div  className="bg-white group  rounded-xl border p-3 space-y-4" >
       <div onClick={handleClick} className="cursor-pointer aspect-square rounded-xl bg-gray-100 relative">
+      <div className="absolute top-10 left-0 z-10 flex flex-col gap-2">
+      {data.isNew && <div className=" bg-red-600 text-white rounded-lg p-1 tracking-wider text-xs font-semibold">
+          Новинка
+        </div>}
+        {data.isSale && <div className=" bg-orange-500 text-white rounded-lg p-1 text-xs font-semibold"> 
+          - {data.sale} %
+        </div>}
+      </div>
         <Image
           src={data?.images?.[0]?.url}
           fill
@@ -61,7 +67,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
        
       </div>
       <div className="flex item-center justify-between">
-        <Currency value={data?.price} />
+        <ChechSale sail={data.isSale} percent={data.sale} price={data.price}/>
+       
       </div>
     </div>
   );

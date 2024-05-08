@@ -7,7 +7,8 @@ import ProductList from "@/components/product-list";
 export const revalidate = 0;
 
 const HomePage = async () => {
-  const products = await getProducts({ isFeatured: true });
+  const newProducts = await getProducts({ isFeatured: true , isNew: true });
+  const saleProducts = await getProducts({ isFeatured: true , isSale: true });
   const billboard = await getBillboard("cf4c6ea7-2b8d-46f8-95b4-9ada229145b9");
   return (
     <Container>
@@ -15,7 +16,10 @@ const HomePage = async () => {
         <Billboard data={billboard} />
 
         <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
-          <ProductList title="Featured Products" items={products} />
+          <ProductList title="Новинки" items={newProducts} />
+        </div>
+        <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
+          <ProductList title="Акції" items={saleProducts} />
         </div>
       </div>
     </Container>

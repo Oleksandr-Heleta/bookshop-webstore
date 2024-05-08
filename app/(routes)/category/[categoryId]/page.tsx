@@ -1,3 +1,4 @@
+import { Metadata, ResolvingMetadata } from 'next';
 import getProducts from "@/actions/get-products";
 import getPublishings from "@/actions/get-publishing";
 import getAgeGroups from "@/actions/get-age-groups";
@@ -19,6 +20,27 @@ interface CategoryPageProps {
     ageGroupId: string;
     publishingId: string;
   };
+}
+
+export async function generateMetadata(
+  { params, searchParams}: CategoryPageProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  
+  const category = await getCategory(params.categoryId);
+ 
+  const parentMetadata = await parent;
+  const previousImages = parentMetadata.openGraph?.images || [];
+  const previousKeywords = parentMetadata.keywords || [];
+ 
+  return {
+    title: category.name,
+    keywords: [category.name, `купити ${category.name}`, `книги ${category.name}`,`книжки ${category.name}`, `дитячі ${category.name}`, ...previousKeywords],
+    openGraph: {
+      images: [category.billboard.imageUrl, ...previousImages],
+      title: `${category.name}| Мишка`,
+    },
+  }
 }
 
 const CategoryPage: React.FC<CategoryPageProps> = async ({
