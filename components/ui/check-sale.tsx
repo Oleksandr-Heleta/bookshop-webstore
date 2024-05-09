@@ -11,7 +11,7 @@ const CheckSale: React.FC<CheckSaleProps> = ({sail, percent, price}) => {
     return (
         <>
             {sail ? (
-                <div className='flex gap-2 justify-self-end'>
+                <div className='flex gap-2 '>
                     <p className='line-through text-gray-500'>
                         <Currency value={price} />
                     </p>

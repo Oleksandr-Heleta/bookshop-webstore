@@ -28,7 +28,7 @@ if (!isMounted) return null;
                                 {cart.items.map((item) => (
                                     <CartItem
                                         key={item.productId}
-                                        data={item.product}
+                                        data={item}
                                     />
                                 ))}
                             </ul>

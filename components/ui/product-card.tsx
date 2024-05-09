@@ -68,7 +68,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
       </div>
       <div className="flex item-center justify-between">
         <ChechSale sail={data.isSale} percent={data.sale} price={data.price}/>
-       
+      
       </div>
     </div>
   );
