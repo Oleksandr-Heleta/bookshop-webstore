@@ -3,7 +3,8 @@ const nextConfig = {
     images: {
         domains: [
             'res.cloudinary.com',
-            'mouse-admin.com.ua'
+            'mouse-admin.com.ua',
+            'localhost',
         ]
     }
 }

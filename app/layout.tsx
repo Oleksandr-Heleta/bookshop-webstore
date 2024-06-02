@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Urbanist } from "next/font/google";
 import "./globals.css";
 import 'keen-slider/keen-slider.min.css';
@@ -48,6 +48,10 @@ export const metadata: Metadata = {
     siteName: 'Мишка',
     description: 'Магазин дитячої книги',
   },
+};
+ 
+export const viewport : Viewport = {
+  themeColor: '#f7f7f7',
 };
 
 export default function RootLayout({
