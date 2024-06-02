@@ -144,8 +144,8 @@ const Summary = () => {
             ></RadioInput>
           </div>
           <div className="w-full">
-           {/* <Address/> */}
-           <Select/>
+           <Address/>
+           {/* <Select/> */}
           </div>
         </form>
       </div>

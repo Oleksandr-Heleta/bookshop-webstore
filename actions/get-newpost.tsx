@@ -8,7 +8,7 @@ const apiKeyNP = `0b9148efd708cee76617577c7575085c`;
 type queryDataType = {
   area?: string;
   city?: string;
-  FindByStrin?: string;
+  FindByString?: string;
 };
 
 export const getArea = async () => {
@@ -50,7 +50,7 @@ export const getCity = async (queryData: queryDataType) => {
         Area: string;
         Limit: string;
         Language: string;
-        FindByStrin: string;
+        FindByString: string;
       };
     } = {
       apiKey: apiKeyNP,
@@ -61,7 +61,7 @@ export const getCity = async (queryData: queryDataType) => {
         Warehouse: "1",
         Limit: "",
         Language: "UA",
-        FindByStrin: queryData.city || "",
+        FindByString: queryData.city || "",
       },
     };
     const { data, status } = await novaPoshtaApi.post(``, body);
@@ -78,7 +78,7 @@ export const getCity = async (queryData: queryDataType) => {
   }
 };
 
-export const getCityOn = async (queryData: queryDataType) => {
+export const getCityOn = async (query:string) => {
   try {
     const body: {
       apiKey: string;
@@ -94,7 +94,7 @@ export const getCityOn = async (queryData: queryDataType) => {
       modelName: "AddressGeneral",
       calledMethod: "searchSettlements",
       methodProperties: {
-        CityName: queryData.city || "",
+        CityName: query || "",
         Limit: "150",
         Page: "1",
       },
@@ -104,8 +104,8 @@ export const getCityOn = async (queryData: queryDataType) => {
       throw new Error(`Failed to fetch data: ${status}`);
     }
     console.log(data.data[0].Addresses);
-    return data.data[0].Addresses.map((city: { Ref: string; Present: string }) => ({
-      id: city.Ref,
+    return data.data[0].Addresses.map((city: { DeliveryCity : string; Present: string }) => ({
+      id: city.DeliveryCity,
       name: city.Present,
     }));
   } catch (error) {
@@ -121,22 +121,22 @@ export const getPosts = async (queryData: queryDataType) => {
       modelName: string;
       calledMethod: string;
       methodProperties: {
-        CityName: string;
+        CityRef: string;
 
         Limit: string;
         Language: string;
-        FindByStrin: string;
+        FindByString: string;
       };
     } = {
       apiKey: apiKeyNP,
-      modelName: "Address",
+      modelName: "AddressGeneral",
       calledMethod: "getWarehouses",
       methodProperties: {
-        CityName: queryData.city || "Київ",
+        CityRef: queryData.city || "Київ",
 
         Limit: "",
         Language: "UA",
-        FindByStrin: queryData.FindByStrin || "",
+        FindByString: queryData.FindByString || "",
       },
     };
     const { data, status } = await novaPoshtaApi.post(``, body);

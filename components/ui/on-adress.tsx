@@ -5,42 +5,50 @@ import { CheckIcon, ChevronsUpDown } from 'lucide-react';
 
 import { getCityOn } from '@/actions/get-newpost';
 
-interface City {
+interface Item {
   id: string;
   name: string;
 }
 
-const Select: React.FC = () => {
-  const [cities, setCities] = useState<City[]>([]);
-  const [selectedCity, setSelectedCity] = useState<City | null>(null);
+interface SelectProps {
+  getFn: (query:  string ) => Promise<Item[]>;
+  onItemSelect: (item: Item | null) => void;
+}
+
+const Select: React.FC<SelectProps> = ({ getFn, onItemSelect }) => {
+  const [items, setItems] = useState<Item[]>([]);
+  const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [query, setQuery] = useState('');
-//   const [isItemSelected, setIsItemSelected] = useState(false);
 
   useEffect(() => {
-    const getCities = async () => {
+    const getItems = async () => {
         
       try {
-        const data = await getCityOn({ city: query });
+        const data = await getFn( query );
        
-        setCities(data);
+        setItems(data);
         console.log(data);
       } catch (error) {
-        console.error('Error fetching cities:', error);
+        console.error('Error fetching items:', error);
       }
     };
     if (query) {
-        getCities();
+      getItems();
       }
-  }, [query, ]);
+  }, [query, getFn ]);
 
-  console.log(cities);
+  useEffect(() => {
+    onItemSelect(selectedItem);
+  }, [selectedItem, onItemSelect]);
+
+  console.log(items);
 
   return (
     <div className="w-full">
       <Combobox 
-        value={selectedCity} 
+        value={selectedItem} 
         onChange={(value) => {
-          setSelectedCity(value);
+          setSelectedItem(value);
         //   setIsItemSelected(true);
         }} 
         // disabled={cities.length === 0}
@@ -49,9 +57,15 @@ const Select: React.FC = () => {
         <div className="relative w-full cursor-default overflow-hidden  py-1.5 pl-2 text-gray-900 text-left  focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
             <Combobox.Input
                 className="w-full border-1  bg-white  rounded-full py-2 pl-3 pr-10 text-sm leading-5 shadow-md text-gray-900 focus:ring-0"
-                displayValue={(city: City) => city ? city.name : ''}
+                displayValue={(item: Item) => item ? item.name : ''}
                 
-                onInput={(event: React.ChangeEvent<HTMLInputElement>) => setQuery(event.target.value)}
+                onInput={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  const newValue = event.target.value;
+                  const cyrillicPattern = /^[\u0400-\u04FF0-9\s]+$/; // pattern for Cyrillic letters and spaces
+                  if (cyrillicPattern.test(newValue) || newValue === ' ') {
+                    setQuery(newValue);
+                  }
+                }}
             />
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
                 <ChevronsUpDown
@@ -67,21 +81,21 @@ const Select: React.FC = () => {
             leaveTo="opacity-0"
             afterLeave={() => setQuery('')}
           >
-            <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-              {cities.length === 0 && query.length !== 0 ? (
+            <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+              {items.length === 0 && query.length !== 0 ? (
                 <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
                   Нічого не знайдено.
                 </div>
               ) : (
-                cities.map((city) => (
+                items.map((item) => (
                   <Combobox.Option
-                    key={city.id}
+                    key={item.id}
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 pl-10 pr-4 ${
                         active ? 'bg-gray-400 text-white' : 'text-gray-900'
                       }`
                     }
-                    value={city}
+                    value={item}
                   >
                     {({ selected, active }) => (
                       <>
@@ -90,7 +104,7 @@ const Select: React.FC = () => {
                             selected ? 'font-medium' : 'font-normal'
                           }`}
                         >
-                          {city.name}
+                          {item.name}
                         </span>
                         {selected ? (
                           <span
