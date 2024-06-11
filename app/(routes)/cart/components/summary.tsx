@@ -7,8 +7,8 @@ import { toast } from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 
-import { Combobox, Transition } from '@headlessui/react'
-import { CheckIcon, ChevronsUpDown } from 'lucide-react'
+import { Combobox, Transition } from "@headlessui/react";
+import { CheckIcon, ChevronsUpDown } from "lucide-react";
 
 import Button from "@/components/ui/button";
 import Currency from "@/components/ui/currency";
@@ -16,19 +16,23 @@ import useCart from "@/hooks/use-cart";
 import Input from "@/components/ui/input";
 import RadioInput from "@/components/ui/radio-input";
 import Image from "next/image";
-import { getArea } from "@/actions/get-newpost";
 
 import * as z from "zod";
-import Selector from "@/components/ui/select";
+
 import Address from "@/components/ui/address";
-import Select from "@/components/ui/on-adress";
+import Checkbox from "@/components/ui/checkboks";
+
+export const ukrposhta = "ukr-post";
+export const novaposhta = "new-post";
+export const post = "post";
+export const courier = "courier";
 
 const phoneRegex = /^\+380\d{9}$/;
 
 export const formSchema = z.object({
   name: z.string().min(1),
   orderStatus: z.string().min(1),
-  orderState: z.string().min(1),
+  payment: z.string().min(1),
   phone: z.string().refine((value) => phoneRegex.test(value), {
     message: "Телефон повинен бути у форматі +380000000000",
   }),
@@ -44,13 +48,18 @@ const Summary = () => {
   const items = useCart((state) => state.items);
   const removeAll = useCart((state) => state.removeAll);
 
-  const [isChecked, setIsChecked] = useState("new-post");
+  const [postType, setPostType] = useState(novaposhta);
+  const [delivType, setDelivType] = useState(post);
+  const [paymentType, setPaymentType] = useState("online");
+  const [call, setCall] = useState(false);
+  const [agree, setAgree] = useState(true);
+
 
   const { register, handleSubmit, formState, control } = useForm<FormValues>({
     defaultValues: {
       name: "",
       orderStatus: "",
-      orderState: "",
+      payment: "",
       isPaid: false,
       phone: "+380",
       address: "",
@@ -58,7 +67,6 @@ const Summary = () => {
     resolver: zodResolver(formSchema),
   });
 
- 
   const { errors } = formState;
 
   useEffect(() => {
@@ -94,8 +102,16 @@ const Summary = () => {
     console.log(data);
   };
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setIsChecked(event.target.value);
+  const handlePostChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setPostType(event.target.value);
+  };
+
+  const handleDelChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setDelivType(event.target.value);
+  };
+
+  const handlePayChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setPaymentType(event.target.value);
   };
 
   return (
@@ -110,42 +126,96 @@ const Summary = () => {
           <div>
             <Input
               {...register("name", { required: "Поле є обов'язковим" })}
-              className="block flex-1 border-1 rounded-full bg-white w-full py-1.5 pl-2 text-gray-900 shadow-md placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+              className=""
               label="П.І.Б."
               errorMessage={errors.name?.message}
             />
             <Input
               {...register("phone", { required: "Поле є обов'язковим" })}
-              className="block flex-1 border-1 rounded-full bg-white w-full py-1.5 pl-2 text-gray-900 shadow-md placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+              className=""
               label="Телефон"
               type="tel"
               value={"+380"}
               errorMessage={errors.name?.message}
             />
           </div>
+          <div className="flex flex-col sm:flex-row lg:flex-col">
           <div className="flex ">
             <RadioInput
               imageSrc="/novap.jpg"
-              className=""
+              className="opacity-0 w-0 h-0"
               label="Нова пошта"
-              name="delivery"
-              value="new-post"
-              handleInputChange={handleInputChange}
-              isChecked={isChecked === "new-post"}
+              name="post"
+              value={novaposhta}
+              handleInputChange={handlePostChange}
+              isChecked={postType === novaposhta}
             ></RadioInput>
             <RadioInput
               imageSrc="/ukrposhta.png"
-              className=""
+              className="opacity-0 w-0 h-0"
               label="Укр пошта"
+              name="post"
+              value={ukrposhta}
+              handleInputChange={handlePostChange}
+              isChecked={postType === ukrposhta}
+            ></RadioInput>
+          </div>
+          <div className="flex flex-row sm:flex-col lg:flex-row gap-1">
+            <RadioInput
+              className=""
+              label="До відділення"
               name="delivery"
-              value="ykr-post"
-              handleInputChange={handleInputChange}
-              isChecked={isChecked === "ykr-post"}
+              value={post}
+              handleInputChange={handleDelChange}
+              isChecked={delivType === post}
+            ></RadioInput>
+            <RadioInput
+              className=""
+              label="За адресою"
+              name="delivery"
+              value={courier}
+              handleInputChange={handleDelChange}
+              isChecked={delivType === courier}
+            ></RadioInput>
+          </div>
+          </div>
+          <div className="w-full">
+            <Address postType={postType} delivery={delivType} />
+          </div>
+          <h3 className="my-3">Метод оплати</h3>
+          <div className="flex  gap-1">
+            <RadioInput
+              className=""
+              label="У відділенні"
+              name="payment"
+              value="afterrecive"
+              handleInputChange={handlePayChange}
+              isChecked={paymentType === "afterrecive"}
+            ></RadioInput>
+            <RadioInput
+              className=""
+              label="За реквізитами"
+              name="payment"
+              value="byIBAN"
+              handleInputChange={handlePayChange}
+              isChecked={paymentType === "byIBAN"}
+            ></RadioInput>
+            <RadioInput
+              className=""
+              label="Оплата online"
+              name="payment"
+              value="online"
+              handleInputChange={handlePayChange}
+              isChecked={paymentType === "online"}
             ></RadioInput>
           </div>
           <div className="w-full">
-           <Address/>
-           {/* <Select/> */}
+            <Checkbox checked={call} onChange={setCall} />
+            <span className="p-2 text-sm">Зателефонувати мені</span>
+          </div>
+          <div className="w-full">
+            <Checkbox checked={agree} onChange={setAgree} />
+            <span className="p-2 text-sm">Я погоджуюсь з умовами сайту</span>
           </div>
         </form>
       </div>

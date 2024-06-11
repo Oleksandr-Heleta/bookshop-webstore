@@ -3,7 +3,7 @@ import React, { useState, useEffect, Fragment } from 'react';
 import { Combobox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronsUpDown } from 'lucide-react';
 
-import { getCityOn } from '@/actions/get-newpost';
+
 
 interface Item {
   id: string;
@@ -54,14 +54,14 @@ const Select: React.FC<SelectProps> = ({ getFn, onItemSelect }) => {
         // disabled={cities.length === 0}
       >
         <div className="relative mt-1">
-        <div className="relative w-full cursor-default overflow-hidden  py-1.5 pl-2 text-gray-900 text-left  focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+        <div className="relative w-full cursor-default overflow-hidden  py-1.5  text-gray-900 text-left  focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
             <Combobox.Input
                 className="w-full border-1  bg-white  rounded-full py-2 pl-3 pr-10 text-sm leading-5 shadow-md text-gray-900 focus:ring-0"
                 displayValue={(item: Item) => item ? item.name : ''}
                 
                 onInput={(event: React.ChangeEvent<HTMLInputElement>) => {
                   const newValue = event.target.value;
-                  const cyrillicPattern = /^[\u0400-\u04FF0-9\s]+$/; // pattern for Cyrillic letters and spaces
+                  const cyrillicPattern = /^[\u0400-\u04FF0-9\s]+$/; 
                   if (cyrillicPattern.test(newValue) || newValue === ' ') {
                     setQuery(newValue);
                   }

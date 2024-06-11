@@ -13,7 +13,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             <>
                 {" "}
                 {!!label && <label htmlFor={id}>{label}</label>}
-                <input {...rest} ref={ref} className={cn("rounded mb-4 p-1", className)} id={id} />
+                <input {...rest} ref={ref} className={cn(" mb-4 p-1 block flex-1 border-1 rounded-full bg-white w-full py-1.5 pl-2 text-gray-900 shadow-md placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6", className)} id={id} />
                 {!!errorMessage && <span className="text-red-500">{errorMessage}</span>}
             </>
         );
