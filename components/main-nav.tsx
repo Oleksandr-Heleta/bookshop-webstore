@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import { Category, AgeGroup, Publishing } from "@/type";
 import Contacts from "./ui/contacts";
 import MenuItem from "./nav-item";
+import Search from "./search";
+
 
 interface MainNavProps {
   categories: Category[];
@@ -66,7 +68,7 @@ const MainNav: React.FC<MainNavProps> = ({
       >
         Доставка і оплата
       </Link>
-
+      <Search className="" />
       <Contacts />
     </nav>
   );

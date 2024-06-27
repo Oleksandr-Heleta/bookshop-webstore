@@ -11,6 +11,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Contacts from "./ui/contacts";
 import MobileItem from "./mobile-item";
+import Search from "./search";
 
 interface MobileNavProps {
   categories: Category[];
@@ -117,6 +118,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
               >
                 Доставка і оплата
               </Link>
+              <Search className="mt-4"/>
             </nav>
             <div className="flex items-center justify-center mt-auto">
               <Contacts />

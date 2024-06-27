@@ -41,7 +41,7 @@ const Select: React.FC<SelectProps> = ({ getFn, onItemSelect }) => {
     onItemSelect(selectedItem);
   }, [selectedItem, onItemSelect]);
 
-  console.log(items);
+  // console.log(items);
 
   return (
     <div className="w-full">

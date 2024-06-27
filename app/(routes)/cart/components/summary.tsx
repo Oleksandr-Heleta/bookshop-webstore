@@ -21,6 +21,7 @@ import * as z from "zod";
 
 import Address from "@/components/ui/address";
 import Checkbox from "@/components/ui/checkboks";
+import { on } from "events";
 
 export const ukrposhta = "ukr-post";
 export const novaposhta = "new-post";
@@ -28,17 +29,29 @@ export const post = "post";
 export const courier = "courier";
 
 const phoneRegex = /^\+380\d{9}$/;
+const nameRegex = /^[A-Za-zА-Яа-яІіЇїЄєҐґ'-]+(\s[A-Za-zА-Яа-яІіЇїЄєҐґ'-]+){1}$/;
+
+interface Item {
+  id: string;
+  name: string;
+}
 
 export const formSchema = z.object({
-  name: z.string().min(1),
+  name: z.string().refine((value) => nameRegex.test(value), {
+    message: "Напишіть своє ім'я та прізвище",
+  }),
   orderStatus: z.string().min(1),
   payment: z.string().min(1),
   phone: z.string().refine((value) => phoneRegex.test(value), {
     message: "Телефон повинен бути у форматі +380000000000",
   }),
   address: z.string().min(1),
+  post: z.string().min(1),
+  delivery: z.string().min(1),
   // orderItems: z.array(orderItemSchema),
   isPaid: z.boolean().default(false),
+  call: z.boolean().default(false),
+  agree: z.boolean().default(true),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -55,14 +68,18 @@ const Summary = () => {
   const [agree, setAgree] = useState(true);
 
 
-  const { register, handleSubmit, formState, control } = useForm<FormValues>({
+  const { register, handleSubmit, formState, control, setValue, getValues } = useForm<FormValues>({
     defaultValues: {
       name: "",
-      orderStatus: "",
-      payment: "",
+      orderStatus: "new",
+      payment: "online",
       isPaid: false,
+      call: false,
+      agree: true,
       phone: "+380",
       address: "",
+      post: novaposhta,
+      delivery: post,
     },
     resolver: zodResolver(formSchema),
   });
@@ -88,14 +105,15 @@ const Summary = () => {
   }, 0);
 
   const onCheckout = async () => {
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
-      {
-        productIds: items.map((item) => item.productId),
-      }
-    );
+    onSubmit(getValues());
+    // const response = await axios.post(
+    //   `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
+    //   {
+    //     productIds: items.map((item) => item.productId),
+    //   }
+    // );
 
-    window.location = response.data.url;
+    // window.location = response.data.url;
   };
 
   const onSubmit = (data: FormValues) => {
@@ -104,15 +122,22 @@ const Summary = () => {
 
   const handlePostChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPostType(event.target.value);
+    setValue("post", event.target.value);
   };
 
   const handleDelChange = (event: ChangeEvent<HTMLInputElement>) => {
     setDelivType(event.target.value);
+    setValue("delivery", event.target.value);
   };
 
   const handlePayChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPaymentType(event.target.value);
+    setValue("payment", event.target.value);
   };
+  
+  const handleAddress = (data: { city: Item | null; post: Item | null; address?: string })=>{
+     setValue('address', `${data.city?.name}: ${data.post?.name} ${data.address}`)
+  }
 
   return (
     <div className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
@@ -122,7 +147,7 @@ const Summary = () => {
           <div className="text-base font-medium text-gray-900">Загалом</div>
           <Currency value={totalPrice} />
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
+        <form onSubmit={handleSubmit(onCheckout)} className="mt-6">
           <div>
             <Input
               {...register("name", { required: "Поле є обов'язковим" })}
@@ -135,7 +160,7 @@ const Summary = () => {
               className=""
               label="Телефон"
               type="tel"
-              value={"+380"}
+              // value={"+380"}
               errorMessage={errors.name?.message}
             />
           </div>
@@ -180,7 +205,7 @@ const Summary = () => {
           </div>
           </div>
           <div className="w-full">
-            <Address postType={postType} delivery={delivType} />
+            <Address postType={postType} delivery={delivType} onComplete={handleAddress} />
           </div>
           <h3 className="my-3">Метод оплати</h3>
           <div className="flex  gap-1">
@@ -210,22 +235,24 @@ const Summary = () => {
             ></RadioInput>
           </div>
           <div className="w-full">
-            <Checkbox checked={call} onChange={setCall} />
+            <Checkbox checked={call} onChange={setCall} name='call' />
             <span className="p-2 text-sm">Зателефонувати мені</span>
           </div>
           <div className="w-full">
-            <Checkbox checked={agree} onChange={setAgree} />
+            <Checkbox checked={agree} onChange={setAgree} name="agree" />
             <span className="p-2 text-sm">Я погоджуюсь з умовами сайту</span>
           </div>
-        </form>
-      </div>
-      <Button
-        disabled={items.length === 0}
+          <Button
+          
+        disabled={items.length === 0 || !agree}
         onClick={onCheckout}
         className="w-full mt-6"
       >
         Замовити
       </Button>
+        </form>
+      </div>
+     
     </div>
   );
 };
