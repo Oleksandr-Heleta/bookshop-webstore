@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { Category, AgeGroup, Publishing } from "@/type";
 import Contacts from "./ui/contacts";
 import MenuItem from "./nav-item";
-import Search from "./search";
+import Search from "./ui/search";
 
 
 interface MainNavProps {

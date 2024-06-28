@@ -11,7 +11,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Contacts from "./ui/contacts";
 import MobileItem from "./mobile-item";
-import Search from "./search";
+import Search from "./ui/search";
 
 interface MobileNavProps {
   categories: Category[];
