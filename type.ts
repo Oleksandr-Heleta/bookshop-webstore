@@ -85,6 +85,6 @@ export interface OrderItem {
 export interface Info {
   id: string;
   name: string;
-  sale: string;
-  billboards: Billboard[];
+  sale: number;
+  mainbillboards: Billboard[];
 };

@@ -5,7 +5,7 @@ import { useEffect, useState, ChangeEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm } from "react-hook-form";
+import { set, useFieldArray, useForm } from "react-hook-form";
 
 import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronsUpDown } from "lucide-react";
@@ -66,13 +66,14 @@ const Summary = () => {
   const [paymentType, setPaymentType] = useState("online");
   const [call, setCall] = useState(false);
   const [agree, setAgree] = useState(true);
+  const [sending, setSending] = useState(false);
 
 
   const { register, handleSubmit, formState, control, setValue, getValues } = useForm<FormValues>({
     defaultValues: {
       name: "",
       orderStatus: "new",
-      payment: "online",
+      payment: "byIBAN",
       isPaid: false,
       call: false,
       agree: true,
@@ -88,7 +89,7 @@ const Summary = () => {
 
   useEffect(() => {
     if (searchParams.get("success")) {
-      toast.success("Сплачено");
+      toast.success("Замовлення успішне");
       removeAll();
     }
 
@@ -104,20 +105,45 @@ const Summary = () => {
     return total + price * item.quantity;
   }, 0);
 
-  const onCheckout = async () => {
-    onSubmit(getValues());
-    // const response = await axios.post(
-    //   `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
-    //   {
-    //     productIds: items.map((item) => item.productId),
-    //   }
-    // );
+ 
 
-    // window.location = response.data.url;
+  const onCheckout = async () => {
+   setSending(true);
+    try {
+      const data = onSubmit(getValues());
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
+        {
+          ...data,
+          orderItems: items,
+          totalPrice,
+          isPaid: false,
+        }
+      );
+  
+      // Перевірка статусу відповіді
+      if (response.status === 200) {
+        
+        // Успішна відповідь, перенаправлення користувача
+        window.location = response.data.url;
+      } else {
+        // Обробка відповіді з помилкою
+        console.error('Error during checkout:', response.statusText);
+        // Тут можна додати відображення повідомлення користувачу
+      }
+    } catch (error) {
+      console.error('Checkout failed:', error);
+      // Тут можна додати відображення повідомлення користувачу
+    } finally {
+      setSending(false);
+    }
   };
 
   const onSubmit = (data: FormValues) => {
     console.log(data);
+return data;
+
+    
   };
 
   const handlePostChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -226,7 +252,8 @@ const Summary = () => {
               isChecked={paymentType === "byIBAN"}
             ></RadioInput>
             <RadioInput
-              className=""
+            disabled
+              className="opacity-50"
               label="Оплата online"
               name="payment"
               value="online"
@@ -244,8 +271,9 @@ const Summary = () => {
           </div>
           <Button
           
-        disabled={items.length === 0 || !agree}
-        onClick={onCheckout}
+        disabled={items.length === 0 || !agree || sending}
+        type="submit"
+        // onClick={onCheckout}
         className="w-full mt-6"
       >
         Замовити

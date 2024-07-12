@@ -27,7 +27,7 @@ const Select: React.FC<SelectProps> = ({ getFn, onItemSelect }) => {
         const data = await getFn( query );
        
         setItems(data);
-        console.log(data);
+        // console.log(data);
       } catch (error) {
         console.error('Error fetching items:', error);
       }

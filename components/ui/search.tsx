@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import Select from "./ui/select";
+import Select from "./select";
 import getProducts from "@/actions/get-products";
 import { SearchIcon } from "lucide-react";
 import { cn } from "@/lib/utils";

@@ -1,3 +1,5 @@
+'use client';
+
 import { Billboard as BillboardType } from "@/type";
 import React from "react"
 import { useKeenSlider } from "keen-slider/react"
@@ -62,7 +64,7 @@ const MainSlider: React.FC<MainSliderProps> = ({ billboards }) => {
             if (mouseOver) return
             timeout = setTimeout(() => {
               slider.next()
-            }, 2000)
+            }, 8000)
           }
           slider.on("created", () => {
             slider.container.addEventListener("mouseover", () => {
@@ -83,7 +85,7 @@ const MainSlider: React.FC<MainSliderProps> = ({ billboards }) => {
     )
 
     return (
-        <>
+        <div className="relative">
           <div className="navigation-wrapper">
             <div ref={sliderRef} className="keen-slider">
             {billboards?.map((billboard : BillboardType, idx : number) => (
@@ -115,7 +117,7 @@ const MainSlider: React.FC<MainSliderProps> = ({ billboards }) => {
             )}
           </div>
           {loaded && instanceRef.current && (
-            <div className="dots">
+            <div className="dots absolute inset-x-0 bottom-2 z-10">
               {[
                 ...Array(instanceRef.current.track.details.slides.length).keys(),
               ].map((idx) => {
@@ -125,13 +127,13 @@ const MainSlider: React.FC<MainSliderProps> = ({ billboards }) => {
                     onClick={() => {
                       instanceRef.current?.moveToIdx(idx)
                     }}
-                    className={"dot" + (currentSlide === idx ? " active" : "")}
+                    className={"dot border-gray-100" + (currentSlide === idx ? " active" : "")}
                   ></button>
                 )
               })}
             </div>
           )}
-        </>
+        </div>
       )
   
 //     const [currentSlide, setCurrentSlide] = useState(0)

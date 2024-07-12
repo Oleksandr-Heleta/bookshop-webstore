@@ -33,8 +33,8 @@ const getProducts = async (query:Query): Promise<Product[]> => {
     })
     
     const res = await fetch(url);
-
-    return res.json();
+const data = await res.json();
+    return data.data;
 };
 
 export default getProducts;
