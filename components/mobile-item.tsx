@@ -38,7 +38,7 @@ const onBack = () => setOpen(false);
 
   return (
     <>
-      <Button onClick={onOpen} className="flex items-center gap-x-2 bg-white  text-neutral-500 hover:text-black ">
+      <Button onClick={onOpen} className="flex items-center gap-x-2 bg-amber-200  text-amber-950 hover:text-amber-800 ">
          {name}
          <ChevronRight size={20} />
       </Button>
@@ -52,10 +52,10 @@ const onBack = () => setOpen(false);
       >
         <div className="fixed inset-0 bg-black bg-opacity-25" />
         <div className="fixed inset-0 z-50 flex">
-          <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-auto bg-white py-4 pb-6 shadow-xl">
+          <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-auto bg-amber-200 py-4 pb-6 shadow-xl">
             <div className="flex items-center justify-between px-4">
-            <h3 className="font-semibold text-lg text-black">{name}</h3>
-              <IconButton icon={<ChevronLeft size={15} />} onClick={onBack} />
+            <h3 className="font-semibold text-lg text-amber-950">{name}</h3>
+              <IconButton icon={<ChevronLeft size={15} />} onClick={onBack}  className="bg-amber-950 text-white border-amber-950"/>
             </div>
 
             <nav className="p-4 flex flex-col">
@@ -66,12 +66,12 @@ const onBack = () => setOpen(false);
                   href={route.href}
                   onClick={onClose}
                   className={cn(
-                    "font-semibold text-lg transition-colors  hover:text-black",
-                    route.active ? "text-black" : "text-neutral-500"
+                    "font-semibold text-lg transition-colors  hover:text-amber-800",
+                    route.active ? "text-amber-800" : "text-amber-950"
                   )}
                 >
                   {route.label}
-                  <hr className="my-4"/>
+                  <hr className="my-4 border-amber-800"/>
                 </Link>
               ))}
             </nav>

@@ -23,10 +23,10 @@ const Info: React.FC<InfoProps> = ({ data, children }) => {
   // console.log(data);
   return (
     <div>
-      <h1 className="text-3xl font-bold text-gray-900">{data.name}</h1>
+      <h1 className="text-3xl font-bold text-amber-950">{data.name}</h1>
       <div className="mt-3 flex items-end justify-between">
-        <div className="text-2xl text-gray-900">
-        <ChechSale sail={data.isSale} percent={data.sale} price={data.price}/>
+        <div className="text-2xl text-amber-950">
+        <ChechSale isSale={data.isSale} percent={data.sale} price={data.price}/>
         </div>
         <Button onClick={addToCart} className="flex items-center gap-x-2">
           Купити
@@ -36,31 +36,31 @@ const Info: React.FC<InfoProps> = ({ data, children }) => {
       <hr className="my-4" />
       <div className="flex flex-col gap-y-6">
         <div className="flex items-center gap-x-4">
-          <h3 className="font-semibold text-black">Категорії:</h3>
+          <h3 className="font-semibold text-amber-950">Категорії:</h3>
           {data?.categories?.map((category: ProdCategory) => (
             <div key={category.categoryId}>{category.categoryName}</div>
           ))}
         </div>
         <div className="flex items-center gap-x-4">
-          <h3 className="font-semibold text-black">Вік:</h3>
+          <h3 className="font-semibold text-amber-950">Вік:</h3>
           {data?.ageGroups?.map((age: ProdAgeGroup) => (
             <div key={age.ageGroupId}>{age.ageGroupName}</div>
           ))}
         </div>
         <div className="flex items-center gap-x-4">
-          <h3 className="font-semibold text-black">Видавництво:</h3>
+          <h3 className="font-semibold text-amber-950">Видавництво:</h3>
           <div>{data?.publishing?.name}</div>
         </div>
         <div className="flex items-center gap-x-4">
-          <h3 className="font-semibold text-black">Обкладинка:</h3>
+          <h3 className="font-semibold text-amber-950">Обкладинка:</h3>
           <div>{title}</div>
         </div>
         <div className="flex items-center gap-x-4">
-          <h3 className="font-semibold text-black">Кількість сторінок:</h3>
+          <h3 className="font-semibold text-amber-950">Кількість сторінок:</h3>
           <div>{data?.sheets}</div>
         </div>
         <div className="flex items-center gap-x-4">
-          <h3 className="font-semibold text-black">Розмір:</h3>
+          <h3 className="font-semibold text-amber-950">Розмір:</h3>
           <div>{data?.size}</div>
         </div>
         {/* <div className="mt-10 flex items-center gap-x-3">

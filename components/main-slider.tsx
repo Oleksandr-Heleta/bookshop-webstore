@@ -4,11 +4,10 @@ import { Billboard as BillboardType } from "@/type";
 import React from "react"
 import { useKeenSlider } from "keen-slider/react"
 import { useState } from "react"
+import { useInfo } from "@/providers/info-provider";
 import Billboard from "./billboard";
 
-interface MainSliderProps {
-    billboards: BillboardType[];
-}
+
 
 
 function Arrow(props: {
@@ -38,8 +37,8 @@ function Arrow(props: {
   
 
 
-const MainSlider: React.FC<MainSliderProps> = ({ billboards }) => {
-
+const MainSlider = () => {
+    const { mainbillboards } = useInfo() || {mainbillboards: [{id:'1',  imageUrl: '/logo.webp', label: 'Мишка'}]}
     const [currentSlide, setCurrentSlide] = useState(0)
     const [loaded, setLoaded] = useState(false)
     const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
@@ -84,11 +83,13 @@ const MainSlider: React.FC<MainSliderProps> = ({ billboards }) => {
       ],
     )
 
+// console.log(mainbillboards)
+
     return (
         <div className="relative">
           <div className="navigation-wrapper">
             <div ref={sliderRef} className="keen-slider">
-            {billboards?.map((billboard : BillboardType, idx : number) => (
+            {mainbillboards?.map((billboard : BillboardType, idx : number) => (
               <div key={idx} className="keen-slider__slide">
                   <Billboard data={billboard} />
               </div>
@@ -117,7 +118,7 @@ const MainSlider: React.FC<MainSliderProps> = ({ billboards }) => {
             )}
           </div>
           {loaded && instanceRef.current && (
-            <div className="dots absolute inset-x-0 bottom-2 z-10">
+            <div className="dots absolute inset-x-0 bottom-0.5 z-10">
               {[
                 ...Array(instanceRef.current.track.details.slides.length).keys(),
               ].map((idx) => {
@@ -127,7 +128,7 @@ const MainSlider: React.FC<MainSliderProps> = ({ billboards }) => {
                     onClick={() => {
                       instanceRef.current?.moveToIdx(idx)
                     }}
-                    className={"dot border-gray-100" + (currentSlide === idx ? " active" : "")}
+                    className={"dot " + (currentSlide === idx ? " active" : "")}
                   ></button>
                 )
               })}
@@ -136,59 +137,7 @@ const MainSlider: React.FC<MainSliderProps> = ({ billboards }) => {
         </div>
       )
   
-//     const [currentSlide, setCurrentSlide] = useState(0)
-//     const [loaded, setLoaded] = useState(false)
-//   const [sliderRef, instanceRef] = useKeenSlider({
-//     initial: 0,
-//   })
-//   const [thumbnailRef] = useKeenSlider(
-//     {
-//       initial: 0,
-//       slides: {
-//         perView: 4,
-//         spacing: 10,
-//       },
-//       slideChanged(slider) {
-//         setCurrentSlide(slider.track.details.rel)
-//       },
-//       created() {
-//         setLoaded(true)
-//       },
-//     },
-    
-//   )
 
-//   return (
-//     <div className="flex flex-col">
-//       <div ref={sliderRef} className="keen-slider relative flex aspect-square cursor-pointer items-center rounded-md bg-white">
-//         {billboards?.map((billboard : BillboardType, idx : number) => (
-//         <div key={idx} className="keen-slider__slide absolute h-full w-full aspect-square inset-0 overflow-hidden rounded-md ">
-//          <Billboard data={billboard} />
-//         </div>))}
-      
-//         {loaded && instanceRef.current && (
-//           <>
-//             <Arrow
-//               left
-//               onClick={(e: any) =>
-//                 e.stopPropagation() || instanceRef.current?.prev()
-//               }
-//               disabled={currentSlide === 0}
-//             />
-
-//             <Arrow
-//               onClick={(e: any) =>
-//                 e.stopPropagation() || instanceRef.current?.next()
-//               }
-//               disabled={
-//                 currentSlide ===
-//                 instanceRef.current.track.details.slides.length - 1
-//               }
-//             />
-//           </>
-//         )}
-//      </div>
-//      </div>);
 };
 
 export default MainSlider;

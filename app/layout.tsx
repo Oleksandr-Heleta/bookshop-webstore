@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Urbanist } from "next/font/google";
+import { Urbanist, Montserrat } from "next/font/google";
 import "./globals.css";
 import 'keen-slider/keen-slider.min.css';
 
@@ -8,8 +8,9 @@ import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import ModalProvider from "@/providers/modal-provider";
 import ToastProvider from "@/providers/toast-provider";
+import {InfoProvider} from "@/providers/info-provider";
 
-const font = Urbanist({ subsets: ["latin"] });
+const font = Montserrat({ subsets: ['cyrillic'] });
 
 export const metadata: Metadata = {
   title: "Мишка",
@@ -51,7 +52,7 @@ export const metadata: Metadata = {
 };
  
 export const viewport : Viewport = {
-  themeColor: '#f7f7f7',
+  themeColor: '#fde68a',
 };
 
 export default function RootLayout({
@@ -81,14 +82,16 @@ export default function RootLayout({
           sizes="16x16"
           href="/favicon-16x16.png"
         />
-        <link rel="manifest" href="/site.webmanifest" />
+       
       </head>
       <body className={font.className}>
         <ModalProvider />
         <ToastProvider />
+        <InfoProvider>
         <Navbar />
         {children}
         <Footer />
+        </InfoProvider>
       </body>
     </html>
   );

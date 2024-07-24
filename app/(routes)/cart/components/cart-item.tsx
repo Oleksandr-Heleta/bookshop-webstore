@@ -37,13 +37,13 @@ const [quantity, setQuantity ] = useState(data.quantity);
     }
     // console.log(data);    
     return (
-        <li className='flex py-6 border-b'>
+        <li className='flex py-6 border-b border-amber-800 text-amber-950'>
             <div className='relative h-24 w-24 rounded-md overflow-hidden sm:h-48 sm:w-48'>
                 <Image
                     fill
                     src={product.images[0].url}
                     alt=''
-                    className='object-cover object-center'
+                    className='object-contain object-center'
                 />
             </div>
             <div className='relative ml-4 flex flex-1 flex-col justify-between sm:ml-6'>
@@ -52,12 +52,12 @@ const [quantity, setQuantity ] = useState(data.quantity);
                 </div>
                 <div className='relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 '>
                     <div className='flex justify-between'>
-                        <p className='text-lg font-semibold text-black'>
+                        <p className='text-lg font-semibold text-amber-950'>
                             {product.name}
                         </p>
                        
                     </div>
-                    <p className='justify-self-end'><ChechSale sail={product.isSale} percent={product.sale} price={product.price}/></p>
+                    <p className='justify-self-end'><ChechSale isSale={product.isSale} percent={product.sale} price={product.price}/></p>
                     {/* <div className='mt-1 flex text-sm'>
                         <p className='text-gray-500'>{data?.ageGroups?.map((age:ProdAgeGroup) => (<span className='p-2' key={age.ageGroupId}>{age.ageGroupName}</span>) )}</p>
                         <p className='text-gray-500 ml-4 border-l border-gray-200 pl-4'>{data.publishing.name}</p>
@@ -68,10 +68,10 @@ const [quantity, setQuantity ] = useState(data.quantity);
                 <div className='mt-6 flex items-center justify-between'>
                     <div className='flex items-center'>
                         <IconButton onClick={() => onChamgeQuantity(quantity - 1)} icon={<Minus size={15} />} />
-                        <p className='mx-2  text-lg font-semibold text-black'>{quantity}</p>
+                        <p className='mx-2  text-lg font-semibold text-amber-950'>{quantity}</p>
                         <IconButton onClick={() => onChamgeQuantity(quantity + 1)} icon={<Plus size={15} />} />
                     </div>
-                    <ChechSale sail={product.isSale} percent={product.sale} price={product.price*quantity}/>
+                    <ChechSale isSale={product.isSale} percent={product.sale} price={product.price*quantity}/>
                 </div>
             </div>
         </li>

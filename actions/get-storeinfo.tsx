@@ -10,9 +10,10 @@ const getStoreInfo = async (): Promise<Info> => {
         } else if (!res.headers.get("content-type")?.includes("application/json")) {
             throw new Error("Not a JSON response");
         }
-        const data: Info = await res.json();
+        const data = await res.json();
+        const info : Info = data.data;
         // Optionally, validate `data` further to match `Info` type
-        return data;
+        return info;
     } catch (error) {
         console.error(error);
         // Consider more nuanced error handling here
@@ -23,7 +24,7 @@ const getStoreInfo = async (): Promise<Info> => {
             mainbillboards: [{
                 id: "string",
                 label: "string",
-                imageUrl: '/logo.png'
+                imageUrl: '/logo.webp'
             }],
         };
     }

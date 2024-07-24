@@ -101,7 +101,7 @@ type SliderProps = {
             src={slide}
             alt="Image"
             fill
-            className="object-cover object-center"
+            className="object-contain object-center"
             priority={idx === 0}
             onLoad={() => instanceRef.current?.update()}
           />
@@ -137,7 +137,7 @@ type SliderProps = {
                 src={slide}
                 alt="Image"
                 fill
-                className="object-cover object-center"
+                className="object-contain object-center"
             />
             </div>))}
       </div>

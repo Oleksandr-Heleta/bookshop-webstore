@@ -5,6 +5,13 @@ const bearer_Uuid = '8f0ceccf-1680-36c6-b077-f083711da047'; // replace with your
 const app_name = 'address-classifier-ws'; // replace with your app name
 const proxy_url = 'https://www.ukrposhta.ua';
 
+type queryDataType = {
+  area?: string;
+  city?: string;
+  FindByString?: string;
+};
+
+
 const performRequest = async (request: string) => {
   try {
     const response = await axios({
@@ -21,9 +28,9 @@ const performRequest = async (request: string) => {
   }
 }
 
-export const getCity = async (city: any) => {
+export const getCity = async (query: any) => {
     const request = `get_city_by_name?city_name=
-    ${city}&lang=UA&fuzzy=1`;
+    ${query}&lang=UA&fuzzy=1`;
     const response = await performRequest(request);
     console.log(response);
   return [{
@@ -32,7 +39,7 @@ export const getCity = async (city: any) => {
   }];
 };
 
-export const getPosts = async (city: any) => {
-    const request = `get_city_by_region_id_and_district_id_and_city_ua?city_ua=${city}`;
+export const getPosts = async (queryData: queryDataType) => {
+    const request = `get_city_by_region_id_and_district_id_and_city_ua?city_ua=${queryData.city}`;
   return await performRequest(request);
 };

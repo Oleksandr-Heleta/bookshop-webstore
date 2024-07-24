@@ -11,7 +11,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(`
         w-auto
         rounded-full
-        bg-black 
+        bg-amber-950 
         border-transparent 
         px-5 
         py-3

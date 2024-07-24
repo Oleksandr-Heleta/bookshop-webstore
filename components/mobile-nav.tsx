@@ -34,7 +34,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
     <>
       <Button
         onClick={onOpen}
-        className="flex items-center gap-x-2 bg-white  text-black lg:hidden"
+        className="flex items-center gap-x-2 bg-amber-950  text-white lg:hidden"
       >
         <Menu size={20} />
       </Button>
@@ -57,9 +57,9 @@ const MobileNav: React.FC<MobileNavProps> = ({
       >
         <div className="fixed inset-0 bg-black bg-opacity-25" />
         <div className="fixed inset-0 z-40 flex">
-          <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-auto bg-white py-4 pb-6 shadow-xl">
+          <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-auto bg-amber-200 py-4 pb-6 shadow-xl">
             <div className="flex items-center justify-end px-4">
-              <IconButton icon={<X size={15} />} onClick={onClose} />
+              <IconButton icon={<X size={15} />} onClick={onClose} className="bg-amber-950 text-white border-amber-950 font-bold"/>
             </div>
 
             <nav className="p-4 flex flex-col">
@@ -87,7 +87,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
                   {route.label} 
                    </Link>
               ))} */}
-              <hr className="my-1" />
+              <hr className="my-1 border-amber-800" />
               <MobileItem
                 links={ageGroups.map((route) => ({
                   href: `/age-groups/${route.id}`,
@@ -97,7 +97,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
                 name="Вік"
                 action={onClose}
               />
-              <hr className="my-1" />
+              <hr className="my-1 border-amber-800" />
               <MobileItem
                 links={publishings.map((route) => ({
                   href: `/publishings/${route.id}`,
@@ -107,13 +107,13 @@ const MobileNav: React.FC<MobileNavProps> = ({
                 name="Видавництва"
                 action={onClose}
               />
-              <hr className="my-1" />
+              <hr className="my-1 border-amber-800" />
               <Link
                 href="/delivery"
                 onClick={onClose}
                 className={cn(
-                  "font-semibold text-lg transition-colors pl-4 pt-4 hover:text-black",
-                  pathname === "/delivery" ? "text-black" : "text-neutral-500"
+                  "font-semibold text-lg transition-colors pl-4 pt-4 hover:text-amber-800",
+                  pathname === "/delivery" ? "text-amber-800" : "text-amber-950"
                 )}
               >
                 Доставка і оплата

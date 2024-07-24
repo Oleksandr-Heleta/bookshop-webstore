@@ -12,7 +12,7 @@ interface RadioInputProps extends ComponentPropsWithoutRef<"input"> {
 }
 
 const RadioInput = forwardRef<HTMLInputElement, RadioInputProps>(
-  function RadioInput({ className, errorMessage, label, imageSrc, handleInputChange, value, isChecked, ...rest }, ref) {
+  function RadioInput({ className, errorMessage, label, imageSrc, handleInputChange, value, isChecked, disabled, ...rest }, ref) {
     const id = useId();
  
 
@@ -20,9 +20,9 @@ const RadioInput = forwardRef<HTMLInputElement, RadioInputProps>(
 
     return (
       <div className="flex gap-3">
-       <input {...rest} ref={ref} className="opacity-0" id={id} type="radio" value={value} onChange={handleInputChange} />
+       <input disabled={disabled} {...rest} ref={ref} className="opacity-0" id={id} type="radio" value={value} onChange={handleInputChange} />
         {!!label && (
-          <label htmlFor={id} className={cn(`text-center bg-white  rounded-md mb-2 border shadow-md p-2 hover:scale-110   hover:opacity-75 transition`,  { 'border-black border-2': isChecked })}>
+          <label htmlFor={id} className={cn(`text-center bg-white  rounded-md mb-2 border shadow-md p-2 hover:scale-110   hover:opacity-75 transition`,  { 'border-amber-800 border-2': isChecked }, {'opacity-50 text-gray-500': disabled})}>
             {imageSrc && < Image src={imageSrc} alt={label}  width={100} height={100} />}
             <span className={className}>{label}</span>
           </label>

@@ -6,6 +6,12 @@ import { courier, novaposhta } from '@/app/(routes)/cart/components/summary';
 import Input from './input';
 
 
+type queryDataType = {
+  area?: string;
+  city?: string;
+  FindByString?: string;
+};
+
 interface Item {
     id: string;
     name: string;
@@ -19,7 +25,9 @@ interface Item {
 
 const Address: React.FC<AddressProps> = ({ postType, delivery, onComplete }) => {
 
-  let getPosts, getCity;
+  let getPosts: (queryData: queryDataType) => Promise<any[]>;
+  let getCity: (query: string) => Promise<any[]>;
+
 if (postType === novaposhta) {
    getPosts = getNewPost;
    getCity = getNewCity;
@@ -47,10 +55,18 @@ if (postType === novaposhta) {
   };
 
   useEffect(() => {
+    const handleComplete = () => {
+      if (delivery === courier) {
+        onComplete({ city, post: null, address });
+      } else {
+        onComplete({ city, post });
+      }
+    };
+  
     if ((delivery !== courier && post) || (delivery === courier && address)) {
       handleComplete();
     }
-  }, [post, address, delivery]);
+  }, [city, post, address, delivery, onComplete]);
 
   const handleCity = (item: Item| null) => {
     setCity(item);
@@ -63,8 +79,8 @@ if (postType === novaposhta) {
 
   
   return (
-    <div className='flex flex-col gap-3'>
-       <div className="text-base font-medium text-gray-900">Адреса доставки</div>
+    <div className='flex flex-col gap-2'>
+       <div className="text-base font-medium text-amber-950">Адреса доставки</div>
       <p>Місто</p>
       <Select getFn={getCity} onItemSelect={handleCity} key={postType}/>
       {(delivery !== courier) ? <>

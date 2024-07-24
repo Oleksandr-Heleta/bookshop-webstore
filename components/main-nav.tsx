@@ -62,8 +62,8 @@ const MainNav: React.FC<MainNavProps> = ({
       <Link
         href="/delivery"
         className={cn(
-          " font-medium transition-colors  hover:text-black",
-          pathname === "/delivery" ? "text-black" : "text-neutral-500"
+          " font-medium transition-colors  hover:text-amber-800",
+          pathname === "/delivery" ? "text-amber-800" : "text-amber-950"
         )}
       >
         Доставка і оплата

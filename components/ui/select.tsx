@@ -53,10 +53,10 @@ const Select: React.FC<SelectProps> = ({ getFn, onItemSelect }) => {
         }} 
         // disabled={cities.length === 0}
       >
-        <div className="relative mt-1">
-        <div className="relative w-full cursor-default overflow-hidden  py-1.5  text-gray-900 text-left  focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+        <div className="relative mb-1">
+        <div className="relative w-full cursor-default overflow-hidden  py-1.5  text-gray-900 text-left  focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-amber-800 sm:text-sm">
             <Combobox.Input
-                className="w-full border-1  bg-white  rounded-full py-2 pl-3 pr-10 text-sm leading-5 shadow-md text-gray-900 focus:ring-0"
+                className="w-full border-1  bg-white  rounded-full py-2 pl-3 pr-10 text-sm leading-5 shadow-md text-amber-950 focus:ring-0"
                 displayValue={(item: Item) => item ? item.name : ''}
                 
                 onInput={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,7 +92,7 @@ const Select: React.FC<SelectProps> = ({ getFn, onItemSelect }) => {
                     key={item.id}
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                        active ? 'bg-gray-400 text-white' : 'text-gray-900'
+                        active ? 'bg-yellow-200 text-amber-950' : 'text-amber-800'
                       }`
                     }
                     value={item}
@@ -109,7 +109,7 @@ const Select: React.FC<SelectProps> = ({ getFn, onItemSelect }) => {
                         {selected ? (
                           <span
                             className={`absolute inset-y-0 left-0 flex items-center pl-3 ${
-                              active ? 'text-white' : 'text-teal-600'
+                              active ? 'text-amber-950' : 'text-yellow-200'
                             }`}
                           >
                             <CheckIcon className="h-5 w-5" aria-hidden="true" />

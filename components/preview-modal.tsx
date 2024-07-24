@@ -25,7 +25,7 @@ const PreviewModal = () => {
             </div>
           )}
           {product.isSale && (
-            <div className=" bg-orange-500 text-white rounded-lg p-1 text-sm font-semibold">
+            <div className=" bg-orange-500 text-white text-center rounded-lg p-1 text-sm font-semibold">
               - {product.sale} %
             </div>
           )}

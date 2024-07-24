@@ -18,6 +18,7 @@ import RadioInput from "@/components/ui/radio-input";
 import Image from "next/image";
 
 import * as z from "zod";
+import { useInfo } from "@/providers/info-provider";
 
 import Address from "@/components/ui/address";
 import Checkbox from "@/components/ui/checkboks";
@@ -60,10 +61,11 @@ const Summary = () => {
   const searchParams = useSearchParams();
   const items = useCart((state) => state.items);
   const removeAll = useCart((state) => state.removeAll);
+  const {sale} = useInfo() || {sale: 0}
 
   const [postType, setPostType] = useState(novaposhta);
   const [delivType, setDelivType] = useState(post);
-  const [paymentType, setPaymentType] = useState("online");
+  const [paymentType, setPaymentType] = useState("byIBAN");
   const [call, setCall] = useState(false);
   const [agree, setAgree] = useState(true);
   const [sending, setSending] = useState(false);
@@ -98,9 +100,12 @@ const Summary = () => {
     }
   }, [searchParams, removeAll]);
 
-  const totalPrice = items.reduce((total, item) => {
-    const price = item.product.isSale
-      ? item.product.price - (item.product.price * item.product.sale) / 100
+  
+
+  const totalPrice = items.reduce((total: number, item) => {
+    const salePercent = (sale > item.product.sale) ? sale : item.product.sale;
+    const price = (item.product.isSale || sale)
+      ? item.product.price - (item.product.price * salePercent) / 100
       : item.product.price;
     return total + price * item.quantity;
   }, 0);
@@ -118,6 +123,8 @@ const Summary = () => {
           orderItems: items,
           totalPrice,
           isPaid: false,
+          call,
+          agree,
         }
       );
   
@@ -149,6 +156,12 @@ return data;
   const handlePostChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPostType(event.target.value);
     setValue("post", event.target.value);
+    if (event.target.value === ukrposhta) {  
+      setValue("delivery", post);
+      setDelivType(post);
+      setValue("payment", "byIBAN");
+      setPaymentType("byIBAN");
+  }
   };
 
   const handleDelChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -166,28 +179,30 @@ return data;
   }
 
   return (
-    <div className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
-      <h2 className="text-lg font-medium text-gray-900">Замовлення</h2>
+    <div className="mt-16 rounded-lg bg-amber-200 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
+      <h2 className="text-lg font-semibold text-amber-950">Замовлення</h2>
       <div className="mt-6 space-y-4">
-        <div className="flex items-center justify-between border-t border-gray-200 pt-4">
-          <div className="text-base font-medium text-gray-900">Загалом</div>
+        <div className="flex items-center justify-between border-t border-amber-800 pt-4">
+          <div className="text-base font-medium text-amber-950">До сплати</div>
           <Currency value={totalPrice} />
         </div>
-        <form onSubmit={handleSubmit(onCheckout)} className="mt-6">
-          <div>
+        <form onSubmit={handleSubmit(onCheckout)} className="mt-6 text-amber-950">
+          <div className="mb-4">
             <Input
               {...register("name", { required: "Поле є обов'язковим" })}
               className=""
-              label="П.І.Б."
+              label="Прізвище та ім'я"
               errorMessage={errors.name?.message}
             />
+            </div>
+            <div className="mb-4">
             <Input
               {...register("phone", { required: "Поле є обов'язковим" })}
               className=""
               label="Телефон"
               type="tel"
               // value={"+380"}
-              errorMessage={errors.name?.message}
+              errorMessage={errors.phone?.message}
             />
           </div>
           <div className="flex flex-col sm:flex-row lg:flex-col">
@@ -223,6 +238,7 @@ return data;
             <RadioInput
               className=""
               label="За адресою"
+              disabled={postType === ukrposhta}
               name="delivery"
               value={courier}
               handleInputChange={handleDelChange}
@@ -233,12 +249,13 @@ return data;
           <div className="w-full">
             <Address postType={postType} delivery={delivType} onComplete={handleAddress} />
           </div>
-          <h3 className="my-3">Метод оплати</h3>
+          <h3 className="my-3 text-amber-950">Метод оплати</h3>
           <div className="flex  gap-1">
             <RadioInput
               className=""
               label="У відділенні"
               name="payment"
+              disabled={postType === ukrposhta}
               value="afterrecive"
               handleInputChange={handlePayChange}
               isChecked={paymentType === "afterrecive"}

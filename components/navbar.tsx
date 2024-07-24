@@ -18,14 +18,14 @@ const Navbar = async () => {
     const ageGroups = await getAgeGroups();
     const publishings = await getPublishings();
   return (
-    <div className="border-b">
+    <div className="border-b bg-amber-200">
       <Container>
-        <div className="relative px-4 sm:px-6 lg:px-8 flex h-16 items-center">
+        <div className="relative  px-4 sm:px-6 lg:px-8 flex h-20 items-center">
           <MobileNav categories={categories}  ageGroups={ageGroups} publishings={publishings} />
           <Link href="/" className="ml-4 flex lg:ml-0 gap-x-2">
             <Image src="/logo.webp" alt="logo" width={50} height={50} />
             {/* <div className="w-[50px]"> */}
-            <p className="font-bold text-xl">Мишка</p>
+            <p className="align-middle text-amber-950 text-xl font-semibold uppercase">Мишка</p>
             {/* <p className="text-xs text-neutral-500 text-justify">магазин</p>
             <p className="text-xs text-neutral-500 text-justify">дитячих</p>
             <p className="text-xs text-neutral-500 text-justify">книг</p> */}

@@ -6,8 +6,8 @@ export default function manifest(): MetadataRoute.Manifest {
         short_name: "Мишка",
         start_url: "/",
         description: "Магазин дитячої книги Мишка",
-        background_color: "#f7f7f7",
-        theme_color: "#f7f7f7",
+        background_color: "#fde68a",
+        theme_color: "#fde68a",
         display: "standalone",
         icons: [
             {
