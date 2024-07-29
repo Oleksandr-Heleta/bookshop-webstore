@@ -7,7 +7,10 @@ import { Category, AgeGroup, Publishing } from "@/type";
 import Contacts from "./ui/contacts";
 import MenuItem from "./nav-item";
 import Search from "./ui/search";
-
+import Button from "./ui/button";
+import { SearchIcon } from "lucide-react";
+import { MouseEventHandler } from "react"; 
+import useSearchModal from "@/hooks/use-search-modal";
 
 interface MainNavProps {
   categories: Category[];
@@ -21,20 +24,17 @@ const MainNav: React.FC<MainNavProps> = ({
   publishings,
 }) => {
   const pathname = usePathname();
+  const searchModal = useSearchModal();
+
+   
+  const handleOpenSearch: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.stopPropagation();
+    searchModal.onOpen();
+  };
 
   return (
-    <nav className="hidden  mx-6  lg:flex items-center space-x-4 lg:space-x-6">
-      {/* {routes.map((route) => (
-        <Link
-         key={route.href}
-         href={route.href}
-         className={cn(
-            'text-sm font-medium transition-colors  hover:text-black',
-            route.active ? 'text-black' : 'text-neutral-500'
-         )}>
-          {route.label}
-        </Link>
-      ))} */}
+    <nav className="hidden  mx-4 xl:mx-6 lg:flex items-center space-x-4 xl:space-x-6">
+     
       <MenuItem
         links={categories.map((route) => ({
           href: `/category/${route.id}`,
@@ -68,7 +68,13 @@ const MainNav: React.FC<MainNavProps> = ({
       >
         Доставка і оплата
       </Link>
-      <Search className="" />
+      {/* <Search className="" /> */}
+      <Button
+        onClick={handleOpenSearch}
+        className="flex items-center rounded-full bg-amber-950 px-4 py-2"
+      >
+        <SearchIcon size={20} color="white" />
+      </Button>
       <Contacts />
     </nav>
   );

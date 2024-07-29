@@ -11,72 +11,7 @@ type queryDataType = {
   FindByString?: string;
 };
 
-export const getArea = async () => {
-  try {
-    const body: {
-      apiKey: string;
-      modelName: string;
-      calledMethod: string;
-      methodProperties: {};
-    } = {
-      apiKey: apiKeyNP,
-      modelName: "AddressGeneral",
-      calledMethod: "getAreas",
-      methodProperties: {},
-    };
-    const { data, status } = await novaPoshtaApi.post(``, body);
-    if (status !== 200) {
-      throw new Error(`Failed to fetch data: ${status}`);
-    }
-    console.log(data.data);
-    return data.data.map((area: { Ref: string; Description: string }) => ({
-      value: area.Ref,
-      name: area.Description,
-    }));
-  } catch (error) {
-    console.error(error);
-    return error;
-  }
-};
 
-export const getCity = async (queryData: queryDataType) => {
-  try {
-    const body: {
-      apiKey: string;
-      modelName: string;
-      calledMethod: string;
-      methodProperties: {
-        Warehouse: string;
-        Area: string;
-        Limit: string;
-        Language: string;
-        FindByString: string;
-      };
-    } = {
-      apiKey: apiKeyNP,
-      modelName: "AddressGeneral",
-      calledMethod: "getSettlements",
-      methodProperties: {
-        Area: queryData.area || "",
-        Warehouse: "1",
-        Limit: "",
-        Language: "UA",
-        FindByString: queryData.city || "",
-      },
-    };
-    const { data, status } = await novaPoshtaApi.post(``, body);
-    if (status !== 200) {
-      throw new Error(`Failed to fetch data: ${status}`);
-    }
-    return data.data.map((city: { Ref: string; Description: string }) => ({
-      value: city.Ref,
-      name: city.Description,
-    }));
-  } catch (error) {
-    console.error(error);
-    return error;
-  }
-};
 
 export const getCityOn = async (query:string) => {
   try {
@@ -103,7 +38,7 @@ export const getCityOn = async (query:string) => {
     if (status !== 200) {
       throw new Error(`Failed to fetch data: ${status}`);
     }
-    console.log(data.data[0].Addresses);
+    // console.log(data.data[0].Addresses);
     return data.data[0].Addresses.map((city: { DeliveryCity : string; Present: string }) => ({
       id: city.DeliveryCity,
       name: city.Present,
@@ -134,7 +69,7 @@ export const getPosts = async (queryData: queryDataType) => {
       methodProperties: {
         CityRef: queryData.city || "Київ",
 
-        Limit: "",
+        Limit: "100",
         Language: "UA",
         FindByString: queryData.FindByString || "",
       },
@@ -144,7 +79,7 @@ export const getPosts = async (queryData: queryDataType) => {
       throw new Error(`Failed to fetch data: ${status}`);
     }
     return data.data.map((post: { Ref: string; Description: string }) => ({
-      value: post.Ref,
+      id: post.Ref,
       name: post.Description,
     }));
   } catch (error) {

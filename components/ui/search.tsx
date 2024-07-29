@@ -13,9 +13,14 @@ interface Item {
     name: string;
   }
 
+  interface SearchProps {
+    autoFocus?: boolean;
+    className?: string;
+  }
 
 
-const Search = ({className}: { className: string }) => {
+
+const Search : React.FC<SearchProps> = ({ autoFocus, className }) => {
     const router = useRouter();
     const [query, setQuery] = useState('');
 
@@ -34,7 +39,7 @@ const Search = ({className}: { className: string }) => {
 
     return (
         <div className={cn(`relative`, className)}>
-            <Select getFn={getProduct} onItemSelect={handleProduct}/>
+            <Select getFn={getProduct} onItemSelect={handleProduct} autoFocus/>
             <SearchIcon size={20} className="absolute top-1/2 right-2 transform -translate-y-1/2 text-gray-500 bg-white"/>
         </div>
     );

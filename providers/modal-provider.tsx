@@ -2,6 +2,7 @@
 
 import {useState, useEffect} from 'react';
 import PreviewModal from "@/components/preview-modal";
+import SearchModal from "@/components/search-modal"; 
 
 
 
@@ -20,6 +21,7 @@ const ModalProvider = ()=> {
     return (
         <>
             <PreviewModal/>
+            <SearchModal />
         </>
     );
 };
