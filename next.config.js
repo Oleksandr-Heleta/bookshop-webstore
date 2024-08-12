@@ -7,6 +7,8 @@ const withPWA = require('next-pwa')
 });
 
 const nextConfig = {
+    basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
+    output: 'standalone',
     images: {
         domains: [
             'res.cloudinary.com',

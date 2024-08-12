@@ -265,7 +265,7 @@ console.log(getValues());
           <div className="flex flex-col sm:flex-row lg:flex-col gap-2">
             <div className="flex gap-2">
               <RadioInput
-                imageSrc="/novap.jpg"
+                imageSrc={(process.env.NEXT_PUBLIC_BASE_PATH || '') + '/novap.jpg'}
                 className="opacity-0 w-0 h-0"
                 label="Нова пошта"
                 name="post"
@@ -274,7 +274,7 @@ console.log(getValues());
                 isChecked={postType === novaposhta}
               ></RadioInput>
               <RadioInput
-                imageSrc="/ukrposhta.png"
+                imageSrc={(process.env.NEXT_PUBLIC_BASE_PATH || '') + '/ukrposhta.png'}
                 className="opacity-0 w-0 h-0"
                 label="Укр пошта"
                 name="post"
