@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Fragment, useRef } from 'react';
+import { FieldErrors } from 'react-hook-form';
 import { Combobox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronsUpDown } from 'lucide-react';
 
@@ -11,9 +12,11 @@ interface SelectProps {
   getFn: (query: string) => Promise<Item[]>;
   onItemSelect: (item: Item | null) => void;
   autoFocus?: boolean;
+  errorId?: string;
+  errorName?: string;
 }
 
-const Select: React.FC<SelectProps> = ({ getFn, onItemSelect, autoFocus }) => {
+const Select: React.FC<SelectProps> = ({ getFn, onItemSelect, autoFocus, errorId, errorName }) => {
   const [items, setItems] = useState<Item[]>([]);
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [query, setQuery] = useState('');
@@ -84,11 +87,14 @@ const Select: React.FC<SelectProps> = ({ getFn, onItemSelect, autoFocus }) => {
               className="w-full border-1 bg-white rounded-full py-2 pl-3 pr-10 text-sm leading-5 shadow-md text-amber-950 focus:ring-0"
               displayValue={(item: Item) => (item ? item.name : query)}
               onInput={handleInputChange}
-            />
+              />
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
               <ChevronsUpDown className="h-5 w-5 text-gray-400" aria-hidden="true" />
             </Combobox.Button>
+           
           </div>
+          {!!errorName && <span className="text-red-500 text-sm">{errorName}</span>}
+          {!!errorId && <span className="text-red-500 text-sm">{errorId}</span>}
           <Transition
             as={Fragment}
             leave="transition ease-in duration-100"
@@ -97,7 +103,7 @@ const Select: React.FC<SelectProps> = ({ getFn, onItemSelect, autoFocus }) => {
             // afterLeave={() => setQuery('')}
           >
             <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-              {items.length === 0 && query.length !== 0 ? (
+              {items.length === 0  ? (
                 <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
                   Нічого не знайдено.
                 </div>

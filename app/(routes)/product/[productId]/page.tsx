@@ -48,7 +48,7 @@ export async function generateMetadata(
 const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
   const product = await getProduct(params.productId);
   const suggestedProducts = await getProducts({
-    categoryId: product?.categories?.[0].categoryId ?? null,
+    ageGroupId: product?.ageGroups?.[0].ageGroupId ?? null,
   });
   return (
     <div className="bg-white">
@@ -78,7 +78,7 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
             </div>
           </div>
           <hr className="my-10 " />
-          <ProductList title="Можливо зацікавить" items={suggestedProducts} />
+          <ProductList title="Можливо зацікавить" items={suggestedProducts.slice(0, 3)} />
         </div>
       </Container>
     </div>

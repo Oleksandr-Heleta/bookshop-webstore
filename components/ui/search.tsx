@@ -14,13 +14,14 @@ interface Item {
   }
 
   interface SearchProps {
+    onClose?: () => void;
     autoFocus?: boolean;
     className?: string;
   }
 
 
 
-const Search : React.FC<SearchProps> = ({ autoFocus, className }) => {
+const Search : React.FC<SearchProps> = ({ autoFocus, className, onClose }) => {
     const router = useRouter();
     const [query, setQuery] = useState('');
 
@@ -33,6 +34,7 @@ const Search : React.FC<SearchProps> = ({ autoFocus, className }) => {
         if (item) {
             router.push(`/product/${item.id}`);
         }
+        onClose && onClose();
     };
 
 

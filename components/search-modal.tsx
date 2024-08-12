@@ -9,7 +9,7 @@ const SearchModal = () => {
   return (
    
   <Modal open={isOpen} onClose={onClose}>
-<Search autoFocus className="w-full mt-4 h-auto" />
+<Search autoFocus className="w-full mt-4 h-auto" onClose={onClose} />
 </Modal> 
 
   );

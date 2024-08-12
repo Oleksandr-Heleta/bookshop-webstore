@@ -5,7 +5,7 @@ import { useEffect, useState, ChangeEvent } from "react";
 import { useSearchParams } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { set, useFieldArray, useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import Link from "next/link";
 import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronsUpDown } from "lucide-react";
@@ -31,6 +31,7 @@ export const courier = "courier";
 
 const phoneRegex = /^\+380\d{9}$/;
 const nameRegex = /^(?=.{2,})[A-Za-zА-Яа-яІіЇїЄєҐґ-]+$/;
+const addressRegex = /^(?=.*[a-zA-Zа-яА-Я])(?=.*[0-9]).+$/;
 
 interface Item {
   id: string;
@@ -49,10 +50,18 @@ export const formSchema = z.object({
   phone: z.string().refine((value) => phoneRegex.test(value), {
     message: "Телефон повинен бути у форматі +380000000000",
   }),
-  city: z.string().min(1),
-  cityId: z.string().min(1),
-  address: z.string().min(1),
-  addressId: z.string().min(1).optional(),
+  city: z.string().min(1,  {
+    message: "Введіть назву населеного пункту.",
+  }),
+  cityId: z.string().min(1,  {
+    message: " Виберіть населений пункт із списку.",
+  }),
+  address: z.string().refine((value) => addressRegex.test(value), {
+    message: "Введіть номер чи адресу.",
+  }),
+  addressId: z.string().min(1,  {
+    message: " Виберіть відділення із списку",
+  }).optional(),
   post: z.string().min(1),
   delivery: z.string().min(1),
   // orderItems: z.array(orderItemSchema),
@@ -76,7 +85,7 @@ const Summary = () => {
   const [agree, setAgree] = useState(true);
   const [sending, setSending] = useState(false);
 
-  const { register, handleSubmit, formState, control, setValue, getValues } =
+  const { register, handleSubmit, formState: { errors }, control, setValue, getValues } =
     useForm<FormValues>({
       defaultValues: {
         name: "",
@@ -97,7 +106,13 @@ const Summary = () => {
       resolver: zodResolver(formSchema),
     });
 
-  const { errors } = formState;
+    const methods = useForm({
+      resolver: zodResolver(formSchema),
+    });
+
+    // useEffect(() => {
+    //   console.log(errors);
+    // }, [errors]);
 
   useEffect(() => {
     if (searchParams.get("success")) {
@@ -120,7 +135,7 @@ const Summary = () => {
   }, 0);
 
   const onCheckout = async () => {
-    console.log("click chechout");
+    // console.log("click chechout");
     setSending(true);
     try {
       const data = onSubmit(getValues());
@@ -154,8 +169,8 @@ const Summary = () => {
   };
 
   const onSubmit = (data: FormValues) => {
-    console.log('click');
-    console.log(data);
+    // console.log('click');
+    // console.log(data);
     return data;
   };
 
@@ -199,6 +214,10 @@ console.log(getValues());
 
   };
 
+  const handleTrim = (field: keyof FormValues) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(field, e.target.value.trim(), { shouldValidate: true });
+  };
+
   return (
     <div className="mt-16 rounded-lg bg-amber-200 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
       <h2 className="text-lg font-semibold text-amber-950">Замовлення</h2>
@@ -207,6 +226,7 @@ console.log(getValues());
           <div className="text-base font-medium text-amber-950">До сплати</div>
           <Currency value={totalPrice} />
         </div>
+    
         <form
           onSubmit={handleSubmit(onCheckout)}
           className="mt-6 text-amber-950"
@@ -217,7 +237,8 @@ console.log(getValues());
                 {...register("name", { required: "Поле є обов'язковим" })}
                 className=""
                 label="Ім'я"
-                errorMessage={errors.name?.message}
+                errorMessage={errors.name?.message as string | undefined}
+                onChange={handleTrim("name")}
               />
             </div>
             <div className="basis-1/2 mb-4">
@@ -225,7 +246,8 @@ console.log(getValues());
                 {...register("surname", { required: "Поле є обов'язковим" })}
                 className=""
                 label="Прізвище "
-                errorMessage={errors.surname?.message}
+                errorMessage={errors.surname?.message as string | undefined}
+                onChange={handleTrim("surname")}
               />
             </div>
           </div>
@@ -236,7 +258,8 @@ console.log(getValues());
               label="Телефон"
               type="tel"
               // value={"+380"}
-              errorMessage={errors.phone?.message}
+              errorMessage={errors.phone?.message as string | undefined}
+              onChange={handleTrim("phone")}
             />
           </div>
           <div className="flex flex-col sm:flex-row lg:flex-col gap-2">
@@ -285,6 +308,7 @@ console.log(getValues());
               postType={postType}
               delivery={delivType}
               onComplete={handleAddress}
+              errors={errors}
             />
           </div>
           <h3 className="my-3 text-amber-950">Метод оплати</h3>
@@ -333,6 +357,7 @@ console.log(getValues());
             Замовити
           </Button>
         </form>
+        
       </div>
     </div>
   );

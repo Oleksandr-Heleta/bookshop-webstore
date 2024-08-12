@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { FieldErrors } from 'react-hook-form';
 import Select from "@/components/ui/select";
 import {
   getPosts as getNewPost,
@@ -30,12 +31,14 @@ interface AddressProps {
     post: Item | null;
     address?: string;
   }) => void;
+  errors: FieldErrors;
 }
 
 const Address: React.FC<AddressProps> = ({
   postType,
   delivery,
   onComplete,
+  errors,
 }) => {
   let getPosts: (queryData: queryDataType) => Promise<any[]>;
   let getCity: (query: string) => Promise<any[]>;
@@ -56,7 +59,7 @@ const Address: React.FC<AddressProps> = ({
     if (!city) return [];
     const body = { city: city.id, FindByString };
     const newPosts = await getPosts(body);
-    console.log("newPosts", newPosts);
+    // console.log("newPosts", newPosts);
     return newPosts;
   };
   const handleComplete = () => {
@@ -98,7 +101,8 @@ const Address: React.FC<AddressProps> = ({
         Адреса доставки
       </div>
       <p>Населений пункт</p>
-      <Select getFn={getCity} onItemSelect={handleCity} key={postType} />
+      <Select getFn={getCity} onItemSelect={handleCity} key={postType}  errorName={errors.city?.message as string}
+            errorId={errors.cityId?.message as string} />
       {delivery !== courier ? (
         <>
           {postType === novaposhta ? (
@@ -110,6 +114,8 @@ const Address: React.FC<AddressProps> = ({
             getFn={fetchPost}
             onItemSelect={handlePost}
             key={city ? city.id : ""}
+            errorName={errors.address?.message as string}
+            errorId={errors.addressId?.message as string}
           />
         </>
       ) : (
@@ -118,6 +124,7 @@ const Address: React.FC<AddressProps> = ({
           placeholder="Вулиця, будинок, квартира"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
+          errorMessage={errors.address?.message ? "Введіть адресу" : ""}
         />
       )}
     </div>

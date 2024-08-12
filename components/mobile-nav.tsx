@@ -118,7 +118,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
               >
                 Доставка і оплата
               </Link>
-              <Search className="mt-4"/>
+              <Search className="mt-4" onClose={onClose}/>
             </nav>
             <div className="flex items-center justify-center mt-auto">
               <Contacts />
