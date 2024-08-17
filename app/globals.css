@@ -38,6 +38,11 @@ body,
   fill: rgb(254 249 195);
 }
 
+.active{
+  border: #fde68a 1px solid;
+  border-radius: 0.375rem;
+}
+
 .dots {
   display: flex;
   padding: 10px 0;
@@ -63,3 +68,8 @@ body,
   background-color: #92400e;
 }
 
+@media (max-width: 768px) {
+  .mobile-visible {
+    opacity: 1 !important;
+  }
+}

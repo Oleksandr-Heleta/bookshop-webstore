@@ -34,7 +34,7 @@ const Info: React.FC<InfoProps> = ({ data, children }) => {
         </Button>
       </div>
       <hr className="my-4" />
-      <div className="flex flex-col gap-y-6">
+      <div className="flex flex-col gap-y-2">
         <div className="flex items-center gap-x-4">
           <h3 className="font-semibold text-amber-950">Категорії:</h3>
           {data?.categories?.map((category: ProdCategory) => (
@@ -47,7 +47,7 @@ const Info: React.FC<InfoProps> = ({ data, children }) => {
             <div key={age.ageGroupId}>{age.ageGroupName}</div>
           ))}
         </div>
-        <div className="flex items-center gap-x-4">
+        {/* <div className="flex items-center gap-x-4">
           <h3 className="font-semibold text-amber-950">Видавництво:</h3>
           <div>{data?.publishing?.name}</div>
         </div>
@@ -62,6 +62,10 @@ const Info: React.FC<InfoProps> = ({ data, children }) => {
         <div className="flex items-center gap-x-4">
           <h3 className="font-semibold text-amber-950">Розмір:</h3>
           <div>{data?.size}</div>
+        </div> */}
+         <div className="flex flex-col  gap-x-4">
+          <h3 className="font-semibold text-amber-950">Опис:</h3>
+          <div>{data?.description}</div>
         </div>
         {/* <div className="mt-10 flex items-center gap-x-3">
             <Button onClick={addToCart} className="flex items-center gap-x-2">

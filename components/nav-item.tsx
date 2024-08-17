@@ -9,7 +9,7 @@ interface MenuItemProps {
 
 const MenuItem: React.FC<MenuItemProps> = ({links, name}) => {
   return (
-    <Menu as="div" className="relative z-50">
+    <Menu as="div" className="relative z-30">
       {({ open }) => (
         <>
   
@@ -33,7 +33,7 @@ const MenuItem: React.FC<MenuItemProps> = ({links, name}) => {
             leaveTo="transform scale-95 opacity-0"
           >
     
-      <Menu.Items className="absolute left-0 z-50 flex flex-col mt-2 w-56 origin-top-right divide-y divide-amber-950 rounded-md bg-white border-amber-950  shadow-lg ring-1 ring-black/5 focus:outline-none">
+      <Menu.Items className="absolute left-0 z-40 flex flex-col mt-2 w-56 origin-top-right divide-y divide-amber-950 rounded-md bg-white border-amber-950  shadow-lg ring-1 ring-black/5 focus:outline-none">
         {links.map((link) => (
           <Menu.Item
             as="a"

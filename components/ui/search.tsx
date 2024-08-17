@@ -33,8 +33,9 @@ const Search : React.FC<SearchProps> = ({ autoFocus, className, onClose }) => {
     const handleProduct = (item: Item | null) => {
         if (item) {
             router.push(`/product/${item.id}`);
+            onClose && onClose();
         }
-        onClose && onClose();
+        //
     };
 
 

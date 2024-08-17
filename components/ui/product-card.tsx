@@ -9,6 +9,7 @@ import { MouseEventHandler } from "react";
 import usePreviewModal from "@/hooks/use-preview-modal";
 import useCart from "@/hooks/use-cart";
 import CheckSale from "./check-sale";
+import React, { useEffect, useRef, useState } from 'react';
 
 interface ProductCardProps {
   data: Product;
@@ -32,8 +33,35 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
     cart.addItem(data);
   };
 
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting && entry.intersectionRatio === 1);
+      },
+      {
+        root: null,
+        threshold: 1, // 50% of the element should be visible
+      }
+    );
+  
+    const currentCardRef = cardRef.current; 
+  
+    if (currentCardRef) {
+      observer.observe(currentCardRef);
+    }
+  
+    return () => {
+      if (currentCardRef) {
+        observer.unobserve(currentCardRef);
+      }
+    };
+  }, []);
+
   return (
-    <div  className="bg-white group  rounded-xl border border-amber-800 p-3 space-y-4" >
+    <div ref={cardRef} className="bg-white group  rounded-xl border border-amber-800 p-3 space-y-4" >
       <div onClick={handleClick} className="cursor-pointer aspect-square rounded-xl  relative">
       <div className="absolute top-10 left-0 z-10 flex flex-col gap-2">
       {data.isNew && <div className=" bg-red-600 text-white rounded-lg p-1 tracking-wider text-xs font-semibold">
@@ -49,7 +77,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
           alt="Image"
           className="aspect-square object-contain rounded-md"
         />
-        <div className="opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition absolute w-full px-6 bottom-5">
+        <div  className={`opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition absolute w-full px-6 bottom-5 ${isVisible ? 'mobile-visible' : ''}`}>
           <div className="flex gap-x-6 justify-center">
             <IconButton
               onClick={onPreview}

@@ -28,26 +28,23 @@ const MobileNav: React.FC<MobileNavProps> = ({
 
   const pathname = usePathname();
 
-  const onOpen = () => setOpen(true);
-  const onClose = () => setOpen(false);
+  const onOpen = () => {
+   
+    setOpen(true);
+  };
+  const onClose = () => {
+   
+    setOpen(false);
+  };
+
   return (
     <>
       <Button
         onClick={onOpen}
-        className="flex items-center gap-x-2 bg-amber-950  text-white lg:hidden"
+        className="flex items-center gap-x-2 bg-amber-950 text-white lg:hidden"
       >
         <Menu size={20} />
       </Button>
-      {/* <Transition
-      show={open}
-      enter="transition duration-100 ease-out"
-      enterFrom="transform scale-95 opacity-0"
-      enterTo="transform scale-100 opacity-100"
-      leave="transition duration-75 ease-out"
-      leaveFrom="transform scale-100 opacity-100"
-      leaveTo="transform scale-95 opacity-0"
-      as={Fragment}
-    > */}
 
       <Dialog
         open={open}
@@ -59,7 +56,12 @@ const MobileNav: React.FC<MobileNavProps> = ({
         <div className="fixed inset-0 z-40 flex">
           <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-auto bg-amber-200 py-4 pb-6 shadow-xl">
             <div className="flex items-center justify-end px-4">
-              <IconButton icon={<X size={15} />} onClick={onClose} className="bg-amber-950 text-white border-amber-950 font-bold"/>
+              <IconButton
+                icon={<X size={15} />}
+                onClick={onClose}
+                className="bg-amber-950 text-white border-amber-950 font-bold"
+                
+              />
             </div>
 
             <nav className="p-4 flex flex-col">
@@ -72,21 +74,6 @@ const MobileNav: React.FC<MobileNavProps> = ({
                 name="Категорії"
                 action={onClose}
               />
-
-              {/* {routes.map((route) => (
-                <Link
-               
-                  key={route.href}
-                  href={route.href}
-                  onClick={onClose}
-                  className={cn(
-                    "font-semibold text-lg transition-colors  hover:text-black",
-                    route.active ? "text-black" : "text-neutral-500"
-                  )}
-                >
-                  {route.label} 
-                   </Link>
-              ))} */}
               <hr className="my-1 border-amber-800" />
               <MobileItem
                 links={ageGroups.map((route) => ({
@@ -118,7 +105,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
               >
                 Доставка і оплата
               </Link>
-              <Search className="mt-4" onClose={onClose}/>
+              <Search className="mt-4" onClose={onClose} />
             </nav>
             <div className="flex items-center justify-center mt-auto">
               <Contacts />
@@ -126,7 +113,6 @@ const MobileNav: React.FC<MobileNavProps> = ({
           </Dialog.Panel>
         </div>
       </Dialog>
-      {/* </Transition> */}
     </>
   );
 };

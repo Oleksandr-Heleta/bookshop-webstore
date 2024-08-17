@@ -25,7 +25,7 @@ const Modal: React.FC<ModalProps> = ({ open, onClose, children }) => {
     <Transition show={open} appear as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-10"
+        className="relative z-40"
         onClose={onClose}
         initialFocus={initialFocusRef}
       >
