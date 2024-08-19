@@ -7,6 +7,7 @@ import { Expand, ShoppingCart } from "lucide-react";
 import Currency from "@/components/ui/currency";
 import { MouseEventHandler } from "react";
 import usePreviewModal from "@/hooks/use-preview-modal";
+import useImageModal from "@/hooks/use-image-modal";
 import useCart from "@/hooks/use-cart";
 import CheckSale from "./check-sale";
 import React, { useEffect, useRef, useState } from 'react';
@@ -18,6 +19,7 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
   const cart = useCart();
   const previewModal = usePreviewModal();
+  const imageModal = useImageModal();
   const router = useRouter();
   const handleClick = () => {
     router.push(`/product/${data.id}`);
@@ -26,6 +28,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
   const onPreview: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.stopPropagation();
     previewModal.onOpen(data);
+  };
+
+  const onZoom: MouseEventHandler<HTMLButtonElement> = (event) => {
+    event.stopPropagation();
+    imageModal.onOpen(data.images); 
   };
 
   const onAddToCart: MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -81,7 +88,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
           <div className="flex gap-x-6 justify-center">
             <IconButton
               onClick={onPreview}
-              icon={<Expand size={20} className="text-white bg-inherit" />}
+              className="hidden lg:block"
+              icon={<Expand size={20} className="text-white bg-inherit hidden lg:block" />}
+            />
+             <IconButton
+              onClick={onZoom}
+              className="lg:hidden"
+              icon={<Expand size={20} className="text-white bg-inherit lg:hidden" />}
             />
             <IconButton
               onClick={onAddToCart}

@@ -4,6 +4,8 @@ import React from "react";
 import { useKeenSlider } from "keen-slider/react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import  useImageModal  from "@/hooks/use-image-modal";
+import { Image as ImageType } from "@/type";
 
 function ThumbnailPlugin(mainRef: any) {
   return (slider: any) => {
@@ -65,7 +67,7 @@ function Arrow(props: {
 }
 
 type SliderProps = {
-  slides: string[];
+  slides: ImageType[];
 };
 
 const Slider: React.FC<SliderProps> = ({ slides }) => {
@@ -96,6 +98,7 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
     },
     [ThumbnailPlugin(instanceRef)]
   );
+  const imageModal = useImageModal();
 
   
 
@@ -111,12 +114,13 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
             className="keen-slider__slide absolute h-full w-full aspect-square inset-0 overflow-hidden rounded-md "
           >
             <Image
-              src={slide}
+              src={slide.url}
               alt="Image"
               fill
-              className="object-contain object-center"
+              className="object-contain object-center cursor-zoom-in"
               priority={idx === 0}
               onLoad={() => instanceRef.current?.update()}
+              onClick={() => imageModal.onOpen( slides, idx)}
             />
           </div>
         ))}
@@ -154,7 +158,7 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
             className="keen-slider__slide cursor-pointer aspect-square "
           >
             <Image
-              src={slide}
+              src={slide.url}
               alt="Image"
               fill
               className="object-contain object-center"

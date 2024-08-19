@@ -3,6 +3,7 @@
 import {useState, useEffect} from 'react';
 import PreviewModal from "@/components/preview-modal";
 import SearchModal from "@/components/search-modal"; 
+import ImageModal from "@/components/image-modal";
 
 
 
@@ -22,6 +23,7 @@ const ModalProvider = ()=> {
         <>
             <PreviewModal/>
             <SearchModal />
+            <ImageModal />
         </>
     );
 };

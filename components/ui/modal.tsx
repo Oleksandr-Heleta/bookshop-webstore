@@ -43,7 +43,7 @@ const Modal: React.FC<ModalProps> = ({ open, onClose, children }) => {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className="w-full h-auto max-w-3xl  rounded-lg text-left align-middle relative flex  items-center  bg-white px-4 pb-8 pt-14 shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
-                <div className="absolute right-4 top-4">
+                <div className="absolute right-4 top-4 z-10">
                   <IconButton
                     onClick={(event) => {
                       event.stopPropagation();

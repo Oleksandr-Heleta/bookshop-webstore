@@ -50,6 +50,9 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
   const suggestedProducts = await getProducts({
     ageGroupId: product?.ageGroups?.[0].ageGroupId ?? null,
   });
+
+  const title = product.titleSheet == "Solid" ? "Тверда" : "М'яка";
+
   return (
     <div className="bg-white">
       <Container>
@@ -68,17 +71,35 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
               )}
             </div>
             {/* <Gallery images={product?.images} /> */}
-            <Slider slides={product?.images.map((image) => image.url)} />
+            <Slider slides={product?.images} />
             <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
-              <Info data={product} />
-              <div className="mt-10">
-                <h3 className="font-semibold text-black">Опис:</h3>
-                <p className="mt-4 text-gray-700">{product?.description}</p>
-              </div>
+              <Info data={product}>
+                <div className="flex items-center gap-x-4">
+                  <h3 className="font-semibold text-amber-950">Видавництво:</h3>
+                  <div>{product?.publishing?.name}</div>
+                </div>
+                <div className="flex items-center gap-x-4">
+                  <h3 className="font-semibold text-amber-950">Обкладинка:</h3>
+                  <div>{title}</div>
+                </div>
+                <div className="flex items-center gap-x-4">
+                  <h3 className="font-semibold text-amber-950">
+                    Кількість сторінок:
+                  </h3>
+                  <div>{product?.sheets}</div>
+                </div>
+                <div className="flex items-center gap-x-4">
+                  <h3 className="font-semibold text-amber-950">Розмір:</h3>
+                  <div>{product?.size}</div>
+                </div>
+              </Info>
             </div>
           </div>
           <hr className="my-10 " />
-          <ProductList title="Можливо зацікавить" items={suggestedProducts.slice(0, 3)} />
+          <ProductList
+            title="Можливо зацікавить"
+            items={suggestedProducts.slice(0, 3)}
+          />
         </div>
       </Container>
     </div>

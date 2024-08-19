@@ -30,7 +30,7 @@ const PreviewModal = () => {
             </div>
           )}
           </div>
-          <Slider slides={product?.images.map((image) => image.url)} />
+          <Slider slides={product?.images} />
         </div>
         <div className="sm:col-span-8 lg:col-span-7">
           <Info data={product} />

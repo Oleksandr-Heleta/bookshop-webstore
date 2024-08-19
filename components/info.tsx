@@ -63,6 +63,7 @@ const Info: React.FC<InfoProps> = ({ data, children }) => {
           <h3 className="font-semibold text-amber-950">Розмір:</h3>
           <div>{data?.size}</div>
         </div> */}
+         {children}
          <div className="flex flex-col  gap-x-4">
           <h3 className="font-semibold text-amber-950">Опис:</h3>
           <div>{data?.description}</div>
@@ -73,7 +74,7 @@ const Info: React.FC<InfoProps> = ({ data, children }) => {
                 <ShoppingCart size={20} className="ml-2"/>
             </Button>
         </div> */}
-        {children}
+       
       </div>
     </div>
   );
