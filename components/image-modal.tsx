@@ -1,7 +1,7 @@
 'use client';
 
 import Modal from '@/components/ui/modal';
-// import Gallery from "@/components/gallery";
+// import Gallery from '@/components/gallery';
 import ZoomImageSlider from '@/components/ui/zoom-image-slider';
 import useImageModal from '@/hooks/use-image-modal';
 

@@ -63,7 +63,7 @@ const ZoomImageSlider: React.FC<SliderProps> = ({ slides, startSlide }) => {
             key={idx}
             className={`keen-slider__slide relative h-full w-full aspect-square inset-0 overflow-hidden rounded-md }`}
           >
-            <TransformWrapper>
+            <TransformWrapper pinch={{ disabled: false }}>
               <TransformComponent>
                 <div className="relative w-full h-full cursor-zoom-in">
                   <Image

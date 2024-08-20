@@ -29,7 +29,7 @@ const Contacts = () => {
         <Instagram size={20} color="white" />
       </Link>
       <Link
-        href="https://t.me/@mouse_kidsbooks"
+        href="https://t.me/mouse_kidsbooks"
         target="_blank"
         className="flex items-center rounded-full bg-amber-950 px-4 py-2  hover:opacity-75 transition"
       >

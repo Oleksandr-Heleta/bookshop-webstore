@@ -50,20 +50,20 @@ const Info: React.FC<InfoProps> = ({ data, children }) => {
             <div key={age.ageGroupId}>{age.ageGroupName}</div>
           ))}
         </div>
-        {/* <div className="flex items-center gap-x-4">
-          <h3 className="font-semibold text-amber-950">Видавництво:</h3>
+        {/* <div className='flex items-center gap-x-4'>
+          <h3 className='font-semibold text-amber-950'>Видавництво:</h3>
           <div>{data?.publishing?.name}</div>
         </div>
-        <div className="flex items-center gap-x-4">
-          <h3 className="font-semibold text-amber-950">Обкладинка:</h3>
+        <div className='flex items-center gap-x-4'>
+          <h3 className='font-semibold text-amber-950'>Обкладинка:</h3>
           <div>{title}</div>
         </div>
-        <div className="flex items-center gap-x-4">
-          <h3 className="font-semibold text-amber-950">Кількість сторінок:</h3>
+        <div className='flex items-center gap-x-4'>
+          <h3 className='font-semibold text-amber-950'>Кількість сторінок:</h3>
           <div>{data?.sheets}</div>
         </div>
-        <div className="flex items-center gap-x-4">
-          <h3 className="font-semibold text-amber-950">Розмір:</h3>
+        <div className='flex items-center gap-x-4'>
+          <h3 className='font-semibold text-amber-950'>Розмір:</h3>
           <div>{data?.size}</div>
         </div> */}
         {children}
@@ -71,10 +71,10 @@ const Info: React.FC<InfoProps> = ({ data, children }) => {
           <h3 className="font-semibold text-amber-950">Опис:</h3>
           <div>{data?.description}</div>
         </div>
-        {/* <div className="mt-10 flex items-center gap-x-3">
-            <Button onClick={addToCart} className="flex items-center gap-x-2">
+        {/* <div className='mt-10 flex items-center gap-x-3'>
+            <Button onClick={addToCart} className='flex items-center gap-x-2'>
                 Купити
-                <ShoppingCart size={20} className="ml-2"/>
+                <ShoppingCart size={20} className='ml-2'/>
             </Button>
         </div> */}
       </div>

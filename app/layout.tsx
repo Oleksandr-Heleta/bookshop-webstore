@@ -21,7 +21,7 @@ export const metadata: Metadata = {
       ? new URL(`${process.env.DOMAIN}`)
       : new URL('http://localhost:3000'),
   referrer: 'origin-when-cross-origin',
-  // viewport: "width=device-width, initial-scale=1",
+  // viewport: 'width=device-width, initial-scale=1',
 
   robots: {
     index: true,
@@ -79,7 +79,7 @@ export default function RootLayout({
     <html lang="uk-UA">
       <head>
         {/* <base href={process.env.DOMAIN} /> */}
-        {/* <meta name="viewport" content="width=device-width, initial-scale=1" /> */}
+        {/* <meta name='viewport' content='width=device-width, initial-scale=1' /> */}
         <link
           rel="apple-touch-icon"
           sizes="180x180"

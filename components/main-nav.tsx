@@ -67,7 +67,7 @@ const MainNav: React.FC<MainNavProps> = ({
       >
         Доставка і оплата
       </Link>
-      {/* <Search className="" /> */}
+      {/* <Search className='' /> */}
       <Button
         onClick={handleOpenSearch}
         className="flex items-center rounded-full bg-amber-950 px-4 py-2"

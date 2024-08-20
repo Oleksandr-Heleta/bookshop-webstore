@@ -138,7 +138,7 @@ const Summary = () => {
   }, 0);
 
   const onCheckout = async () => {
-    // console.log("click chechout");
+    // console.log('click chechout');
     setSending(true);
     try {
       const data = onSubmit(getValues());
@@ -260,7 +260,7 @@ const Summary = () => {
               className=""
               label="Телефон"
               type="tel"
-              // value={"+380"}
+              // value={'+380'}
               errorMessage={errors.phone?.message as string | undefined}
               onChange={handleTrim('phone')}
             />

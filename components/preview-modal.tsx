@@ -2,7 +2,7 @@
 
 import Info from '@/components/info';
 import Modal from '@/components/ui/modal';
-// import Gallery from "@/components/gallery";
+// import Gallery from '@/components/gallery';
 import Slider from '@/components/ui/slider';
 import usePreviewModal from '@/hooks/use-preview-modal';
 

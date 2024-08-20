@@ -61,7 +61,7 @@ const Address: React.FC<AddressProps> = ({
     if (!city) return [];
     const body = { city: city.id, FindByString };
     const newPosts = await getPosts(body);
-    // console.log("newPosts", newPosts);
+    // console.log('newPosts', newPosts);
     return newPosts;
   };
   // const handleComplete = () => {
@@ -87,12 +87,12 @@ const Address: React.FC<AddressProps> = ({
   }, [city, post, address, delivery, onComplete]);
 
   const handleCity = (item: Item | null) => {
-    // console.log("city", item);
+    // console.log('city', item);
     setCity(item);
   };
 
   const handlePost = (item: Item | null) => {
-    // console.log("post", item);
+    // console.log('post', item);
     setPost(item);
   };
 
