@@ -7,6 +7,7 @@ import getPublishings from '@/actions/get-publishing';
 import Container from '@/components/ui/container';
 import NoResults from '@/components/ui/no-results';
 import ProductCard from '@/components/ui/product-card';
+
 import Filter from './components/filter';
 import MobileFilters from './components/mobile-filters';
 

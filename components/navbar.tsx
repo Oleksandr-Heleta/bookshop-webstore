@@ -26,12 +26,7 @@ const Navbar = async () => {
             publishings={publishings}
           />
           <Link href="/" className="ml-4 flex lg:ml-0 gap-x-2">
-            <Image
-              src={(process.env.NEXT_PUBLIC_BASE_PATH || '') + '/logo.webp'}
-              alt="logo"
-              width={50}
-              height={50}
-            />
+            <Image src="/logo.webp" alt="logo" width={50} height={50} />
             {/* <div className="w-[50px]"> */}
             <p className="align-middle text-amber-950 text-xl font-semibold uppercase">
               Мишка
