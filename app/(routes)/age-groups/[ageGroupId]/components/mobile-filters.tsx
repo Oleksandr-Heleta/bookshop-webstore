@@ -1,19 +1,24 @@
-"use client";
+'use client';
 
-import Button from "@/components/ui/button";
-import IconButton from "@/components/ui/icon-button";
-import {  Category, Publishing } from "@/type";
-import { Dialog } from "@headlessui/react";
-import { Plus, X } from "lucide-react";
-import { useState } from "react";
-import Filter from "./filter";
+import { Dialog } from '@headlessui/react';
+import { Plus, X } from 'lucide-react';
+import { useState } from 'react';
+
+import Button from '@/components/ui/button';
+import IconButton from '@/components/ui/icon-button';
+import { Category, Publishing } from '@/type';
+
+import Filter from './filter';
 
 interface MobileFiltersProps {
   categories: Category[];
   publishings: Publishing[];
 }
 
-const MobileFilters: React.FC<MobileFiltersProps> = ({ categories, publishings }) => {
+const MobileFilters: React.FC<MobileFiltersProps> = ({
+  categories,
+  publishings,
+}) => {
   const [open, setOpen] = useState(false);
 
   const onOpen = () => setOpen(true);
@@ -39,8 +44,16 @@ const MobileFilters: React.FC<MobileFiltersProps> = ({ categories, publishings }
             </div>
 
             <div className="p-4">
-              <Filter valueKey="categoryId" name="Категорії" data={categories} />
-              <Filter valueKey="publishingId" name="Видавництво" data={publishings} />
+              <Filter
+                valueKey="categoryId"
+                name="Категорії"
+                data={categories}
+              />
+              <Filter
+                valueKey="publishingId"
+                name="Видавництво"
+                data={publishings}
+              />
             </div>
           </Dialog.Panel>
         </div>

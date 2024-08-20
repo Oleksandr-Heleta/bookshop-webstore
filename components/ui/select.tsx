@@ -1,7 +1,12 @@
-import React, { useState, useEffect, Fragment, useRef, useCallback } from 'react';
-import { FieldErrors } from 'react-hook-form';
 import { Combobox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronsUpDown } from 'lucide-react';
+import React, {
+  Fragment,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 interface Item {
   id: string;
@@ -16,11 +21,17 @@ interface SelectProps {
   errorName?: string;
 }
 
-const Select: React.FC<SelectProps> = ({ getFn, onItemSelect, autoFocus, errorId, errorName }) => {
+const Select: React.FC<SelectProps> = ({
+  getFn,
+  onItemSelect,
+  autoFocus,
+  errorId,
+  errorName,
+}) => {
   const [items, setItems] = useState<Item[]>([]);
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [query, setQuery] = useState('');
-  const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  // const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -46,9 +57,12 @@ const Select: React.FC<SelectProps> = ({ getFn, onItemSelect, autoFocus, errorId
     }
   }, [query, getFn]);
 
-  const handleItemSelect = useCallback((item: Item | null) => {
-    onItemSelect(item);
-  }, [onItemSelect]);
+  const handleItemSelect = useCallback(
+    (item: Item | null) => {
+      onItemSelect(item);
+    },
+    [onItemSelect]
+  );
 
   useEffect(() => {
     handleItemSelect(selectedItem);
@@ -84,10 +98,15 @@ const Select: React.FC<SelectProps> = ({ getFn, onItemSelect, autoFocus, errorId
               onInput={handleInputChange}
             />
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-              <ChevronsUpDown className="h-5 w-5 text-gray-400" aria-hidden="true" />
+              <ChevronsUpDown
+                className="h-5 w-5 text-gray-400"
+                aria-hidden="true"
+              />
             </Combobox.Button>
           </div>
-          {!!errorName && <span className="text-red-500 text-sm">{errorName}</span>}
+          {!!errorName && (
+            <span className="text-red-500 text-sm">{errorName}</span>
+          )}
           {!!errorId && <span className="text-red-500 text-sm">{errorId}</span>}
           <Transition
             as={Fragment}
@@ -106,7 +125,9 @@ const Select: React.FC<SelectProps> = ({ getFn, onItemSelect, autoFocus, errorId
                     key={item.id}
                     className={({ active }) =>
                       `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                        active ? 'bg-yellow-200 text-amber-950' : 'text-amber-800'
+                        active
+                          ? 'bg-yellow-200 text-amber-950'
+                          : 'text-amber-800'
                       }`
                     }
                     value={item}

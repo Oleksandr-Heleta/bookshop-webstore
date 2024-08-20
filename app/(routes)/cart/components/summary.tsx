@@ -1,33 +1,27 @@
-"use client";
+'use client';
 
-import axios from "axios";
-import { useEffect, useState, ChangeEvent } from "react";
-import { useSearchParams } from "next/navigation";
-import { toast } from "react-hot-toast";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, FormProvider } from "react-hook-form";
-import Link from "next/link";
-import { Combobox, Transition } from "@headlessui/react";
-import { CheckIcon, ChevronsUpDown } from "lucide-react";
+import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'react-hot-toast';
+import * as z from 'zod';
 
-import Button from "@/components/ui/button";
-import Currency from "@/components/ui/currency";
-import useCart from "@/hooks/use-cart";
-import Input from "@/components/ui/input";
-import RadioInput from "@/components/ui/radio-input";
-import Image from "next/image";
+import Address from '@/components/ui/address';
+import Button from '@/components/ui/button';
+import Checkbox from '@/components/ui/checkboks';
+import Currency from '@/components/ui/currency';
+import Input from '@/components/ui/input';
+import RadioInput from '@/components/ui/radio-input';
+import useCart from '@/hooks/use-cart';
+import { useInfo } from '@/providers/info-provider';
 
-import * as z from "zod";
-import { useInfo } from "@/providers/info-provider";
-
-import Address from "@/components/ui/address";
-import Checkbox from "@/components/ui/checkboks";
-import { on } from "events";
-
-export const ukrposhta = "ukr-post";
-export const novaposhta = "new-post";
-export const post = "post";
-export const courier = "courier";
+export const ukrposhta = 'ukr-post';
+export const novaposhta = 'new-post';
+export const post = 'post';
+export const courier = 'courier';
 
 const phoneRegex = /^\+380\d{9}$/;
 const nameRegex = /^(?=.{2,})[A-Za-zА-Яа-яІіЇїЄєҐґ-]+$/;
@@ -43,25 +37,28 @@ export const formSchema = z.object({
     message: "Напишіть своє ім'я",
   }),
   surname: z.string().refine((value) => nameRegex.test(value), {
-    message: "Напишіть своє  прізвище",
+    message: 'Напишіть своє  прізвище',
   }),
   orderStatus: z.string().min(1),
   payment: z.string().min(1),
   phone: z.string().refine((value) => phoneRegex.test(value), {
-    message: "Телефон повинен бути у форматі +380000000000",
+    message: 'Телефон повинен бути у форматі +380000000000',
   }),
-  city: z.string().min(1,  {
-    message: "Введіть назву населеного пункту.",
+  city: z.string().min(1, {
+    message: 'Введіть назву населеного пункту.',
   }),
-  cityId: z.string().min(1,  {
-    message: " Виберіть населений пункт із списку.",
+  cityId: z.string().min(1, {
+    message: ' Виберіть населений пункт із списку.',
   }),
   address: z.string().refine((value) => addressRegex.test(value), {
-    message: "Введіть номер чи адресу.",
+    message: 'Введіть номер чи адресу.',
   }),
-  addressId: z.string().min(1,  {
-    message: " Виберіть відділення із списку",
-  }).optional(),
+  addressId: z
+    .string()
+    .min(1, {
+      message: ' Виберіть відділення із списку',
+    })
+    .optional(),
   post: z.string().min(1),
   delivery: z.string().min(1),
   // orderItems: z.array(orderItemSchema),
@@ -80,48 +77,54 @@ const Summary = () => {
 
   const [postType, setPostType] = useState(novaposhta);
   const [delivType, setDelivType] = useState(post);
-  const [paymentType, setPaymentType] = useState("byIBAN");
+  const [paymentType, setPaymentType] = useState('byIBAN');
   const [call, setCall] = useState(false);
   const [agree, setAgree] = useState(true);
   const [sending, setSending] = useState(false);
 
-  const { register, handleSubmit, formState: { errors }, control, setValue, getValues } =
-    useForm<FormValues>({
-      defaultValues: {
-        name: "",
-        surname: "",
-        orderStatus: "new",
-        payment: "byIBAN",
-        isPaid: false,
-        call: false,
-        agree: true,
-        phone: "+380",
-        city: "",
-        cityId: "",
-        address: "",
-        addressId: "",
-        post: novaposhta,
-        delivery: post,
-      },
-      resolver: zodResolver(formSchema),
-    });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    // control,
+    setValue,
+    getValues,
+  } = useForm<FormValues>({
+    defaultValues: {
+      name: '',
+      surname: '',
+      orderStatus: 'new',
+      payment: 'byIBAN',
+      isPaid: false,
+      call: false,
+      agree: true,
+      phone: '+380',
+      city: '',
+      cityId: '',
+      address: '',
+      addressId: '',
+      post: novaposhta,
+      delivery: post,
+    },
+    resolver: zodResolver(formSchema),
+  });
 
-    const methods = useForm({
-      resolver: zodResolver(formSchema),
-    });
+  // const methods = useForm({
+  //   resolver: zodResolver(formSchema),
+  // });
 
-    // useEffect(() => {
-    //   console.log(errors);
-    // }, [errors]);
+  // useEffect(() => {
+  //   console.log(errors);
+  // }, [errors]);
 
   useEffect(() => {
-    if (searchParams.get("success")) {
-      toast.success("Замовлення успішне");
+    if (searchParams.get('success')) {
+      toast.success('Замовлення успішне');
       removeAll();
     }
 
-    if (searchParams.get("canceled")) {
-      toast.error("Щось пішло не за планом");
+    if (searchParams.get('canceled')) {
+      toast.error('Щось пішло не за планом');
     }
   }, [searchParams, removeAll]);
 
@@ -157,11 +160,11 @@ const Summary = () => {
         window.location = response.data.url;
       } else {
         // Обробка відповіді з помилкою
-        console.error("Error during checkout:", response.statusText);
+        console.error('Error during checkout:', response.statusText);
         // Тут можна додати відображення повідомлення користувачу
       }
     } catch (error) {
-      console.error("Checkout failed:", error);
+      console.error('Checkout failed:', error);
       // Тут можна додати відображення повідомлення користувачу
     } finally {
       setSending(false);
@@ -176,23 +179,23 @@ const Summary = () => {
 
   const handlePostChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPostType(event.target.value);
-    setValue("post", event.target.value);
+    setValue('post', event.target.value);
     if (event.target.value === ukrposhta) {
-      setValue("delivery", post);
+      setValue('delivery', post);
       setDelivType(post);
-      setValue("payment", "byIBAN");
-      setPaymentType("byIBAN");
+      setValue('payment', 'byIBAN');
+      setPaymentType('byIBAN');
     }
   };
 
   const handleDelChange = (event: ChangeEvent<HTMLInputElement>) => {
     setDelivType(event.target.value);
-    setValue("delivery", event.target.value);
+    setValue('delivery', event.target.value);
   };
 
   const handlePayChange = (event: ChangeEvent<HTMLInputElement>) => {
     setPaymentType(event.target.value);
-    setValue("payment", event.target.value);
+    setValue('payment', event.target.value);
   };
 
   const handleAddress = (data: {
@@ -201,22 +204,22 @@ const Summary = () => {
     address?: string;
   }) => {
     console.log(data);
-    setValue("city", data.city?.name || "");
-    setValue("cityId", data.city?.id || "");
+    setValue('city', data.city?.name || '');
+    setValue('cityId', data.city?.id || '');
     if (data.post) {
-      setValue("address", data.post?.name || "");
-      setValue("addressId", data.post?.id || "");
+      setValue('address', data.post?.name || '');
+      setValue('addressId', data.post?.id || '');
     } else {
-    setValue("address", data.address || "" );
-    setValue("addressId", data.address?.replace(/ /g, '_') || "")
-  }
-console.log(getValues());
-
+      setValue('address', data.address || '');
+      setValue('addressId', data.address?.replace(/ /g, '_') || '');
+    }
+    console.log(getValues());
   };
 
-  const handleTrim = (field: keyof FormValues) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(field, e.target.value.trim(), { shouldValidate: true });
-  };
+  const handleTrim =
+    (field: keyof FormValues) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(field, e.target.value.trim(), { shouldValidate: true });
+    };
 
   return (
     <div className="mt-16 rounded-lg bg-amber-200 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
@@ -226,7 +229,7 @@ console.log(getValues());
           <div className="text-base font-medium text-amber-950">До сплати</div>
           <Currency value={totalPrice} />
         </div>
-    
+
         <form
           onSubmit={handleSubmit(onCheckout)}
           className="mt-6 text-amber-950"
@@ -234,38 +237,40 @@ console.log(getValues());
           <div className="flex flex-col sm:flex-row lg:flex-col gap-2 ">
             <div className="basis-1/2">
               <Input
-                {...register("name", { required: "Поле є обов'язковим" })}
+                {...register('name', { required: "Поле є обов'язковим" })}
                 className=""
                 label="Ім'я"
                 errorMessage={errors.name?.message as string | undefined}
-                onChange={handleTrim("name")}
+                onChange={handleTrim('name')}
               />
             </div>
             <div className="basis-1/2 mb-4">
               <Input
-                {...register("surname", { required: "Поле є обов'язковим" })}
+                {...register('surname', { required: "Поле є обов'язковим" })}
                 className=""
                 label="Прізвище "
                 errorMessage={errors.surname?.message as string | undefined}
-                onChange={handleTrim("surname")}
+                onChange={handleTrim('surname')}
               />
             </div>
           </div>
           <div className="mb-4">
             <Input
-              {...register("phone", { required: "Поле є обов'язковим" })}
+              {...register('phone', { required: "Поле є обов'язковим" })}
               className=""
               label="Телефон"
               type="tel"
               // value={"+380"}
               errorMessage={errors.phone?.message as string | undefined}
-              onChange={handleTrim("phone")}
+              onChange={handleTrim('phone')}
             />
           </div>
           <div className="flex flex-col sm:flex-row lg:flex-col gap-2">
             <div className="flex gap-2">
               <RadioInput
-                imageSrc={(process.env.NEXT_PUBLIC_BASE_PATH || '') + '/novap.jpg'}
+                imageSrc={
+                  (process.env.NEXT_PUBLIC_BASE_PATH || '') + '/novap.jpg'
+                }
                 className="opacity-0 w-0 h-0"
                 label="Нова пошта"
                 name="post"
@@ -274,7 +279,9 @@ console.log(getValues());
                 isChecked={postType === novaposhta}
               ></RadioInput>
               <RadioInput
-                imageSrc={(process.env.NEXT_PUBLIC_BASE_PATH || '') + '/ukrposhta.png'}
+                imageSrc={
+                  (process.env.NEXT_PUBLIC_BASE_PATH || '') + '/ukrposhta.png'
+                }
                 className="opacity-0 w-0 h-0"
                 label="Укр пошта"
                 name="post"
@@ -320,7 +327,7 @@ console.log(getValues());
               disabled={postType === ukrposhta}
               value="afterrecive"
               handleInputChange={handlePayChange}
-              isChecked={paymentType === "afterrecive"}
+              isChecked={paymentType === 'afterrecive'}
             ></RadioInput>
             <RadioInput
               className=""
@@ -328,7 +335,7 @@ console.log(getValues());
               name="payment"
               value="byIBAN"
               handleInputChange={handlePayChange}
-              isChecked={paymentType === "byIBAN"}
+              isChecked={paymentType === 'byIBAN'}
             ></RadioInput>
             <RadioInput
               disabled
@@ -337,7 +344,7 @@ console.log(getValues());
               name="payment"
               value="online"
               handleInputChange={handlePayChange}
-              isChecked={paymentType === "online"}
+              isChecked={paymentType === 'online'}
             ></RadioInput>
           </div>
           <div className="w-full">
@@ -346,7 +353,16 @@ console.log(getValues());
           </div>
           <div className="w-full">
             <Checkbox checked={agree} onChange={setAgree} name="agree" />
-            <span className="p-2 text-sm">Я погоджуюсь з  <Link href='/agreement' target="_blank" className="underline hover:text-amber-800">умовами публічної оферти</Link></span>
+            <span className="p-2 text-sm">
+              Я погоджуюсь з{' '}
+              <Link
+                href="/agreement"
+                target="_blank"
+                className="underline hover:text-amber-800"
+              >
+                умовами публічної оферти
+              </Link>
+            </span>
           </div>
           <Button
             disabled={items.length === 0 || !agree || sending}
@@ -357,7 +373,6 @@ console.log(getValues());
             Замовити
           </Button>
         </form>
-        
       </div>
     </div>
   );

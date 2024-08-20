@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from 'react';
 import { FieldErrors } from 'react-hook-form';
-import Select from "@/components/ui/select";
+
 import {
-  getPosts as getNewPost,
   getCityOn as getNewCity,
-} from "@/actions/get-newpost";
+  getPosts as getNewPost,
+} from '@/actions/get-newpost';
 import {
-  getPosts as getUkrPost,
   getCity as getUkrCity,
-} from "@/actions/get-ykrpost";
-import { courier, novaposhta } from "@/app/(routes)/cart/components/summary";
-import Input from "./input";
+  getPosts as getUkrPost,
+} from '@/actions/get-ykrpost';
+import { courier, novaposhta } from '@/app/(routes)/cart/components/summary';
+import Select from '@/components/ui/select';
+import Input from './input';
 
 type queryDataType = {
   area?: string;
@@ -53,7 +54,7 @@ const Address: React.FC<AddressProps> = ({
 
   const [city, setCity] = useState<Item | null>(null);
   const [post, setPost] = useState<Item | null>(null);
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState('');
 
   const fetchPost = async (FindByString: string) => {
     if (!city) return [];
@@ -62,13 +63,13 @@ const Address: React.FC<AddressProps> = ({
     // console.log("newPosts", newPosts);
     return newPosts;
   };
-  const handleComplete = () => {
-    if (delivery === courier) {
-      onComplete({ city, post: null, address });
-    } else {
-      onComplete({ city, post });
-    }
-  };
+  // const handleComplete = () => {
+  //   if (delivery === courier) {
+  //     onComplete({ city, post: null, address });
+  //   } else {
+  //     onComplete({ city, post });
+  //   }
+  // };
 
   useEffect(() => {
     const handleComplete = () => {
@@ -87,7 +88,6 @@ const Address: React.FC<AddressProps> = ({
   const handleCity = (item: Item | null) => {
     // console.log("city", item);
     setCity(item);
-
   };
 
   const handlePost = (item: Item | null) => {
@@ -101,8 +101,13 @@ const Address: React.FC<AddressProps> = ({
         Адреса доставки
       </div>
       <p>Населений пункт</p>
-      <Select getFn={getCity} onItemSelect={handleCity} key={postType}  errorName={errors.city?.message as string}
-            errorId={errors.cityId?.message as string} />
+      <Select
+        getFn={getCity}
+        onItemSelect={handleCity}
+        key={postType}
+        errorName={errors.city?.message as string}
+        errorId={errors.cityId?.message as string}
+      />
       {delivery !== courier ? (
         <>
           {postType === novaposhta ? (
@@ -113,7 +118,7 @@ const Address: React.FC<AddressProps> = ({
           <Select
             getFn={fetchPost}
             onItemSelect={handlePost}
-            key={city ? city.id : ""}
+            key={city ? city.id : ''}
             errorName={errors.address?.message as string}
             errorId={errors.addressId?.message as string}
           />
@@ -124,7 +129,7 @@ const Address: React.FC<AddressProps> = ({
           placeholder="Вулиця, будинок, квартира"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-          errorMessage={errors.address?.message ? "Введіть адресу" : ""}
+          errorMessage={errors.address?.message ? 'Введіть адресу' : ''}
         />
       )}
     </div>

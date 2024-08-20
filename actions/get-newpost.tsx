@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios from 'axios';
 export const novaPoshtaApi = axios.create({
-  baseURL: "https://api.novaposhta.ua/v2.0/json/",
+  baseURL: 'https://api.novaposhta.ua/v2.0/json/',
 });
 
 const apiKeyNP = `0b9148efd708cee76617577c7575085c`;
@@ -11,9 +11,7 @@ type queryDataType = {
   FindByString?: string;
 };
 
-
-
-export const getCityOn = async (query:string) => {
+export const getCityOn = async (query: string) => {
   try {
     const body: {
       apiKey: string;
@@ -26,12 +24,12 @@ export const getCityOn = async (query:string) => {
       };
     } = {
       apiKey: apiKeyNP,
-      modelName: "AddressGeneral",
-      calledMethod: "searchSettlements",
+      modelName: 'AddressGeneral',
+      calledMethod: 'searchSettlements',
       methodProperties: {
-        CityName: query || "",
-        Limit: "150",
-        Page: "1",
+        CityName: query || '',
+        Limit: '150',
+        Page: '1',
       },
     };
     const { data, status } = await novaPoshtaApi.post(``, body);
@@ -39,10 +37,12 @@ export const getCityOn = async (query:string) => {
       throw new Error(`Failed to fetch data: ${status}`);
     }
     // console.log(data.data[0].Addresses);
-    return data.data[0].Addresses.map((city: { DeliveryCity : string; Present: string }) => ({
-      id: city.DeliveryCity,
-      name: city.Present,
-    }));
+    return data.data[0].Addresses.map(
+      (city: { DeliveryCity: string; Present: string }) => ({
+        id: city.DeliveryCity,
+        name: city.Present,
+      })
+    );
   } catch (error) {
     console.error(error);
     return error;
@@ -64,14 +64,14 @@ export const getPosts = async (queryData: queryDataType) => {
       };
     } = {
       apiKey: apiKeyNP,
-      modelName: "AddressGeneral",
-      calledMethod: "getWarehouses",
+      modelName: 'AddressGeneral',
+      calledMethod: 'getWarehouses',
       methodProperties: {
-        CityRef: queryData.city || "Київ",
+        CityRef: queryData.city || 'Київ',
 
-        Limit: "100",
-        Language: "UA",
-        FindByString: queryData.FindByString || "",
+        Limit: '100',
+        Language: 'UA',
+        FindByString: queryData.FindByString || '',
       },
     };
     const { data, status } = await novaPoshtaApi.post(``, body);

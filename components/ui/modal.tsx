@@ -1,10 +1,11 @@
-"use client";
+'use client';
 
-import { Dialog, Transition } from "@headlessui/react";
-import { useEffect, useRef } from "react";
-import { Fragment } from "react";
-import IconButton from "@/components/ui/icon-button";
-import { X } from "lucide-react";
+import { Dialog, Transition } from '@headlessui/react';
+import { X } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+import { Fragment } from 'react';
+
+import IconButton from '@/components/ui/icon-button';
 
 interface ModalProps {
   open: boolean;

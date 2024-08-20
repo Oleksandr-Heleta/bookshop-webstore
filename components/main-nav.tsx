@@ -1,16 +1,17 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Category, AgeGroup, Publishing } from "@/type";
-import Contacts from "./ui/contacts";
-import MenuItem from "./nav-item";
-import Search from "./ui/search";
-import Button from "./ui/button";
-import { SearchIcon } from "lucide-react";
-import { MouseEventHandler } from "react"; 
-import useSearchModal from "@/hooks/use-search-modal";
+import { SearchIcon } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { MouseEventHandler } from 'react';
+
+import useSearchModal from '@/hooks/use-search-modal';
+import { cn } from '@/lib/utils';
+import { AgeGroup, Category, Publishing } from '@/type';
+
+import MenuItem from './nav-item';
+import Button from './ui/button';
+import Contacts from './ui/contacts';
 
 interface MainNavProps {
   categories: Category[];
@@ -26,7 +27,6 @@ const MainNav: React.FC<MainNavProps> = ({
   const pathname = usePathname();
   const searchModal = useSearchModal();
 
-   
   const handleOpenSearch: MouseEventHandler<HTMLButtonElement> = (event) => {
     event.stopPropagation();
     searchModal.onOpen();
@@ -34,7 +34,6 @@ const MainNav: React.FC<MainNavProps> = ({
 
   return (
     <nav className="hidden  mx-4 xl:mx-6 lg:flex items-center space-x-4 xl:space-x-6">
-     
       <MenuItem
         links={categories.map((route) => ({
           href: `/category/${route.id}`,
@@ -62,8 +61,8 @@ const MainNav: React.FC<MainNavProps> = ({
       <Link
         href="/delivery"
         className={cn(
-          " font-medium transition-colors  hover:text-amber-800",
-          pathname === "/delivery" ? "text-amber-800" : "text-amber-950"
+          ' font-medium transition-colors  hover:text-amber-800',
+          pathname === '/delivery' ? 'text-amber-800' : 'text-amber-950'
         )}
       >
         Доставка і оплата

@@ -1,11 +1,11 @@
-import { Metadata, ResolvingMetadata } from "next";
-import getProduct from "@/actions/get-product";
-import getProducts from "@/actions/get-products";
-import ProductList from "@/components/product-list";
-import Container from "@/components/ui/container";
-import Gallery from "@/components/gallery";
-import Slider from "@/components/ui/slider";
-import Info from "@/components/info";
+import { Metadata, ResolvingMetadata } from 'next';
+
+import getProduct from '@/actions/get-product';
+import getProducts from '@/actions/get-products';
+import Info from '@/components/info';
+import ProductList from '@/components/product-list';
+import Container from '@/components/ui/container';
+import Slider from '@/components/ui/slider';
 
 export const revalidate = 0;
 
@@ -51,7 +51,7 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
     ageGroupId: product?.ageGroups?.[0].ageGroupId ?? null,
   });
 
-  const title = product.titleSheet == "Solid" ? "Тверда" : "М'яка";
+  const title = product.titleSheet == 'Solid' ? 'Тверда' : "М'яка";
 
   return (
     <div className="bg-white">

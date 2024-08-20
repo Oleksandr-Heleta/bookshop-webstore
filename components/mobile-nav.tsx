@@ -1,17 +1,19 @@
-"use client";
+'use client';
 
-import Button from "@/components/ui/button";
-import IconButton from "@/components/ui/icon-button";
-import { Category, AgeGroup, Publishing } from "@/type";
-import { Dialog, Transition } from "@headlessui/react";
-import { Menu, X } from "lucide-react";
-import { useState, Fragment } from "react";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import Contacts from "./ui/contacts";
-import MobileItem from "./mobile-item";
-import Search from "./ui/search";
+import { Dialog } from '@headlessui/react';
+import { Menu, X } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Fragment, useState } from 'react';
+
+import Button from '@/components/ui/button';
+import IconButton from '@/components/ui/icon-button';
+import { cn } from '@/lib/utils';
+import { AgeGroup, Category, Publishing } from '@/type';
+
+import MobileItem from './mobile-item';
+import Contacts from './ui/contacts';
+import Search from './ui/search';
 
 interface MobileNavProps {
   categories: Category[];
@@ -29,11 +31,9 @@ const MobileNav: React.FC<MobileNavProps> = ({
   const pathname = usePathname();
 
   const onOpen = () => {
-   
     setOpen(true);
   };
   const onClose = () => {
-   
     setOpen(false);
   };
 
@@ -60,7 +60,6 @@ const MobileNav: React.FC<MobileNavProps> = ({
                 icon={<X size={15} />}
                 onClick={onClose}
                 className="bg-amber-950 text-white border-amber-950 font-bold"
-                
               />
             </div>
 
@@ -99,8 +98,8 @@ const MobileNav: React.FC<MobileNavProps> = ({
                 href="/delivery"
                 onClick={onClose}
                 className={cn(
-                  "font-semibold text-lg transition-colors pl-4 pt-4 hover:text-amber-800",
-                  pathname === "/delivery" ? "text-amber-800" : "text-amber-950"
+                  'font-semibold text-lg transition-colors pl-4 pt-4 hover:text-amber-800',
+                  pathname === '/delivery' ? 'text-amber-800' : 'text-amber-950'
                 )}
               >
                 Доставка і оплата

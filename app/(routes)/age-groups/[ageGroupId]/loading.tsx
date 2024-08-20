@@ -1,11 +1,10 @@
-import Container from "@/components/ui/container";
-import Skeleton from "@/components/ui/skeleton";
+import Container from '@/components/ui/container';
+import Skeleton from '@/components/ui/skeleton';
 
 const Loading = () => {
   return (
     <Container>
       <div className="w-full h-full p-8">
-        
         <div className="lg:grid lg:grid-cols-5 lg:gap-x-8 mt-8 h-full">
           <div className="hidden lg:block">
             <Skeleton className="w-full h-[500px] rounded-xl" />
@@ -24,6 +23,6 @@ const Loading = () => {
       </div>
     </Container>
   );
-}
- 
+};
+
 export default Loading;

@@ -1,11 +1,12 @@
-"use client";
+'use client';
 
-import { ProdCategory, ProdAgeGroup, Product } from "@/type";
-import Currency from "@/components/ui/currency";
-import Button from "./ui/button";
-import { ShoppingCart } from "lucide-react";
-import useCart from "@/hooks/use-cart";
-import ChechSale from "./ui/check-sale";
+import { ShoppingCart } from 'lucide-react';
+
+import useCart from '@/hooks/use-cart';
+import { ProdAgeGroup, ProdCategory, Product } from '@/type';
+
+import Button from './ui/button';
+import ChechSale from './ui/check-sale';
 
 interface InfoProps {
   data: Product;
@@ -19,14 +20,16 @@ const Info: React.FC<InfoProps> = ({ data, children }) => {
     cart.addItem(data);
   };
 
-  const title = data.titleSheet == "Solid" ? "Тверда" : "М'яка";
-  // console.log(data);
   return (
     <div>
       <h1 className="text-3xl font-bold text-amber-950">{data.name}</h1>
       <div className="mt-3 flex items-end justify-between">
         <div className="text-2xl text-amber-950">
-        <ChechSale isSale={data.isSale} percent={data.sale} price={data.price}/>
+          <ChechSale
+            isSale={data.isSale}
+            percent={data.sale}
+            price={data.price}
+          />
         </div>
         <Button onClick={addToCart} className="flex items-center gap-x-2">
           Купити
@@ -63,8 +66,8 @@ const Info: React.FC<InfoProps> = ({ data, children }) => {
           <h3 className="font-semibold text-amber-950">Розмір:</h3>
           <div>{data?.size}</div>
         </div> */}
-         {children}
-         <div className="flex flex-col  gap-x-4">
+        {children}
+        <div className="flex flex-col  gap-x-4">
           <h3 className="font-semibold text-amber-950">Опис:</h3>
           <div>{data?.description}</div>
         </div>
@@ -74,7 +77,6 @@ const Info: React.FC<InfoProps> = ({ data, children }) => {
                 <ShoppingCart size={20} className="ml-2"/>
             </Button>
         </div> */}
-       
       </div>
     </div>
   );

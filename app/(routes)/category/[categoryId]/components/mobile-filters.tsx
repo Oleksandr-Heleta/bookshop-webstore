@@ -1,19 +1,24 @@
-"use client";
+'use client';
 
-import Button from "@/components/ui/button";
-import IconButton from "@/components/ui/icon-button";
-import { AgeGroup, Publishing } from "@/type";
-import { Dialog } from "@headlessui/react";
-import { Plus, X } from "lucide-react";
-import { useState } from "react";
-import Filter from "./filter";
+import { Dialog } from '@headlessui/react';
+import { Plus, X } from 'lucide-react';
+import { useState } from 'react';
+
+import Button from '@/components/ui/button';
+import IconButton from '@/components/ui/icon-button';
+import { AgeGroup, Publishing } from '@/type';
+
+import Filter from './filter';
 
 interface MobileFiltersProps {
   ageGroups: AgeGroup[];
   publishings: Publishing[];
 }
 
-const MobileFilters: React.FC<MobileFiltersProps> = ({ ageGroups, publishings }) => {
+const MobileFilters: React.FC<MobileFiltersProps> = ({
+  ageGroups,
+  publishings,
+}) => {
   const [open, setOpen] = useState(false);
 
   const onOpen = () => setOpen(true);
@@ -40,7 +45,11 @@ const MobileFilters: React.FC<MobileFiltersProps> = ({ ageGroups, publishings })
 
             <div className="p-4">
               <Filter valueKey="ageGroupId" name="Вік" data={ageGroups} />
-              <Filter valueKey="publishingId" name="Видавництво" data={publishings} />
+              <Filter
+                valueKey="publishingId"
+                name="Видавництво"
+                data={publishings}
+              />
             </div>
           </Dialog.Panel>
         </div>

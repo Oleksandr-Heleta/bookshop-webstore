@@ -4,6 +4,6 @@ const NoResults = () => {
       <p>Нічого не знайдено.</p>
     </div>
   );
-}
+};
 
 export default NoResults;

@@ -1,0 +1,8 @@
+node_modules
+dist
+# Ігнорування файлу next.config.js
+next.config.js
+
+# Ігнорування файлів у директорії public
+public/sw.js
+public/workbox-4754cb34.js

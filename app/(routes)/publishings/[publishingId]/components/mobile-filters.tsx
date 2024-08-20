@@ -1,12 +1,14 @@
-"use client";
+'use client';
 
-import Button from "@/components/ui/button";
-import IconButton from "@/components/ui/icon-button";
-import { AgeGroup, Category } from "@/type";
-import { Dialog } from "@headlessui/react";
-import { Plus, X } from "lucide-react";
-import { useState } from "react";
-import Filter from "./filter";
+import { Dialog } from '@headlessui/react';
+import { Plus, X } from 'lucide-react';
+import { useState } from 'react';
+
+import Button from '@/components/ui/button';
+import IconButton from '@/components/ui/icon-button';
+import { AgeGroup, Category } from '@/type';
+
+import Filter from './filter';
 
 interface MobileFiltersProps {
   ageGroups: AgeGroup[];

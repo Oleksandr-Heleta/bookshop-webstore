@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC } from 'react';
 
 interface CheckboxProps {
   checked: boolean;
@@ -9,9 +9,9 @@ interface CheckboxProps {
 const Checkbox: FC<CheckboxProps> = ({ checked, onChange, name }) => {
   return (
     <input
-    className="group size-15 rounded-md bg-white/10 p-1 ring-1 ring-white/15 ring-inset data-[checked]:bg-white"
+      className="group size-15 rounded-md bg-white/10 p-1 ring-1 ring-white/15 ring-inset data-[checked]:bg-white"
       checked={checked}
-      name = {name}
+      name={name}
       type="checkbox"
       onChange={(e) => onChange(e.target.checked)}
     />

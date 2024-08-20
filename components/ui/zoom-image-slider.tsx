@@ -1,28 +1,22 @@
-"use client";
+'use client';
 
-import React, { useState, useRef, useEffect,  Component } from "react";
-import { useKeenSlider } from "keen-slider/react";
-import {
-  TransformWrapper,
-  TransformComponent,
-  useControls,
-} from "react-zoom-pan-pinch";
-import Image from "next/image";
-import "keen-slider/keen-slider.min.css"; // Імпорт стилів Keen Slider
-import { start } from "repl";
+import { useKeenSlider } from 'keen-slider/react';
+import Image from 'next/image';
+import React, { useRef, useState } from 'react';
+import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 
 function Arrow(props: {
   disabled: boolean;
   left?: boolean;
   onClick: (e: any) => void;
 }) {
-  const disabled = props.disabled ? " arrow--disabled" : "";
+  const disabled = props.disabled ? ' arrow--disabled' : '';
 
   return (
     <svg
       onClick={props.onClick}
       className={`arrow ${
-        props.left ? "arrow--left" : "arrow--right"
+        props.left ? 'arrow--left' : 'arrow--right'
       } ${disabled}`}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
@@ -45,23 +39,18 @@ type SliderProps = {
 const ZoomImageSlider: React.FC<SliderProps> = ({ slides, startSlide }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
-  const [zoomed, setZoomed] = useState(false);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [dragging, setDragging] = useState(false);
-  const [isDragging, setIsDragging] = useState(false); // Новий прапор
+
   const imageRef = useRef<HTMLImageElement>(null);
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
     initial: startSlide ?? 0,
     slideChanged(slider) {
       setCurrentSlide(slider.track.details.rel);
-     
     },
     created() {
       setLoaded(true);
     },
-    drag : false, // !zoomed Забороняємо зміну слайду перетягуванням, коли зображення в зумі
+    drag: false, // !zoomed Забороняємо зміну слайду перетягуванням, коли зображення в зумі
   });
-
 
   return (
     <div className="flex flex-col">
@@ -73,30 +62,23 @@ const ZoomImageSlider: React.FC<SliderProps> = ({ slides, startSlide }) => {
           <div
             key={idx}
             className={`keen-slider__slide relative h-full w-full aspect-square inset-0 overflow-hidden rounded-md }`}
-           
           >
-             <TransformWrapper>
-             <TransformComponent >
-             <div className="relative w-full h-full cursor-zoom-in">
-            <Image
-              ref={imageRef}
-              src={slide}
-              alt="Image"
-              
-              width={1000}
-              height={1000}
-
-                   
-              className={'object-contain  object-center cursor-zoom-in '
-              
-            }
-              priority={idx === 0}
-              onLoad={() => instanceRef.current?.update()}
-             
-            />
-            </div>
+            <TransformWrapper>
+              <TransformComponent>
+                <div className="relative w-full h-full cursor-zoom-in">
+                  <Image
+                    ref={imageRef}
+                    src={slide}
+                    alt="Image"
+                    width={1000}
+                    height={1000}
+                    className={'object-contain  object-center cursor-zoom-in '}
+                    priority={idx === 0}
+                    onLoad={() => instanceRef.current?.update()}
+                  />
+                </div>
               </TransformComponent>
-              </TransformWrapper>
+            </TransformWrapper>
           </div>
         ))}
 

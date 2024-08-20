@@ -1,36 +1,36 @@
-"use client";
+'use client';
 
-import React from "react";
-import { useKeenSlider } from "keen-slider/react";
-import { useState, useEffect } from "react";
-import Image from "next/image";
-import  useImageModal  from "@/hooks/use-image-modal";
-import { Image as ImageType } from "@/type";
+import { useKeenSlider } from 'keen-slider/react';
+import Image from 'next/image';
+import { useState } from 'react';
+
+import useImageModal from '@/hooks/use-image-modal';
+import { Image as ImageType } from '@/type';
 
 function ThumbnailPlugin(mainRef: any) {
   return (slider: any) => {
     function removeActive() {
       slider.slides.forEach((slide: any) => {
-        slide.classList.remove("active");
+        slide.classList.remove('active');
       });
     }
     function addActive(idx: number) {
-      slider.slides[idx].classList.add("active");
+      slider.slides[idx].classList.add('active');
     }
 
     function addClickEvents() {
       slider.slides.forEach((slide: any, idx: number) => {
-        slide.addEventListener("click", () => {
+        slide.addEventListener('click', () => {
           if (mainRef.current) mainRef.current.moveToIdx(idx);
         });
       });
     }
 
-    slider.on("created", () => {
+    slider.on('created', () => {
       if (!mainRef.current) return;
       addActive(slider.track.details.rel);
       addClickEvents();
-      mainRef.current.on("animationStarted", (main: any) => {
+      mainRef.current.on('animationStarted', (main: any) => {
         removeActive();
         const next = main.animator.targetIdx || 0;
         addActive(main.track.absToRel(next));
@@ -45,13 +45,13 @@ function Arrow(props: {
   left?: boolean;
   onClick: (e: any) => void;
 }) {
-  const disabled = props.disabled ? " arrow--disabled" : "";
+  const disabled = props.disabled ? ' arrow--disabled' : '';
 
   return (
     <svg
       onClick={props.onClick}
       className={`arrow ${
-        props.left ? "arrow--left" : "arrow--right"
+        props.left ? 'arrow--left' : 'arrow--right'
       } ${disabled}`}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
@@ -100,8 +100,6 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
   );
   const imageModal = useImageModal();
 
-  
-
   return (
     <div className="flex flex-col">
       <div
@@ -120,7 +118,7 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
               className="object-contain object-center cursor-zoom-in"
               priority={idx === 0}
               onLoad={() => instanceRef.current?.update()}
-              onClick={() => imageModal.onOpen( slides, idx)}
+              onClick={() => imageModal.onOpen(slides, idx)}
             />
           </div>
         ))}

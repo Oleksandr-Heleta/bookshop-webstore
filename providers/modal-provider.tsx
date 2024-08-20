@@ -1,31 +1,29 @@
-"use client";
+'use client';
 
-import {useState, useEffect} from 'react';
-import PreviewModal from "@/components/preview-modal";
-import SearchModal from "@/components/search-modal"; 
-import ImageModal from "@/components/image-modal";
+import { useEffect, useState } from 'react';
 
+import ImageModal from '@/components/image-modal';
+import PreviewModal from '@/components/preview-modal';
+import SearchModal from '@/components/search-modal';
 
+const ModalProvider = () => {
+  const [isMounted, setIsMounted] = useState(false);
 
-const ModalProvider = ()=> {
-    const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
-    useEffect(()=>{
-        setIsMounted(true)
-        
-    },[]);
+  if (!isMounted) {
+    return null;
+  }
 
-    if(!isMounted) {
-        return null;
-    };
-
-    return (
-        <>
-            <PreviewModal/>
-            <SearchModal />
-            <ImageModal />
-        </>
-    );
+  return (
+    <>
+      <PreviewModal />
+      <SearchModal />
+      <ImageModal />
+    </>
+  );
 };
 
 export default ModalProvider;
