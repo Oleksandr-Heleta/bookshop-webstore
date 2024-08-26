@@ -49,7 +49,7 @@ const ZoomImageSlider: React.FC<SliderProps> = ({ slides, startSlide }) => {
     created() {
       setLoaded(true);
     },
-    drag: false, // !zoomed Забороняємо зміну слайду перетягуванням, коли зображення в зумі
+    drag: false, // Забороняємо зміну слайду перетягуванням
   });
 
   return (
@@ -57,13 +57,14 @@ const ZoomImageSlider: React.FC<SliderProps> = ({ slides, startSlide }) => {
       <div
         ref={sliderRef}
         className="keen-slider relative flex aspect-square cursor-pointer items-center rounded-md bg-white"
+        style={{ touchAction: 'none' }} // Додаємо touchAction, щоб уникнути блокування подій
       >
         {slides?.map((slide, idx) => (
           <div
             key={idx}
             className={`keen-slider__slide relative h-full w-full aspect-square inset-0 overflow-hidden rounded-md }`}
           >
-            <TransformWrapper pinch={{ disabled: false }}>
+            <TransformWrapper pinch={{ disabled: false, step: 2 }}>
               <TransformComponent>
                 <div className="relative w-full h-full cursor-zoom-in">
                   <Image
