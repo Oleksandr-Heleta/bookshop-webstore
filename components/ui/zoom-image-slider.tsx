@@ -87,6 +87,7 @@ const ZoomImageSlider: React.FC<SliderProps> = ({ slides, startSlide }) => {
                   className={'object-contain object-center cursor-zoom-in '}
                   priority={idx === 0}
                   onLoad={() => instanceRef.current?.update()}
+                  style={{ touchAction: 'manipulation' }}
                 />
               </TransformComponent>
             </TransformWrapper>
