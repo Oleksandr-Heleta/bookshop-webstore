@@ -64,16 +64,28 @@ const ZoomImageSlider: React.FC<SliderProps> = ({ slides, startSlide }) => {
             key={idx}
             className={`keen-slider__slide relative h-full w-full aspect-square inset-0 overflow-hidden rounded-md }`}
           >
-            <TransformWrapper pinch={{ disabled: false, step: 2 }}>
+            <TransformWrapper
+              maxScale={5}
+              onZoomStop={(ref) => {
+                if (ref.state.scale >= 5) {
+                  ref.resetTransform();
+                }
+              }}
+              pinch={{ disabled: false, step: 0.5 }}
+              doubleClick={{ disabled: false, step: 0.5 }}
+            >
               <TransformComponent>
-                <div className="relative w-full h-full cursor-zoom-in">
+                <div
+                  className="relative w-full h-full cursor-zoom-in"
+                  style={{ touchAction: 'none' }}
+                >
                   <Image
                     ref={imageRef}
                     src={slide}
                     alt="Image"
                     width={1000}
                     height={1000}
-                    className={'object-contain  object-center cursor-zoom-in '}
+                    className={'object-contain object-center cursor-zoom-in '}
                     priority={idx === 0}
                     onLoad={() => instanceRef.current?.update()}
                   />

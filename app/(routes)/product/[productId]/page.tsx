@@ -98,7 +98,10 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
           <hr className="my-10 " />
           <ProductList
             title="Можливо зацікавить"
-            items={suggestedProducts.slice(0, 3)}
+            items={suggestedProducts
+              .slice(0, 4)
+              .filter((p) => p.id !== product.id)
+              .slice(0, 3)}
           />
         </div>
       </Container>

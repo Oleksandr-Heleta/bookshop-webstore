@@ -49,7 +49,6 @@ export const metadata: Metadata = {
     'купити дитячу книгу',
   ],
   authors: [{ name: 'Oleksandr Heleta' }],
-  // viewport: 'width=device-width, initial-scale=1.0',
   openGraph: {
     type: 'website',
     url: `${process.env.DOMAIN}`,
