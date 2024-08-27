@@ -74,22 +74,20 @@ const ZoomImageSlider: React.FC<SliderProps> = ({ slides, startSlide }) => {
               pinch={{ disabled: false, step: 0.5 }}
               doubleClick={{ disabled: false, step: 0.5 }}
             >
-              <TransformComponent>
-                <div
-                  className="relative w-full h-full cursor-zoom-in"
-                  style={{ touchAction: 'manipulation' }}
-                >
-                  <Image
-                    ref={imageRef}
-                    src={slide}
-                    alt="Image"
-                    width={1000}
-                    height={1000}
-                    className={'object-contain object-center cursor-zoom-in '}
-                    priority={idx === 0}
-                    onLoad={() => instanceRef.current?.update()}
-                  />
-                </div>
+              <TransformComponent
+                contentClass="relative w-full h-full cursor-zoom-in"
+                contentStyle={{ touchAction: 'manipulation' }}
+              >
+                <Image
+                  ref={imageRef}
+                  src={slide}
+                  alt="Image"
+                  width={1000}
+                  height={1000}
+                  className={'object-contain object-center cursor-zoom-in '}
+                  priority={idx === 0}
+                  onLoad={() => instanceRef.current?.update()}
+                />
               </TransformComponent>
             </TransformWrapper>
           </div>

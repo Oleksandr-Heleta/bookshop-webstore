@@ -38,7 +38,7 @@ const Info: React.FC<InfoProps> = ({ data, children }) => {
       </div>
       <hr className="my-4" />
       <div className="flex flex-col  gap-y-2">
-        <div className="flex items-center gap-x-2 sm:gap-x-4">
+        <div className="flex items-center flex-wrap gap-x-2 sm:gap-x-4 sm:flex-nowrap">
           <h3 className="font-semibold text-amber-950">Категорії:</h3>
           {data?.categories?.map((category: ProdCategory) => (
             <div key={category.categoryId}>{category.categoryName}</div>
