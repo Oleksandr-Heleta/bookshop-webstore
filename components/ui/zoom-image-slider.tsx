@@ -77,7 +77,7 @@ const ZoomImageSlider: React.FC<SliderProps> = ({ slides, startSlide }) => {
               <TransformComponent>
                 <div
                   className="relative w-full h-full cursor-zoom-in"
-                  style={{ touchAction: 'none' }}
+                  style={{ touchAction: 'manipulation' }}
                 >
                   <Image
                     ref={imageRef}
