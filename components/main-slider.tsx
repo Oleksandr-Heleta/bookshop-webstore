@@ -36,7 +36,7 @@ function Arrow(props: {
 
 const MainSlider = () => {
   const { mainbillboards } = useInfo() || {
-    mainbillboards: [{ id: '1', imageUrl: '/logo.webp', label: 'Мишка' }],
+    mainbillboards: [{ id: '1', imageUrl: '/baner.jpg', label: 'Мишка' }],
   };
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
@@ -84,6 +84,8 @@ const MainSlider = () => {
   );
 
   // console.log(mainbillboards)
+  if (mainbillboards.length === 1)
+    return <Billboard data={mainbillboards[0]} />;
 
   return (
     <div className="relative">

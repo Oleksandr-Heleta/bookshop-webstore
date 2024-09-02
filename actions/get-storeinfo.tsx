@@ -25,7 +25,7 @@ const getStoreInfo = async (): Promise<Info> => {
         {
           id: 'string',
           label: 'string',
-          imageUrl: '/logo.webp',
+          imageUrl: '/baner.jpg',
         },
       ],
     };

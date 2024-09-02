@@ -6,6 +6,7 @@ import getProducts from '@/actions/get-products';
 import getPublishings from '@/actions/get-publishing';
 import Container from '@/components/ui/container';
 import NoResults from '@/components/ui/no-results';
+import Pagination from '@/components/ui/pagination';
 import ProductCard from '@/components/ui/product-card';
 
 import Filter from './components/filter';
@@ -20,6 +21,7 @@ interface AgePageProps {
   searchParams: {
     categoryId: string;
     publishingId: string;
+    page?: string;
   };
 }
 
@@ -54,6 +56,9 @@ const CategoryPage: React.FC<AgePageProps> = async ({
   params,
   searchParams,
 }) => {
+  const pageSize = 20;
+  const currentPage = parseInt(searchParams.page || '1', 10);
+
   const products = await getProducts({
     ageGroupId: params.ageGroupId,
     categoryId: searchParams.categoryId,
@@ -62,6 +67,10 @@ const CategoryPage: React.FC<AgePageProps> = async ({
 
   const publishings = await getPublishings();
   const categories = await getCategories();
+
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const paginatedProducts = products.slice(startIndex, endIndex);
   return (
     <div className="bg-white">
       <Container>
@@ -81,12 +90,19 @@ const CategoryPage: React.FC<AgePageProps> = async ({
               />
             </div>
             <div className="mt-6 lg:col-span-4 lg:mt-0">
-              {products.length === 0 && <NoResults />}
+              {paginatedProducts.length === 0 && <NoResults />}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {products.map((product) => (
+                {paginatedProducts.map((product) => (
                   <ProductCard key={product.id} data={product} />
                 ))}
               </div>
+              {products.length >= pageSize && (
+                <Pagination
+                  total={products.length}
+                  currentPage={currentPage}
+                  pageSize={pageSize}
+                />
+              )}
             </div>
           </div>
         </div>

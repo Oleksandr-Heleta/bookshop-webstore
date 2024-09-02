@@ -102,7 +102,7 @@ export default function RootLayout({
         <ToastProvider />
         <InfoProvider>
           <Navbar />
-          {children}
+          <div className="mt-20 md:mt-0">{children}</div>
           <Footer />
         </InfoProvider>
       </body>

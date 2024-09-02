@@ -17,9 +17,9 @@ const Navbar = async () => {
   const ageGroups = await getAgeGroups();
   const publishings = await getPublishings();
   return (
-    <div className="border-b bg-amber-200">
+    <div className="fixed top-0 left-0 right-0 z-10 md:relative border-b bg-amber-200">
       <Container>
-        <div className="relative  px-4 sm:px-6 lg:px-8 flex h-20 items-center">
+        <div className="  px-4 sm:px-6 lg:px-8 flex h-20 items-center">
           <MobileNav
             categories={categories}
             ageGroups={ageGroups}

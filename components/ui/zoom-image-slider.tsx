@@ -81,7 +81,7 @@ const ZoomImageSlider: React.FC<SliderProps> = ({ slides, startSlide }) => {
                 <Image
                   ref={imageRef}
                   src={slide}
-                  alt="Image"
+                  alt={slide}
                   width={1000}
                   height={1000}
                   className={'object-contain object-center cursor-zoom-in '}
