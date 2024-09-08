@@ -20,9 +20,10 @@ const Footer = () => {
       <div className="container flex flex-col md:flex-row justify-around items-center mx-auto py-10">
         <div className="flex gap-2">
           <Image src="/logo.png" alt="logo" width={100} height={100} />
-          <p className="align-middle text-amber-950 text-2xl font-semibold uppercase">
+          <Image src="/name.png" alt="logo" width={200} height={100} />
+          {/* <p className="align-middle text-amber-950 text-2xl font-semibold uppercase">
             Мишка
-          </p>
+          </p> */}
         </div>
         <ul className="flex flex-col justify-center py-5">
           {footerItems.map((item) => (
@@ -37,7 +38,7 @@ const Footer = () => {
       </div>
       <div className="mx-auto py-10">
         <p className="text-center text-xs text-amber-800">
-          &copy; 2023 Книгарня Мишка. Всі права захищені.
+          &copy; 2024 Книгарня Мишка. Всі права захищені.
         </p>
       </div>
     </footer>

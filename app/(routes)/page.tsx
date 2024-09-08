@@ -6,7 +6,11 @@ import Container from '@/components/ui/container';
 export const revalidate = 0;
 
 const HomePage = async () => {
-  const newProducts = await getProducts({ isFeatured: true, isNew: true });
+  const newProducts = await getProducts({
+    isFeatured: true,
+    isNew: true,
+    isSale: false,
+  });
   const saleProducts = await getProducts({ isFeatured: true, isSale: true });
   const featuredProducts = await getProducts({
     isFeatured: true,

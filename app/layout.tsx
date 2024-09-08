@@ -77,6 +77,10 @@ export default function RootLayout({
   return (
     <html lang="uk-UA">
       <head>
+        <meta
+          name="google-site-verification"
+          content="rtC2Y-KwU_b3dFPCMXUietWdKtzJ9PWNMO-fe1e1bIk"
+        />
         {/* <base href={process.env.DOMAIN} /> */}
         {/* <meta name='viewport' content='width=device-width, initial-scale=1' /> */}
         <link

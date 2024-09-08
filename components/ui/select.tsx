@@ -31,7 +31,9 @@ const Select: React.FC<SelectProps> = ({
   const [items, setItems] = useState<Item[]>([]);
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
   const [query, setQuery] = useState('');
-  // const typingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [previousSelectedItem, setPreviousSelectedItem] = useState<Item | null>(
+    null
+  );
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -64,9 +66,13 @@ const Select: React.FC<SelectProps> = ({
     [onItemSelect]
   );
 
+  // Перевірка, чи вибраний елемент дійсно змінився
   useEffect(() => {
-    handleItemSelect(selectedItem);
-  }, [selectedItem, handleItemSelect]);
+    if (selectedItem && selectedItem.id !== previousSelectedItem?.id) {
+      handleItemSelect(selectedItem);
+      setPreviousSelectedItem(selectedItem);
+    }
+  }, [selectedItem, previousSelectedItem, handleItemSelect]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value;
@@ -84,9 +90,7 @@ const Select: React.FC<SelectProps> = ({
     <div className="w-full ">
       <Combobox
         value={selectedItem}
-        onChange={(value) => {
-          setSelectedItem(value);
-        }}
+        onChange={(value) => setSelectedItem(value)}
         nullable
       >
         <div className="relative mb-1">
