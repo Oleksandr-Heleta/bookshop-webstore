@@ -49,11 +49,11 @@ const CartItem: React.FC<CartItemProps> = ({ data }) => {
         </div>
         <div className="relative pr-9 sm:grid sm:grid-cols-2 sm:gap-x-6 ">
           <div className="flex justify-between">
-            <p className="text-lg font-semibold text-amber-950">
+            <p className="text-sm sm:text-lg font-semibold text-amber-950">
               {product.name}
             </p>
           </div>
-          <p className="justify-self-end">
+          <p className="justify-self-end text-sm sm:text-lg">
             <ChechSale
               isSale={product.isSale}
               percent={product.sale}
@@ -65,15 +65,13 @@ const CartItem: React.FC<CartItemProps> = ({ data }) => {
                         <p className='text-gray-500 ml-4 border-l border-gray-200 pl-4'>{data.publishing.name}</p>
                     </div> */}
         </div>
-        <div className="mt-6 flex items-center justify-between">
+        <div className="mt-6 flex items-center justify-between text-sm sm:text-lg">
           <div className="flex items-center">
             <IconButton
               onClick={() => onChamgeQuantity(quantity - 1)}
               icon={<Minus size={15} />}
             />
-            <p className="mx-2  text-lg font-semibold text-amber-950">
-              {quantity}
-            </p>
+            <p className="mx-2 font-semibold text-amber-950">{quantity}</p>
             <IconButton
               onClick={() => onChamgeQuantity(quantity + 1)}
               icon={<Plus size={15} />}

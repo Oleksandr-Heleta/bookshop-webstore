@@ -54,9 +54,9 @@ export const metadata: Metadata = {
     url: `${process.env.DOMAIN}`,
     images: [
       {
-        url: `${process.env.DOMAIN}/logo.webp`,
-        width: 600,
-        height: 600,
+        url: `${process.env.DOMAIN}/android-chrome-512x512.png`,
+        width: 512,
+        height: 512,
         alt: 'Логотип книжкового магазину Мишка',
       },
     ],

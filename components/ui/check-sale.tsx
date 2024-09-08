@@ -17,7 +17,7 @@ const CheckSale: React.FC<CheckSaleProps> = ({ isSale, percent, price }) => {
   return (
     <>
       {isSale || sale ? (
-        <div className="flex gap-2 ">
+        <div className="flex flex-wrap gap-2  ">
           <p className="line-through text-gray-500">
             <Currency value={price} />
           </p>

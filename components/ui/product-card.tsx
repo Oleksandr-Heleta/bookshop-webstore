@@ -72,20 +72,20 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
   return (
     <div
       ref={cardRef}
-      className="bg-white group  rounded-xl border border-amber-800 p-3 space-y-4"
+      className=" bg-white group  rounded-xl border border-amber-800 p-3 space-y-4"
     >
       <div
         onClick={handleClick}
         className="cursor-pointer aspect-square rounded-xl  relative"
       >
-        <div className="absolute top-10 left-0 z-10 flex flex-col gap-2">
+        <div className="absolute top-1 sm:top-10 left-0 z-10 flex flex-col gap-2">
           {data.isNew && (
-            <div className=" bg-red-600 text-white rounded-lg p-1 tracking-wider text-xs font-semibold">
+            <div className=" bg-red-600 text-white rounded-lg p-1 tracking-wider text-[8px] sm:text-xs font-semibold">
               Новинка
             </div>
           )}
           {data.isSale && (
-            <div className=" bg-orange-500 text-white text-center rounded-lg p-1 text-xs font-semibold">
+            <div className=" bg-orange-500 text-white text-center rounded-lg p-1 text-[8px] sm:text-xs font-semibold">
               - {data.sale} %
             </div>
           )}
@@ -93,15 +93,15 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
         <Image
           src={data?.images?.[0]?.url}
           fill
-          alt="Image"
+          alt={`${data.name} титульна сторінка`}
           className="aspect-square object-contain rounded-md"
         />
         <div
-          className={`opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition absolute w-full px-6 bottom-5 ${
+          className={`opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition absolute w-full px-6 -bottom-2 sm:bottom-5 ${
             isVisible ? 'mobile-visible' : ''
           }`}
         >
-          <div className="flex gap-x-6 justify-center">
+          <div className="flex gap-x-2 sm:gap-x-6 justify-center">
             <IconButton
               onClick={onPreview}
               className="hidden lg:block"
@@ -131,12 +131,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
       <div>
         <p
           onClick={handleClick}
-          className="cursor-pointer font-semibold text-lg text-amber-950 hover:scale-105 origin-left transition"
+          className="cursor-pointer font-semibold text-xs min-[480px]:text-sm sm:text-lg text-amber-950 hover:scale-105 origin-left transition"
         >
           {data.name}
         </p>
       </div>
-      <div className="flex item-center justify-between">
+      <div className="flex item-center justify-between  text-xs min-[480px]:text-sm sm:text-lg">
         <CheckSale
           isSale={data.isSale}
           percent={data.sale}
