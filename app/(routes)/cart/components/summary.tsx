@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import * as z from 'zod';
 
+import getOrder from '@/actions/get-order';
 import Address from '@/components/ui/address';
 import Button from '@/components/ui/button';
 import Checkbox from '@/components/ui/checkboks';
@@ -118,13 +119,29 @@ const Summary = () => {
   // }, [errors]);
 
   useEffect(() => {
-    if (searchParams.get('success')) {
-      toast.success('Замовлення успішне');
-      removeAll();
-    }
+    const orderId = searchParams.get('orderId');
+    if (orderId) {
+      const success = async () => {
+        try {
+          const response = await getOrder(orderId);
 
-    if (searchParams.get('canceled')) {
-      toast.error('Щось пішло не за планом');
+          if (
+            response.orderStatus === 'paid' ||
+            response.orderState !== 'online'
+          ) {
+            toast.success('Замовлення успішне');
+            removeAll();
+          }
+
+          if (searchParams.get('failed')) {
+            toast.error('Щось пішло не за планом');
+          }
+        } catch (error) {
+          console.error(error);
+          toast.error('Щось пішло не за планом');
+        }
+      };
+      success();
     }
   }, [searchParams, removeAll]);
 
@@ -203,7 +220,7 @@ const Summary = () => {
     post: Item | null;
     address?: string;
   }) => {
-    console.log(data);
+    // console.log(data);
     setValue('city', data.city?.name || '');
     setValue('cityId', data.city?.id || '');
     if (data.post) {
@@ -213,7 +230,7 @@ const Summary = () => {
       setValue('address', data.address || '');
       setValue('addressId', data.address?.replace(/ /g, '_') || '');
     }
-    console.log(getValues());
+    // console.log(getValues());
   };
 
   const handleTrim =
