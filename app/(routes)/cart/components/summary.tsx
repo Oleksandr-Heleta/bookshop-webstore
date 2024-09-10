@@ -338,8 +338,8 @@ const Summary = () => {
               isChecked={paymentType === 'byIBAN'}
             ></RadioInput>
             <RadioInput
-              disabled
-              className="opacity-50"
+              // disabled
+              // className="opacity-50"
               label="Оплата online"
               name="payment"
               value="online"
