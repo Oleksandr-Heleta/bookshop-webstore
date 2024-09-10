@@ -124,16 +124,17 @@ const Summary = () => {
       const success = async () => {
         try {
           const response = await getOrder(orderId);
-
+          console.log('Full response:', response);
           if (
             response.orderStatus === 'paid' ||
             response.orderState !== 'online'
           ) {
+            console.log(response.orderStatus, response.orderState);
             toast.success('Замовлення успішне');
             removeAll();
           }
 
-          if (searchParams.get('failed')) {
+          if (response.orderStatus === 'failed') {
             toast.error('Щось пішло не за планом');
           }
         } catch (error) {
