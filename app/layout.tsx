@@ -14,7 +14,7 @@ const font = Montserrat({ subsets: ['cyrillic'] });
 
 export const metadata: Metadata = {
   title: 'Мишка',
-  description: 'Магазин дитячої книги',
+  description: 'Магазин дитячих книг',
   // base: process.env.DOMAIN,
   metadataBase:
     process.env.NODE_ENV === 'production'
@@ -51,6 +51,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'Oleksandr Heleta' }],
   openGraph: {
     type: 'website',
+    title: 'Магазин дитячих книг МИШКА | Купити дитячі книги онлайн',
     url: `${process.env.DOMAIN}`,
     images: [
       {
@@ -60,8 +61,8 @@ export const metadata: Metadata = {
         alt: 'Логотип книжкового магазину Мишка',
       },
     ],
-    siteName: 'Мишка',
-    description: 'Магазин дитячої книги',
+    siteName: 'Магазин дитячих книг МИШКА',
+    description: 'Книги для маленьких читачів',
   },
 };
 

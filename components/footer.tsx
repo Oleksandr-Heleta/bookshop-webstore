@@ -27,18 +27,20 @@ const Footer = () => {
         </div>
         <ul className="flex flex-col justify-center py-5">
           {footerItems.map((item) => (
-            <Link href={item.link} key={item.title}>
-              <div className="text-amber-950 transition-colors hover:text-amber-800">
-                {item.title}
-              </div>
-            </Link>
+            <li key={item.title}>
+              <Link href={item.link}>
+                <div className="text-amber-950 transition-colors hover:text-amber-800">
+                  {item.title}
+                </div>
+              </Link>
+            </li>
           ))}
         </ul>
         <Contacts />
       </div>
       <div className="mx-auto py-10">
         <p className="text-center text-xs text-amber-800">
-          &copy; 2024 Книгарня Мишка. Всі права захищені.
+          &copy; 2024 Магазин дитячих книг МИШКА. Всі права захищені.
         </p>
       </div>
     </footer>

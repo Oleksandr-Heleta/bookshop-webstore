@@ -70,9 +70,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
   }, []);
 
   return (
-    <div
+    <section
       ref={cardRef}
-      className=" bg-white group  rounded-xl border border-amber-800 p-3 space-y-4"
+      className=" bg-white group  rounded-xl border border-amber-800 p-3 flex flex-col justify-between flex-1"
     >
       <div
         onClick={handleClick}
@@ -103,6 +103,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
         >
           <div className="flex gap-x-2 sm:gap-x-6 justify-center">
             <IconButton
+              aria-label="Попередній перегляд"
               onClick={onPreview}
               className="hidden lg:block"
               icon={
@@ -113,6 +114,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
               }
             />
             <IconButton
+              aria-label="Збільшити зображення"
               onClick={onZoom}
               className="lg:hidden"
               icon={
@@ -120,6 +122,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
               }
             />
             <IconButton
+              aria-label="Додати в кошик"
               onClick={onAddToCart}
               icon={
                 <ShoppingCart size={20} className="text-white bg-inherit" />
@@ -129,12 +132,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
         </div>
       </div>
       <div>
-        <p
+        <h3
           onClick={handleClick}
           className="cursor-pointer font-semibold text-xs min-[480px]:text-sm sm:text-lg text-amber-950 hover:scale-105 origin-left transition"
         >
           {data.name}
-        </p>
+        </h3>
       </div>
       <div className="flex item-center justify-between  text-xs min-[480px]:text-sm sm:text-lg">
         <CheckSale
@@ -143,7 +146,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
           price={data.price}
         />
       </div>
-    </div>
+    </section>
   );
 };
 

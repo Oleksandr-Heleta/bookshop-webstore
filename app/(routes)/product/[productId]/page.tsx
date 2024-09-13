@@ -40,7 +40,7 @@ export async function generateMetadata(
     ],
     openGraph: {
       images: [product.images[0].url, ...previousImages],
-      title: `${product.name}| Мишка`,
+      title: `${product.name}| Магазин дитячих книг Мишка`,
     },
   };
 }
@@ -56,7 +56,7 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
   return (
     <div className="bg-white">
       <Container>
-        <div className="px-4 py-10 sm:px-6 lg:px-8">
+        <article className="px-4 py-10 sm:px-6 lg:px-8">
           <div className="lg:grid lg:grid-cols-2 lg:gap-x-8 relative">
             <div className="absolute top-10 left-0 z-10 flex flex-col gap-2">
               {product.isNew && (
@@ -74,24 +74,24 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
             <Slider slides={product?.images} />
             <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
               <Info data={product}>
-                <div className="flex items-center gap-x-4">
+                <section className="flex items-center gap-x-4">
                   <h3 className="font-semibold text-amber-950">Видавництво:</h3>
-                  <div>{product?.publishing?.name}</div>
-                </div>
-                <div className="flex items-center gap-x-4">
+                  <p>{product?.publishing?.name}</p>
+                </section>
+                <section className="flex items-center gap-x-4">
                   <h3 className="font-semibold text-amber-950">Обкладинка:</h3>
-                  <div>{title}</div>
-                </div>
-                <div className="flex items-center gap-x-4">
+                  <p>{title}</p>
+                </section>
+                <section className="flex items-center gap-x-4">
                   <h3 className="font-semibold text-amber-950">
                     Кількість сторінок:
                   </h3>
-                  <div>{product?.sheets}</div>
-                </div>
-                <div className="flex items-center gap-x-4">
+                  <p>{product?.sheets}</p>
+                </section>
+                <section className="flex items-center gap-x-4">
                   <h3 className="font-semibold text-amber-950">Розмір:</h3>
-                  <div>{product?.size}</div>
-                </div>
+                  <p>{product?.size}</p>
+                </section>
               </Info>
             </div>
           </div>
@@ -103,7 +103,7 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
               .filter((p) => p.id !== product.id)
               .slice(0, 3)}
           />
-        </div>
+        </article>
       </Container>
     </div>
   );

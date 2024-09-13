@@ -21,7 +21,7 @@ const Info: React.FC<InfoProps> = ({ data, children }) => {
   };
 
   return (
-    <div>
+    <section>
       <h1 className="text-3xl font-bold text-amber-950">{data.name}</h1>
       <div className="mt-3 flex items-end justify-between">
         <div className="text-2xl text-amber-950">
@@ -38,18 +38,18 @@ const Info: React.FC<InfoProps> = ({ data, children }) => {
       </div>
       <hr className="my-4" />
       <div className="flex flex-col  gap-y-2">
-        <div className="flex items-center flex-wrap gap-x-2 sm:gap-x-4 sm:flex-nowrap">
+        <section className="flex items-center flex-wrap gap-x-2 sm:gap-x-4 sm:flex-nowrap">
           <h3 className="font-semibold text-amber-950">Категорії:</h3>
           {data?.categories?.map((category: ProdCategory) => (
-            <div key={category.categoryId}>{category.categoryName}</div>
+            <p key={category.categoryId}>{category.categoryName}</p>
           ))}
-        </div>
-        <div className="flex items-center gap-x-4">
+        </section>
+        <section className="flex items-center gap-x-4">
           <h3 className="font-semibold text-amber-950">Вік:</h3>
           {data?.ageGroups?.map((age: ProdAgeGroup) => (
-            <div key={age.ageGroupId}>{age.ageGroupName}</div>
+            <p key={age.ageGroupId}>{age.ageGroupName}</p>
           ))}
-        </div>
+        </section>
         {/* <div className='flex items-center gap-x-4'>
           <h3 className='font-semibold text-amber-950'>Видавництво:</h3>
           <div>{data?.publishing?.name}</div>
@@ -67,10 +67,10 @@ const Info: React.FC<InfoProps> = ({ data, children }) => {
           <div>{data?.size}</div>
         </div> */}
         {children}
-        <div className="flex flex-col  gap-x-4">
+        <section className="flex flex-col  gap-x-4">
           <h3 className="font-semibold text-amber-950">Опис:</h3>
-          <div>{data?.description}</div>
-        </div>
+          <p>{data?.description}</p>
+        </section>
         {/* <div className='mt-10 flex items-center gap-x-3'>
             <Button onClick={addToCart} className='flex items-center gap-x-2'>
                 Купити
@@ -78,7 +78,7 @@ const Info: React.FC<InfoProps> = ({ data, children }) => {
             </Button>
         </div> */}
       </div>
-    </div>
+    </section>
   );
 };
 

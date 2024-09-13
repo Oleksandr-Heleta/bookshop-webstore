@@ -47,7 +47,7 @@ export async function generateMetadata(
     ],
     openGraph: {
       images: [...previousImages],
-      title: `Вік ${category.name}| Мишка`,
+      title: `Вік ${category.name} р.| Магазин дитячих книг МИШКА`,
     },
   };
 }
@@ -67,6 +67,7 @@ const CategoryPage: React.FC<AgePageProps> = async ({
 
   const publishings = await getPublishings();
   const categories = await getCategories();
+  const ageGroup = await getAgeGroup(params.ageGroupId);
 
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
@@ -74,7 +75,7 @@ const CategoryPage: React.FC<AgePageProps> = async ({
   return (
     <div className="bg-white">
       <Container>
-        <div className="px-4 sm:px-6 lg:px-8 pb-24 pt-4">
+        <article className="px-4 sm:px-6 lg:px-8 pb-24 pt-4">
           <div className="lg:grid lg:grid-cols-5 lg:gap-x-8">
             <MobileFilters categories={categories} publishings={publishings} />
             <div className="hidden lg:block">
@@ -90,12 +91,17 @@ const CategoryPage: React.FC<AgePageProps> = async ({
               />
             </div>
             <div className="mt-6 lg:col-span-4 lg:mt-0">
+              <h1 className="font-bold text-3xl text-amber-950 mb-6">
+                Книги для віку {ageGroup.name} років
+              </h1>
               {paginatedProducts.length === 0 && <NoResults />}
-              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              <ul className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {paginatedProducts.map((product) => (
-                  <ProductCard key={product.id} data={product} />
+                  <li key={product.id} className="flex">
+                    <ProductCard data={product} />
+                  </li>
                 ))}
-              </div>
+              </ul>
               {products.length >= pageSize && (
                 <Pagination
                   total={products.length}
@@ -105,7 +111,7 @@ const CategoryPage: React.FC<AgePageProps> = async ({
               )}
             </div>
           </div>
-        </div>
+        </article>
       </Container>
     </div>
   );

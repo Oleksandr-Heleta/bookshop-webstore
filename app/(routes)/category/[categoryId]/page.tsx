@@ -33,8 +33,8 @@ export async function generateMetadata(
   const category = await getCategory(params.categoryId);
 
   const parentMetadata = await parent;
-  const previousImages = parentMetadata.openGraph?.images || [];
   const previousKeywords = parentMetadata.keywords || [];
+  const previousImages = parentMetadata.openGraph?.images || [];
 
   return {
     title: category.name,
@@ -47,8 +47,8 @@ export async function generateMetadata(
       ...previousKeywords,
     ],
     openGraph: {
-      images: [category.billboard.imageUrl, ...previousImages],
-      title: `${category.name}| Мишка`,
+      images: [...previousImages],
+      title: `${category.name}| Магазин дитячих книг МИШКА`,
     },
   };
 }
@@ -91,11 +91,13 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
             </div>
             <div className="mt-6 lg:col-span-4 lg:mt-0">
               {paginatedProducts.length === 0 && <NoResults />}
-              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              <ul className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {paginatedProducts.map((product) => (
-                  <ProductCard key={product.id} data={product} />
+                  <li key={product.id} className="flex">
+                    <ProductCard data={product} />
+                  </li>
                 ))}
-              </div>
+              </ul>
               {products.length >= pageSize && (
                 <Pagination
                   total={products.length}

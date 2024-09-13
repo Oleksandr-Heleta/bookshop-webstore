@@ -29,9 +29,9 @@ const Navbar = async () => {
             <Image src="/logo.png" alt="logo" width={50} height={50} />
             <Image src="/name.png" alt="logo" width={100} height={50} />
             {/* <div className='w-[50px]'> */}
-            <h1 className="hidden align-middle text-amber-950 text-xl font-semibold uppercase">
+            <h2 className="hidden align-middle text-amber-950 text-xl font-semibold uppercase">
               Мишка
-            </h1>
+            </h2>
 
             {/* <p className='text-xs text-neutral-500 text-justify'>магазин</p>
             <p className='text-xs text-neutral-500 text-justify'>дитячих</p>
