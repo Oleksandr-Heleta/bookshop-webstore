@@ -147,7 +147,7 @@ const Summary = () => {
   }, [searchParams, removeAll]);
 
   const totalPrice = items.reduce((total: number, item) => {
-    const salePercent = sale > item.product.sale ? sale : item.product.sale;
+    const salePercent = item.product.isSale ? item.product.sale : sale;
     const price =
       item.product.isSale || sale
         ? item.product.price - (item.product.price * salePercent) / 100
