@@ -10,7 +10,7 @@ interface CheckSaleProps {
 
 const CheckSale: React.FC<CheckSaleProps> = ({ isSale, percent, price }) => {
   const { sale } = useInfo() || { sale: 0 };
-  const salePercent = sale > percent ? sale : percent;
+  const salePercent = isSale ? percent : sale;
 
   // console.log(salePercent);
 
