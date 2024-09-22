@@ -3,6 +3,7 @@ import 'keen-slider/keen-slider.min.css';
 
 import type { Metadata, Viewport } from 'next';
 import { Montserrat } from 'next/font/google';
+import Script from 'next/script';
 
 import Footer from '@/components/footer';
 import Navbar from '@/components/navbar';
@@ -81,6 +82,23 @@ export default function RootLayout({
         <meta
           name="google-site-verification"
           content="rtC2Y-KwU_b3dFPCMXUietWdKtzJ9PWNMO-fe1e1bIk"
+        />
+        {/* <!-- Google tag (gtag.js) -->  */}
+        <Script
+          strategy="beforeInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=AW-16704672073"
+        />
+        <Script
+          id="gtag-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'AW-16704672073');
+            `,
+          }}
         />
         {/* <base href={process.env.DOMAIN} /> */}
         {/* <meta name='viewport' content='width=device-width, initial-scale=1' /> */}

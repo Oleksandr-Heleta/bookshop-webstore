@@ -126,6 +126,7 @@ const MainSlider = () => {
           ].map((idx) => {
             return (
               <button
+                aria-label={`Перейти на слайд ${idx + 1}`}
                 key={idx}
                 onClick={() => {
                   instanceRef.current?.moveToIdx(idx);
