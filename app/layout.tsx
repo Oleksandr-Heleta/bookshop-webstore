@@ -124,9 +124,11 @@ export default function RootLayout({
         <ModalProvider />
         <ToastProvider />
         <InfoProvider>
-          <Navbar />
-          <div className="mt-20 md:mt-0">{children}</div>
-          <Footer />
+          <div className="flex flex-col min-h-screen">
+            <Navbar />
+            <main className="flex-grow mt-20 md:mt-0">{children}</main>
+            <Footer />
+          </div>
         </InfoProvider>
       </body>
     </html>

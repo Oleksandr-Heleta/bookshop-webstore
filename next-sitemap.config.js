@@ -1,13 +1,13 @@
 module.exports = {
   siteUrl: process.env.DOMAIN || 'http://localhost:3000',
   generateRobotsTxt: true,
-  exclude: ['/cart', '/delivery', '/agreement'],
+  exclude: ['/cart'],
   transform: async (config, path) => {
     if (path === '/cart') {
       return null;
     }
 
-    let priority = 0.3;
+    let priority = 0.1;
     if (path === '/') {
       priority = 1.0;
     } else if (path.startsWith('/product/')) {

@@ -5,12 +5,24 @@ import Contacts from './ui/contacts';
 
 const footerItems = [
   {
+    title: 'Про нас',
+    link: '/about_us',
+  },
+  {
     title: 'Доставка і оплата',
     link: '/delivery',
   },
   {
     title: 'Договір публічної оферти',
     link: '/agreement',
+  },
+  {
+    title: 'Повернення товару',
+    link: '/povernenia_tovary',
+  },
+  {
+    title: 'Контакти',
+    link: '/contacts',
   },
 ];
 
