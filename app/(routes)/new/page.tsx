@@ -23,7 +23,14 @@ interface SalePageProps {
   };
 }
 
+interface PageProps {
+  params: {
+    page?: string;
+  };
+}
+
 export async function generateMetadata(
+  { params }: PageProps,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   // console.log(params);
