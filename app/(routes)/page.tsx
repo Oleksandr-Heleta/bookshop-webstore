@@ -1,3 +1,6 @@
+import { MoveRight } from 'lucide-react';
+import Link from 'next/link';
+
 import getProducts from '@/actions/get-products';
 import MainSlider from '@/components/main-slider';
 import ProductList from '@/components/product-list';
@@ -25,17 +28,31 @@ const HomePage = async () => {
         <MainSlider />
 
         {newProducts.length !== 0 && (
-          <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
+          <div className="relative flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
+            <Link
+              href="/new"
+              className="absolute top-2 right-8 flex gap-2 amber-950 hover:amber-800 hover:scale-105  transition"
+            >
+              <MoveRight />
+              Всі новинки
+            </Link>
             <ProductList title="Нові надходження" items={newProducts} />
           </div>
         )}
         {saleProducts.length !== 0 && (
-          <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
+          <div className="relative flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
+            <Link
+              href="/sale"
+              className="absolute top-2 right-8 flex gap-2 amber-950 hover:amber-800 hover:scale-105  transition"
+            >
+              <MoveRight />
+              Всі акції
+            </Link>
             <ProductList title="Акції" items={saleProducts} />
           </div>
         )}
         {featuredProducts.length !== 0 && (
-          <div className="flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
+          <div className=" flex flex-col gap-y-8 px-4 sm:px-6 lg:px-8">
             <ProductList title="Рекомендації" items={featuredProducts} />
           </div>
         )}

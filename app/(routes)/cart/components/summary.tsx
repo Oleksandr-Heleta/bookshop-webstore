@@ -130,16 +130,22 @@ const Summary = () => {
             response.orderState !== 'online'
           ) {
             // console.log(response.orderStatus, response.orderState);
-            toast.success('Замовлення успішне');
+            toast.success('Замовлення успішне', {
+              duration: 10000,
+            });
             removeAll();
           }
 
           if (response.orderStatus === 'failed') {
-            toast.error('Щось пішло не за планом');
+            toast.error('Щось пішло не за планом', {
+              duration: 10000,
+            });
           }
         } catch (error) {
           console.error(error);
-          toast.error('Щось пішло не за планом');
+          toast.error('Щось пішло не за планом', {
+            duration: 10000,
+          });
         }
       };
       success();

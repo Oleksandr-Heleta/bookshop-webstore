@@ -8,17 +8,24 @@ export interface Category {
   id: string;
   name: string;
   billboard: Billboard;
+  value: string;
+  description: string | null;
+  descriptionSeo: string | null;
+  titleSeo: string | null;
 }
 
 export interface Product {
   id: string;
   name: string;
+  author: string | undefined;
   images: Image[];
   price: number;
   quantity: number;
   categories: ProdCategory[];
   ageGroups: ProdAgeGroup[];
+  suggestionProducts: Product[];
   publishing: Publishing;
+  seria: Seria;
   description: string;
   titleSheet: string;
   sheets: number;
@@ -29,6 +36,9 @@ export interface Product {
   isFeatured: boolean;
   isArchived: boolean;
   isLowQuantity: boolean;
+  isbn: string | undefined;
+  titleSeo: string | undefined;
+  descriptionSeo: string | undefined;
 }
 
 export interface Image {
@@ -40,12 +50,27 @@ export interface AgeGroup {
   id: string;
   name: string;
   value: string;
+  description: string | null;
+  descriptionSeo: string | null;
+  titleSeo: string | null;
 }
 
 export interface Publishing {
   id: string;
   name: string;
   value: string;
+  description: string | null;
+  descriptionSeo: string | null;
+  titleSeo: string | null;
+}
+
+export interface Seria {
+  id: string;
+  name: string;
+  value: string;
+  description: string | null;
+  descriptionSeo: string | null;
+  titleSeo: string | null;
 }
 
 export interface ProdAgeGroup {
@@ -64,7 +89,7 @@ export interface ProdCategory {
 
 export interface Order {
   id: string;
-  items: OrderItem[];
+  orderItems: OrderItem[];
   total: number;
   name: string;
   totalPrice: number;

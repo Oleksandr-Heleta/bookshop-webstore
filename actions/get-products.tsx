@@ -8,6 +8,7 @@ interface Query {
   categoryId?: string;
   ageGroupId?: string;
   publishingId?: string;
+  seriaId?: string;
   isFeatured?: boolean;
   isSale?: boolean;
   isNew?: boolean;
@@ -23,6 +24,7 @@ const getProducts = async (query: Query): Promise<Product[]> => {
       publishingId: query.publishingId,
       ageGroupId: query.ageGroupId,
       categoryId: query.categoryId,
+      seriaId: query.seriaId,
       isFeatured: query.isFeatured,
       isSale: query.isSale,
       isNew: query.isNew,
@@ -32,6 +34,7 @@ const getProducts = async (query: Query): Promise<Product[]> => {
     },
   });
 
+  // console.log(url);
   const res = await fetch(url);
   const data = await res.json();
   return data.data;

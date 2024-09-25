@@ -1,9 +1,9 @@
 module.exports = {
   siteUrl: process.env.DOMAIN || 'http://localhost:3000',
   generateRobotsTxt: true,
-  exclude: ['/cart'],
+  exclude: ['/cart', '/order-confirm'],
   transform: async (config, path) => {
-    if (path === '/cart') {
+    if (path === '/cart' || path === '/order-confirm') {
       return null;
     }
 

@@ -3,7 +3,7 @@
 import { ShoppingCart } from 'lucide-react';
 
 import useCart from '@/hooks/use-cart';
-import { ProdAgeGroup, ProdCategory, Product } from '@/type';
+import { Product } from '@/type';
 
 import Button from './ui/button';
 import ChechSale from './ui/check-sale';
@@ -38,34 +38,6 @@ const Info: React.FC<InfoProps> = ({ data, children }) => {
       </div>
       <hr className="my-4" />
       <div className="flex flex-col  gap-y-2">
-        <section className="flex items-center flex-wrap gap-x-2 sm:gap-x-4 sm:flex-nowrap">
-          <h3 className="font-semibold text-amber-950">Категорії:</h3>
-          {data?.categories?.map((category: ProdCategory) => (
-            <p key={category.categoryId}>{category.categoryName}</p>
-          ))}
-        </section>
-        <section className="flex items-center gap-x-4">
-          <h3 className="font-semibold text-amber-950">Вік:</h3>
-          {data?.ageGroups?.map((age: ProdAgeGroup) => (
-            <p key={age.ageGroupId}>{age.ageGroupName}</p>
-          ))}
-        </section>
-        {/* <div className='flex items-center gap-x-4'>
-          <h3 className='font-semibold text-amber-950'>Видавництво:</h3>
-          <div>{data?.publishing?.name}</div>
-        </div>
-        <div className='flex items-center gap-x-4'>
-          <h3 className='font-semibold text-amber-950'>Обкладинка:</h3>
-          <div>{title}</div>
-        </div>
-        <div className='flex items-center gap-x-4'>
-          <h3 className='font-semibold text-amber-950'>Кількість сторінок:</h3>
-          <div>{data?.sheets}</div>
-        </div>
-        <div className='flex items-center gap-x-4'>
-          <h3 className='font-semibold text-amber-950'>Розмір:</h3>
-          <div>{data?.size}</div>
-        </div> */}
         {children}
         <section className="flex flex-col  gap-x-4">
           <h3 className="font-semibold text-amber-950">Опис:</h3>
