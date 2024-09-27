@@ -29,7 +29,7 @@ const footerItems = [
 const Footer = () => {
   return (
     <footer className="bg-amber-200 border-t">
-      <div className="container flex flex-col md:flex-row justify-around items-center mx-auto py-10">
+      <div className="container flex flex-col md:flex-row justify-around items-center mx-auto py-5">
         <div className="flex gap-2">
           <Image src="/logo.png" alt="logo" width={100} height={100} />
           <Image src="/name.png" alt="logo" width={200} height={100} />
@@ -50,7 +50,7 @@ const Footer = () => {
         </ul>
         <Contacts />
       </div>
-      <div className="mx-auto py-10">
+      <div className="mx-auto py-5">
         <p className="text-center text-xs text-amber-800">
           &copy; 2024 Магазин дитячих книг МИШКА. Всі права захищені.
         </p>

@@ -100,7 +100,7 @@ const SalePage: React.FC<SalePageProps> = async ({ searchParams }) => {
 
             <div className="mt-6 lg:col-span-4 lg:mt-0">
               <h1 className="font-bold text-3xl text-amber-950 mb-6">
-                Нові надходження
+                Новинки
               </h1>
               {paginatedProducts.length === 0 && <NoResults />}
               <ul className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4">

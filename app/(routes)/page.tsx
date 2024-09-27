@@ -36,7 +36,7 @@ const HomePage = async () => {
               <MoveRight />
               Всі новинки
             </Link>
-            <ProductList title="Нові надходження" items={newProducts} />
+            <ProductList title="Новинки" items={newProducts} />
           </div>
         )}
         {saleProducts.length !== 0 && (

@@ -81,7 +81,7 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
                   {product?.categories?.map((category: ProdCategory) => (
                     <p key={category.categoryId}>
                       <Link
-                        href={`/age-groups/${category.categoryId}`}
+                        href={`/category/${category.categoryId}`}
                         className="amber-950 hover:amber-600"
                       >
                         {category.categoryName}
