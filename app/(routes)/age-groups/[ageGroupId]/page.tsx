@@ -30,24 +30,28 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   // console.log(params);
-  const category = await getAgeGroup(params.ageGroupId);
+  const ageGroup = await getAgeGroup(params.ageGroupId);
 
   const parentMetadata = await parent;
   const previousImages = parentMetadata.openGraph?.images || [];
   const previousKeywords = parentMetadata.keywords || [];
+  const previousDescription = parentMetadata.description || '';
 
   return {
-    title: category.name,
+    title:
+      ageGroup.titleSeo ??
+      `Купити книги для віку ${ageGroup.name} р.| Магазин дитячих книг МИШКА`,
+    description: ageGroup.descriptionSeo ?? previousDescription,
     keywords: [
-      `купити для ${category.name} років`,
-      `книги для ${category.name} років`,
-      `книжки для ${category.name} років`,
-      `дитячі книжки для ${category.name} років`,
+      `купити для ${ageGroup.name} років`,
+      `книги для ${ageGroup.name} років`,
+      `книжки для ${ageGroup.name} років`,
+      `дитячі книжки для ${ageGroup.name} років`,
       ...previousKeywords,
     ],
     openGraph: {
       images: [...previousImages],
-      title: `Вік ${category.name} р.| Магазин дитячих книг МИШКА`,
+      title: `Купити книги для віку ${ageGroup.name} р.| Магазин дитячих книг МИШКА`,
     },
   };
 }
@@ -111,6 +115,12 @@ const CategoryPage: React.FC<AgePageProps> = async ({
               )}
             </div>
           </div>
+          {ageGroup.description && (
+            <div
+              className="mt-12 text-justify"
+              dangerouslySetInnerHTML={{ __html: ageGroup.description }}
+            />
+          )}
         </article>
       </Container>
     </div>

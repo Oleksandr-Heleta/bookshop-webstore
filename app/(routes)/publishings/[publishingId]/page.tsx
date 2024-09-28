@@ -35,9 +35,13 @@ export async function generateMetadata(
   const parentMetadata = await parent;
   const previousImages = parentMetadata.openGraph?.images || [];
   const previousKeywords = parentMetadata.keywords || [];
+  const previousDescription = parentMetadata.description || '';
 
   return {
-    title: publishing.name,
+    title:
+      publishing.titleSeo ??
+      `Купити книги видавництва ${publishing.name}| Магазин дитячих книг МИШКА`,
+    description: publishing.descriptionSeo ?? previousDescription,
     keywords: [
       `${publishing.name}`,
       `книги ${publishing.name}`,
@@ -47,7 +51,7 @@ export async function generateMetadata(
     ],
     openGraph: {
       images: [...previousImages],
-      title: `Видавництво ${publishing.name}| Магазин дитячих книг МИШКА`,
+      title: `Купити книги видавництва ${publishing.name}| Магазин дитячих книг МИШКА`,
     },
   };
 }
@@ -108,6 +112,12 @@ const CategoryPage: React.FC<PublishingPageProps> = async ({
               )}
             </div>
           </div>
+          {publishing.description && (
+            <div
+              className="mt-12 text-justify"
+              dangerouslySetInnerHTML={{ __html: publishing.description }}
+            />
+          )}
         </article>
       </Container>
     </div>

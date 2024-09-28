@@ -29,9 +29,12 @@ export async function generateMetadata(
   const parentMetadata = await parent;
   const previousImages = parentMetadata.openGraph?.images || [];
   const previousKeywords = parentMetadata.keywords || [];
+  const previosDescription = parentMetadata.description || '';
 
   return {
-    title: product.name,
+    title:
+      product.titleSeo ?? `Купити ${product.name}| Магазин дитячих книг Мишка`,
+    description: product.descriptionSeo ?? previosDescription,
     keywords: [
       product.name,
       `купити ${product.name}`,
@@ -42,7 +45,7 @@ export async function generateMetadata(
     ],
     openGraph: {
       images: [product.images[0].url, ...previousImages],
-      title: `${product.name}| Магазин дитячих книг Мишка`,
+      title: `Купити ${product.name}| Магазин дитячих книг Мишка`,
     },
   };
 }

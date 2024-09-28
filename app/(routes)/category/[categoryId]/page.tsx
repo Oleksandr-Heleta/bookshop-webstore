@@ -35,9 +35,13 @@ export async function generateMetadata(
   const parentMetadata = await parent;
   const previousKeywords = parentMetadata.keywords || [];
   const previousImages = parentMetadata.openGraph?.images || [];
+  const previousDescription = parentMetadata.description || '';
 
   return {
-    title: category.name,
+    title:
+      category.titleSeo ??
+      `Купити ${category.name}| Магазин дитячих книг МИШКА`,
+    description: category.descriptionSeo ?? previousDescription,
     keywords: [
       category.name,
       `купити ${category.name}`,
@@ -48,7 +52,7 @@ export async function generateMetadata(
     ],
     openGraph: {
       images: [...previousImages],
-      title: `${category.name}| Магазин дитячих книг МИШКА`,
+      title: `Купити ${category.name}| Магазин дитячих книг МИШКА`,
     },
   };
 }
@@ -75,7 +79,7 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
   const paginatedProducts = products.slice(startIndex, endIndex);
 
   return (
-    <div className="bg-white">
+    <article className="bg-white">
       <Container>
         <Billboard data={category?.billboard} />
         <div className="px-4 sm:px-6 lg:px-8 pb-24">
@@ -108,8 +112,19 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
             </div>
           </div>
         </div>
+        {category?.description && (
+          <div className="px-4 sm:px-6 lg:px-8 pb-24">
+            <h2 className="font-bold text-3xl text-amber-950 mb-6">
+              {category.name}
+            </h2>
+            <div
+              className="mt-12 text-justify"
+              dangerouslySetInnerHTML={{ __html: category.description }}
+            />
+          </div>
+        )}
       </Container>
-    </div>
+    </article>
   );
 };
 

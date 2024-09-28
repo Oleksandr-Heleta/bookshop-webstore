@@ -4,7 +4,6 @@ import { useKeenSlider } from 'keen-slider/react';
 import React from 'react';
 import { useState } from 'react';
 
-import { useInfo } from '@/providers/info-provider';
 import { Billboard as BillboardType } from '@/type';
 
 import Billboard from './billboard';
@@ -34,10 +33,15 @@ function Arrow(props: {
   );
 }
 
-const MainSlider = () => {
-  const { mainbillboards } = useInfo() || {
-    mainbillboards: [{ id: '1', imageUrl: '/baner.jpg', label: 'Мишка' }],
-  };
+interface MainSliderProps {
+  slides: BillboardType[];
+}
+
+const MainSlider = ({ slides }: MainSliderProps) => {
+  const mainbillboards = slides || [
+    { id: '1', imageUrl: '/baner.jpg', label: 'Мишка' },
+  ];
+  // console.log(mainbillboards);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>(

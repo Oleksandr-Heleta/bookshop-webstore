@@ -73,6 +73,12 @@ const CategoryPage: React.FC<SeriaPageProps> = async ({ params }) => {
               {seria.description && <p>{seria.description}</p>}
             </div>
           </div>
+          {seria.description && (
+            <div
+              className="mt-12 text-justify"
+              dangerouslySetInnerHTML={{ __html: seria.description }}
+            />
+          )}
         </article>
       </Container>
     </div>

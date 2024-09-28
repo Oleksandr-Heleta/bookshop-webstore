@@ -110,5 +110,8 @@ export interface Info {
   id: string;
   name: string;
   sale: number;
+  description: string | undefined;
+  titleSeo: string | undefined;
+  descriptionSeo: string | undefined;
   mainbillboards: Billboard[];
 }

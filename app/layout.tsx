@@ -14,8 +14,9 @@ import ToastProvider from '@/providers/toast-provider';
 const font = Montserrat({ subsets: ['cyrillic'] });
 
 export const metadata: Metadata = {
-  title: 'Мишка',
-  description: 'Магазин дитячих книг',
+  title: 'Магазин дитячих книг Мишка',
+  description:
+    'Широкий асортимент дитячих книг для розвитку та зростання маленьких читачів',
   // base: process.env.DOMAIN,
   metadataBase:
     process.env.NODE_ENV === 'production'
