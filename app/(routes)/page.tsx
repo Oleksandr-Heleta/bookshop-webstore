@@ -55,6 +55,7 @@ const HomePage = async () => {
   });
   const storeinfo = await getStoreInfo();
   // const billboard = await getBillboard('cf4c6ea7-2b8d-46f8-95b4-9ada229145b9');
+  // console.log(storeinfo);
 
   return (
     <Container>

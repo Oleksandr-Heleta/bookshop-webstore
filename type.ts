@@ -36,6 +36,7 @@ export interface Product {
   isFeatured: boolean;
   isArchived: boolean;
   isLowQuantity: boolean;
+  video: string | undefined;
   isbn: string | undefined;
   titleSeo: string | undefined;
   descriptionSeo: string | undefined;

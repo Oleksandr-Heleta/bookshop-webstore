@@ -9,7 +9,7 @@ const nextConfig = {
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || '',
   output: 'standalone',
   images: {
-    domains: ['res.cloudinary.com', 'mouse-admin.com.ua', 'mouse-kidsbooks.com.ua', 'localhost'],
+    domains: ['res.cloudinary.com', 'mouse-admin.com.ua', 'mouse-kidsbooks.com.ua', 'img.youtube.com', 'localhost'],
   },
 };
 

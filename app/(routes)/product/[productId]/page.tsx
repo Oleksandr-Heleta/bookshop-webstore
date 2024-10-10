@@ -76,7 +76,7 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
               )}
             </div>
             {/* <Gallery images={product?.images} /> */}
-            <Slider slides={product?.images} />
+            <Slider slides={product?.images} video={product?.video} />
             <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
               <Info data={product}>
                 <section className="flex items-center flex-wrap gap-x-2 sm:gap-x-4 sm:flex-nowrap">
@@ -152,6 +152,11 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
               </Info>
             </div>
           </div>
+          {/* <div className="mt-10 sm:mt-16">
+            <YouTubeShort
+              videoId={'ssXDFCmRpeQ'}
+            />
+          </div> */}
           <hr className="my-10 " />
           <ProductList
             title="Можливо зацікавить"

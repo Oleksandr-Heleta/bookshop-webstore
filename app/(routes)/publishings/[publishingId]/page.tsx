@@ -69,6 +69,8 @@ const CategoryPage: React.FC<PublishingPageProps> = async ({
     ageGroupId: searchParams.ageGroupId,
   });
 
+  console.log(params.publishingId, products);
+
   const ageGroups = await getAgeGroups();
   const categories = await getCategories();
   const publishing = await getPublishing(params.publishingId);

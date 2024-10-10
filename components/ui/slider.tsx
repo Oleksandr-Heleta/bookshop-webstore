@@ -4,6 +4,7 @@ import { useKeenSlider } from 'keen-slider/react';
 import Image from 'next/image';
 import { useState } from 'react';
 
+import YouTubeShort from '@/components/ui/youtube-short';
 import useImageModal from '@/hooks/use-image-modal';
 import { Image as ImageType } from '@/type';
 
@@ -68,9 +69,10 @@ function Arrow(props: {
 
 type SliderProps = {
   slides: ImageType[];
+  video?: string;
 };
 
-const Slider: React.FC<SliderProps> = ({ slides }) => {
+const Slider: React.FC<SliderProps> = ({ slides, video }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [sliderRef, instanceRef] = useKeenSlider({
@@ -122,7 +124,17 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
             />
           </div>
         ))}
-
+        {video && (
+          <div
+            key={slides.length}
+            className="keen-slider__slide absolute h-full w-full aspect-square inset-0 overflow-hidden rounded-md "
+          >
+            <YouTubeShort
+              videoId={video}
+              shouldPlay={currentSlide == slides.length}
+            />
+          </div>
+        )}
         {loaded && instanceRef.current && (
           <>
             <Arrow
@@ -163,6 +175,19 @@ const Slider: React.FC<SliderProps> = ({ slides }) => {
             />
           </div>
         ))}
+        {video && (
+          <div
+            key={slides.length}
+            className="keen-slider__slide cursor-pointer aspect-square "
+          >
+            <Image
+              src={`https://img.youtube.com/vi/${video}/hqdefault.jpg`}
+              alt="Image"
+              fill
+              className="object-contain object-center"
+            />
+          </div>
+        )}
       </div>
     </div>
   );
