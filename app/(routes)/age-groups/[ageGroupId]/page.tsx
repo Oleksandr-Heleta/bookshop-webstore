@@ -4,13 +4,7 @@ import { getAgeGroup } from '@/actions/get-age-groups';
 import getCategories from '@/actions/get-categories';
 import getProducts from '@/actions/get-products';
 import getPublishings from '@/actions/get-publishing';
-import Container from '@/components/ui/container';
-import NoResults from '@/components/ui/no-results';
-import Pagination from '@/components/ui/pagination';
-import ProductCard from '@/components/ui/product-card';
-
-import Filter from './components/filter';
-import MobileFilters from './components/mobile-filters';
+import ProductListPage from '@/components/product-list-page';
 
 export const revalidate = 0;
 
@@ -29,9 +23,7 @@ export async function generateMetadata(
   { params }: AgePageProps,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  // console.log(params);
   const ageGroup = await getAgeGroup(params.ageGroupId);
-
   const parentMetadata = await parent;
   const previousImages = parentMetadata.openGraph?.images || [];
   const previousKeywords = parentMetadata.keywords || [];
@@ -56,10 +48,7 @@ export async function generateMetadata(
   };
 }
 
-const CategoryPage: React.FC<AgePageProps> = async ({
-  params,
-  searchParams,
-}) => {
+const AgePage: React.FC<AgePageProps> = async ({ params, searchParams }) => {
   const pageSize = 20;
   const currentPage = parseInt(searchParams.page || '1', 10);
 
@@ -73,58 +62,16 @@ const CategoryPage: React.FC<AgePageProps> = async ({
   const categories = await getCategories();
   const ageGroup = await getAgeGroup(params.ageGroupId);
 
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  const paginatedProducts = products.slice(startIndex, endIndex);
   return (
-    <div className="bg-white">
-      <Container>
-        <article className="px-4 sm:px-6 lg:px-8 pb-24 pt-4">
-          <div className="lg:grid lg:grid-cols-5 lg:gap-x-8">
-            <MobileFilters categories={categories} publishings={publishings} />
-            <div className="hidden lg:block">
-              <Filter
-                valueKey="categoryId"
-                name="Категорії"
-                data={categories}
-              />
-              <Filter
-                valueKey="publishingId"
-                name="Видавництво"
-                data={publishings}
-              />
-            </div>
-            <div className="mt-6 lg:col-span-4 lg:mt-0">
-              <h1 className="font-bold text-3xl text-amber-950 mb-6">
-                Книги для віку {ageGroup.name} років
-              </h1>
-              {paginatedProducts.length === 0 && <NoResults />}
-              <ul className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {paginatedProducts.map((product) => (
-                  <li key={product.id} className="flex">
-                    <ProductCard data={product} />
-                  </li>
-                ))}
-              </ul>
-              {products.length >= pageSize && (
-                <Pagination
-                  total={products.length}
-                  currentPage={currentPage}
-                  pageSize={pageSize}
-                />
-              )}
-            </div>
-          </div>
-          {ageGroup.description && (
-            <div
-              className="mt-12 text-justify"
-              dangerouslySetInnerHTML={{ __html: ageGroup.description }}
-            />
-          )}
-        </article>
-      </Container>
-    </div>
+    <ProductListPage
+      title={`Книги для віку ${ageGroup.name} років`}
+      description={ageGroup.description ?? undefined}
+      products={products}
+      filters={{ categories, publishings }}
+      currentPage={currentPage}
+      pageSize={pageSize}
+    />
   );
 };
 
-export default CategoryPage;
+export default AgePage;

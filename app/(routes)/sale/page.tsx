@@ -4,13 +4,7 @@ import getAgeGroups from '@/actions/get-age-groups';
 import getCategories from '@/actions/get-categories';
 import getProducts from '@/actions/get-products';
 import getPublishings from '@/actions/get-publishing';
-import Container from '@/components/ui/container';
-import NoResults from '@/components/ui/no-results';
-import Pagination from '@/components/ui/pagination';
-import ProductCard from '@/components/ui/product-card';
-
-import Filter from './components/filter';
-import MobileFilters from './components/mobile-filters';
+import ProductListPage from '@/components/product-list-page';
 
 export const revalidate = 0;
 
@@ -70,56 +64,15 @@ const SalePage: React.FC<SalePageProps> = async ({ searchParams }) => {
   const categories = await getCategories();
   const publishings = await getPublishings();
 
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  const paginatedProducts = products.slice(startIndex, endIndex);
-
   return (
-    <div className="bg-white">
-      <Container>
-        <article className="px-4 sm:px-6 lg:px-8 pb-24 pt-4">
-          <div className="lg:grid lg:grid-cols-5 lg:gap-x-8">
-            <MobileFilters
-              ageGroups={ageGroups}
-              categories={categories}
-              publishings={publishings}
-            />
-            <div className="hidden lg:block">
-              <Filter
-                valueKey="categoryId"
-                name="Категорії"
-                data={categories}
-              />
-              <Filter valueKey="ageGroupId" name="Вік" data={ageGroups} />
-              <Filter
-                valueKey="publishingId"
-                name="Видавництво"
-                data={publishings}
-              />
-            </div>
-
-            <div className="mt-6 lg:col-span-4 lg:mt-0">
-              <h1 className="font-bold text-3xl text-amber-950 mb-6">Акції</h1>
-              {paginatedProducts.length === 0 && <NoResults />}
-              <ul className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {paginatedProducts.map((product) => (
-                  <li key={product.id} className="flex">
-                    <ProductCard data={product} />
-                  </li>
-                ))}
-              </ul>
-              {products.length >= pageSize && (
-                <Pagination
-                  total={products.length}
-                  currentPage={currentPage}
-                  pageSize={pageSize}
-                />
-              )}
-            </div>
-          </div>
-        </article>
-      </Container>
-    </div>
+    <ProductListPage
+      title="Акції"
+      description={undefined}
+      products={products}
+      filters={{ ageGroups, categories, publishings }}
+      currentPage={currentPage}
+      pageSize={pageSize}
+    />
   );
 };
 

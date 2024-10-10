@@ -6,16 +6,18 @@ import { useState } from 'react';
 
 import Button from '@/components/ui/button';
 import IconButton from '@/components/ui/icon-button';
-import { Category, Publishing } from '@/type';
+import { AgeGroup, Category, Publishing } from '@/type';
 
 import Filter from './filter';
 
 interface MobileFiltersProps {
-  categories: Category[];
-  publishings: Publishing[];
+  ageGroups?: AgeGroup[];
+  categories?: Category[];
+  publishings?: Publishing[];
 }
 
 const MobileFilters: React.FC<MobileFiltersProps> = ({
+  ageGroups,
   categories,
   publishings,
 }) => {
@@ -23,6 +25,7 @@ const MobileFilters: React.FC<MobileFiltersProps> = ({
 
   const onOpen = () => setOpen(true);
   const onClose = () => setOpen(false);
+
   return (
     <>
       <Button onClick={onOpen} className="flex items-center gap-x-2 lg:hidden">
@@ -44,16 +47,23 @@ const MobileFilters: React.FC<MobileFiltersProps> = ({
             </div>
 
             <div className="p-4">
-              <Filter
-                valueKey="categoryId"
-                name="Категорії"
-                data={categories}
-              />
-              <Filter
-                valueKey="publishingId"
-                name="Видавництво"
-                data={publishings}
-              />
+              {categories && (
+                <Filter
+                  valueKey="categoryId"
+                  name="Категорії"
+                  data={categories}
+                />
+              )}
+              {ageGroups && (
+                <Filter valueKey="ageGroupId" name="Вік" data={ageGroups} />
+              )}
+              {publishings && (
+                <Filter
+                  valueKey="publishingId"
+                  name="Видавництво"
+                  data={publishings}
+                />
+              )}
             </div>
           </Dialog.Panel>
         </div>

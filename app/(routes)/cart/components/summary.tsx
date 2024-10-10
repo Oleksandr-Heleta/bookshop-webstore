@@ -110,14 +110,6 @@ const Summary = () => {
     resolver: zodResolver(formSchema),
   });
 
-  // const methods = useForm({
-  //   resolver: zodResolver(formSchema),
-  // });
-
-  // useEffect(() => {
-  //   console.log(errors);
-  // }, [errors]);
-
   useEffect(() => {
     const orderId = searchParams.get('orderId');
     if (orderId) {

@@ -23,6 +23,7 @@ const Filter: React.FC<FilterProps> = ({ data, name, valueKey }) => {
     const query = {
       ...current,
       [valueKey]: id,
+      page: null,
     };
 
     if (current[valueKey] === id) {

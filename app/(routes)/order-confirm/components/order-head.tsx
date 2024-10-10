@@ -14,7 +14,11 @@ const OrderHead = ({ order }: OrderHeadProps) => {
   //   console.log(order);
 
   if (order) {
-    if (order.orderStatus === 'paid' || order.orderState !== 'online') {
+    if (
+      order.isPaid ||
+      order.orderState === 'byIBAN' ||
+      order.orderState === 'afterrecive'
+    ) {
       removeAll();
     }
     return (
@@ -22,7 +26,7 @@ const OrderHead = ({ order }: OrderHeadProps) => {
         <h1 className="text-3xl font-bold text-amber-950">
           Ваше замовлення прийнято
         </h1>
-        {order.orderStatus === 'failed' && (
+        {order.orderState === 'failed' && (
           <p className="font-semibold text-red-600 my-4">
             Оплата не пройшла, найближчим часом з Вами зв&apos;яжеться менеджер
           </p>
