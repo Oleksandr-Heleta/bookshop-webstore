@@ -1,4 +1,4 @@
-const URL = `${process.env.NEXT_PUBLIC_API_URL}/ykrpost`;
+const URL = `${process.env.NEXT_PUBLIC_API_URL}/ukr-post`;
 
 type queryDataType = {
   area?: string;
