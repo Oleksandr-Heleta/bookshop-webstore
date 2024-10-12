@@ -26,8 +26,18 @@ const Navbar = async () => {
             publishings={publishings}
           />
           <Link href="/" className="ml-4 flex lg:ml-0 gap-x-2">
-            <Image src="/logo.png" alt="logo" width={50} height={50} />
-            <Image src="/name.png" alt="logo" width={100} height={50} />
+            <Image
+              src="/logo.png"
+              alt="Лого магазину - Мишка читає книжку"
+              width={50}
+              height={50}
+            />
+            <Image
+              src="/name.png"
+              alt="Назва магазину - Мишка магазин дитячих книг"
+              width={100}
+              height={50}
+            />
             {/* <div className='w-[50px]'> */}
             <h2 className="hidden align-middle text-amber-950 text-xl font-semibold uppercase">
               Мишка

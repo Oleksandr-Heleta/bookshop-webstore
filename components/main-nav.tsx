@@ -69,6 +69,7 @@ const MainNav: React.FC<MainNavProps> = ({
       </Link>
       {/* <Search className='' /> */}
       <Button
+        aria-label="Пошук за назвою"
         onClick={handleOpenSearch}
         className="flex items-center rounded-full bg-amber-950 px-4 py-2"
       >

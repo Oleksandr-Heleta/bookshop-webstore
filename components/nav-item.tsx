@@ -25,7 +25,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ links, name }) => {
                 '-mr-1 ml-2 h-5 w-5 text-amber-950',
                 open && 'transform rotate-180 text-amber-800'
               )}
-              aria-hidden="true"
+              aria-label={`Відкрити наявні ${name}`}
             />
           </Menu.Button>
 
@@ -45,6 +45,9 @@ const MenuItem: React.FC<MenuItemProps> = ({ links, name }) => {
                   as="a"
                   key={link.href}
                   href={link.href}
+                  disabled={link.active}
+                  aria-current={link.active ? 'page' : undefined}
+                  aria-label={link.label}
                   className={cn(
                     'block p-3 text-sm font-medium transition-colors  hover:text-amber-800 hover:bg-amber-200',
                     link.active ? 'text-amber-800' : 'text-amber-950'

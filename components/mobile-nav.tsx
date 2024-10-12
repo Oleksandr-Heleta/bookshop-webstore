@@ -40,6 +40,7 @@ const MobileNav: React.FC<MobileNavProps> = ({
   return (
     <>
       <Button
+      aria-label='Відкрити меню'
         onClick={onOpen}
         className="flex items-center gap-x-2 bg-amber-950 text-white lg:hidden"
       >

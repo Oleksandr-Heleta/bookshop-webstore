@@ -31,8 +31,18 @@ const Footer = () => {
     <footer className="bg-amber-200 border-t">
       <div className="container flex flex-col md:flex-row justify-around items-center mx-auto py-5">
         <div className="flex gap-2">
-          <Image src="/logo.png" alt="logo" width={100} height={100} />
-          <Image src="/name.png" alt="logo" width={200} height={100} />
+          <Image
+            src="/logo.png"
+            alt="Лого магазину - Мишка читає книжку"
+            width={100}
+            height={100}
+          />
+          <Image
+            src="/name.png"
+            alt="Назва магазину - Мишка магазин дитячих книг"
+            width={200}
+            height={100}
+          />
           {/* <p className="align-middle text-amber-950 text-2xl font-semibold uppercase">
             Мишка
           </p> */}
