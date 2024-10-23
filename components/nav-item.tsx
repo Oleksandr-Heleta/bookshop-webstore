@@ -25,7 +25,7 @@ const MenuItem: React.FC<MenuItemProps> = ({ links, name }) => {
                 '-mr-1 ml-2 h-5 w-5 text-amber-950',
                 open && 'transform rotate-180 text-amber-800'
               )}
-              aria-label={`Відкрити наявні ${name}`}
+              aria-hidden="true"
             />
           </Menu.Button>
 

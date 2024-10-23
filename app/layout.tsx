@@ -84,23 +84,21 @@ export default function RootLayout({
           name="google-site-verification"
           content="rtC2Y-KwU_b3dFPCMXUietWdKtzJ9PWNMO-fe1e1bIk"
         />
-        {/* <!-- Google tag (gtag.js) -->  */}
-        <Script
-          strategy="beforeInteractive"
-          src="https://www.googletagmanager.com/gtag/js?id=AW-16704672073"
-        />
+        {/*<!-- Google Tag Manager --> */}
         <Script
           id="gtag-init"
           strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'AW-16704672073');
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-WK55MZ3Q');
             `,
           }}
         />
+        {/* <!-- End Google Tag Manager --> */}
         {/* <base href={process.env.DOMAIN} /> */}
         {/* <meta name='viewport' content='width=device-width, initial-scale=1' /> */}
         <link
@@ -122,6 +120,16 @@ export default function RootLayout({
         />
       </head>
       <body className={font.className}>
+        {/* <!-- Google Tag Manager (noscript) --> */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-WK55MZ3Q"
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+          ></iframe>
+        </noscript>
+        {/* <!-- End Google Tag Manager (noscript) --> */}
         <ModalProvider />
         <ToastProvider />
         <InfoProvider>

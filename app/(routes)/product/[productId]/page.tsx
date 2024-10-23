@@ -162,7 +162,9 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
             title="Можливо зацікавить"
             items={
               product.suggestionProducts.length !== 0
-                ? product.suggestionProducts
+                ? product.suggestionProducts.filter(
+                    (p) => p.id !== product.id && p.isArchived === false
+                  )
                 : suggestedProducts
                     .slice(0, 5)
                     .filter((p) => p.id !== product.id)
