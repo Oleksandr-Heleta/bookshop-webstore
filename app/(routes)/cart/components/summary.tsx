@@ -12,7 +12,7 @@ import * as z from 'zod';
 import getOrder from '@/actions/get-order';
 import Address from '@/components/ui/address';
 import Button from '@/components/ui/button';
-import Checkbox from '@/components/ui/checkboks';
+import Checkbox from '@/components/ui/checkbox';
 import Currency from '@/components/ui/currency';
 import Input from '@/components/ui/input';
 import RadioInput from '@/components/ui/radio-input';
@@ -364,11 +364,19 @@ const Summary = () => {
             ></RadioInput>
           </div>
           <div className="w-full">
-            <Checkbox checked={call} onChange={setCall} name="call" />
+            <Checkbox
+              checked={call}
+              onCheckedChange={(checked) => setCall(checked === true)}
+              name="call"
+            />
             <span className="p-2 text-sm">Зателефонувати мені</span>
           </div>
           <div className="w-full">
-            <Checkbox checked={agree} onChange={setAgree} name="agree" />
+            <Checkbox
+              checked={agree}
+              onCheckedChange={(checked) => setAgree(checked === true)}
+              name="agree"
+            />
             <span className="p-2 text-sm">
               Я погоджуюсь з{' '}
               <Link

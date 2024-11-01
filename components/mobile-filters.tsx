@@ -9,6 +9,7 @@ import IconButton from '@/components/ui/icon-button';
 import { AgeGroup, Category, Publishing } from '@/type';
 
 import Filter from './filter';
+import { Filters } from './filters';
 
 interface MobileFiltersProps {
   ageGroups?: AgeGroup[];
@@ -47,7 +48,11 @@ const MobileFilters: React.FC<MobileFiltersProps> = ({
             </div>
 
             <div className="p-4">
-              {categories && (
+              <Filters
+                className="text-amber-950 mx-5"
+                filtersData={{ ageGroups, categories, publishings }}
+              />
+              {/* {categories && (
                 <Filter
                   valueKey="categoryId"
                   name="Категорії"
@@ -63,7 +68,7 @@ const MobileFilters: React.FC<MobileFiltersProps> = ({
                   name="Видавництво"
                   data={publishings}
                 />
-              )}
+              )} */}
             </div>
           </Dialog.Panel>
         </div>

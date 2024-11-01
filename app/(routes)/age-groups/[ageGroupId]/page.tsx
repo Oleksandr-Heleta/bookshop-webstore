@@ -1,4 +1,5 @@
 import { Metadata, ResolvingMetadata } from 'next';
+import qs from 'qs';
 
 import { getAgeGroup } from '@/actions/get-age-groups';
 import getCategories from '@/actions/get-categories';
@@ -51,11 +52,20 @@ export async function generateMetadata(
 const AgePage: React.FC<AgePageProps> = async ({ params, searchParams }) => {
   const pageSize = 20;
   const currentPage = parseInt(searchParams.page || '1', 10);
+  const searchItems = qs.parse(searchParams, {
+    comma: true,
+  });
 
   const products = await getProducts({
     ageGroupId: params.ageGroupId,
-    categoryId: searchParams.categoryId,
-    publishingId: searchParams.publishingId,
+    categories: Array.isArray(searchItems.categories)
+      ? searchItems.categories
+      : [searchItems.categories],
+    publishings: Array.isArray(searchItems.publishings)
+      ? searchItems.publishings
+      : [searchItems.publishings],
+    maxPrice: Number(searchItems.priceTo),
+    minPrice: Number(searchItems.priceFrom),
   });
 
   const publishings = await getPublishings();

@@ -8,6 +8,7 @@ import Pagination from '@/components/ui/pagination';
 import ProductCard from '@/components/ui/product-card';
 
 import Filter from './filter';
+import { Filters } from './filters';
 import MobileFilters from './mobile-filters';
 
 interface ProductListPageProps {
@@ -41,8 +42,9 @@ const ProductListPage: React.FC<ProductListPageProps> = ({
         <article className="px-4 sm:px-6 lg:px-8 pb-24 pt-4">
           <div className="lg:grid lg:grid-cols-5 lg:gap-x-8">
             <MobileFilters {...filters} />
-            <div className="hidden lg:block">
-              {filters.categories && (
+            <div className="hidden lg:block ">
+              <Filters className="text-amber-950" filtersData={filters} />
+              {/* {filters.categories && (
                 <Filter
                   valueKey="categoryId"
                   name="Категорії"
@@ -62,7 +64,7 @@ const ProductListPage: React.FC<ProductListPageProps> = ({
                   name="Видавництво"
                   data={filters.publishings}
                 />
-              )}
+              )} */}
             </div>
             <div className="mt-6 lg:col-span-4 lg:mt-0">
               <h1 className="font-bold text-3xl text-amber-950 mb-6">

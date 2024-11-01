@@ -6,6 +6,9 @@ const URL = `${process.env.NEXT_PUBLIC_API_URL}/products`;
 
 interface Query {
   categoryId?: string;
+  categories?: string[];
+  ageGroups?: string[];
+  publishings?: string[];
   ageGroupId?: string;
   publishingId?: string;
   seriaId?: string;
@@ -21,6 +24,9 @@ const getProducts = async (query: Query): Promise<Product[]> => {
   const url = qs.stringifyUrl({
     url: URL,
     query: {
+      categories: query.categories,
+      ageGroups: query.ageGroups,
+      publishings: query.publishings,
       publishingId: query.publishingId,
       ageGroupId: query.ageGroupId,
       categoryId: query.categoryId,
@@ -34,7 +40,7 @@ const getProducts = async (query: Query): Promise<Product[]> => {
     },
   });
 
-  // console.log(url);
+  console.log(url);
   const res = await fetch(url);
   const data = await res.json();
   return data.data;

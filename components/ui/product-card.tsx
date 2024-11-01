@@ -93,6 +93,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
         <Image
           src={data?.images?.[0]?.url}
           fill
+          loading="lazy"
           alt={`${data.name} титульна сторінка`}
           className="aspect-square object-contain rounded-md "
         />

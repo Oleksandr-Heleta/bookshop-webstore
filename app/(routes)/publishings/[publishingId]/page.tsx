@@ -1,4 +1,5 @@
 import { Metadata, ResolvingMetadata } from 'next';
+import qs from 'qs';
 
 import getAgeGroups from '@/actions/get-age-groups';
 import getCategories from '@/actions/get-categories';
@@ -13,8 +14,8 @@ interface PublishingPageProps {
     publishingId: string;
   };
   searchParams: {
-    ageGroupId: string;
-    categoryId: string;
+    ageGroups: string;
+    categories: string;
     page?: string;
   };
 }
@@ -53,12 +54,23 @@ const PublishingPage: React.FC<PublishingPageProps> = async ({
   searchParams,
 }) => {
   const pageSize = 20;
-  const currentPage = parseInt(searchParams.page || '1', 10);
 
+  const searchItems = qs.parse(searchParams, {
+    comma: true,
+  });
+  const currentPage = parseInt(searchParams.page || '1', 10);
+  // console.log(searchItems);
   const products = await getProducts({
     publishingId: params.publishingId,
-    categoryId: searchParams.categoryId,
-    ageGroupId: searchParams.ageGroupId,
+
+    categories: Array.isArray(searchItems.categories)
+      ? searchItems.categories
+      : [searchItems.categories],
+    ageGroups: Array.isArray(searchItems.ageGroups)
+      ? searchItems.ageGroups
+      : [searchItems.ageGroups],
+    maxPrice: Number(searchItems.priceTo),
+    minPrice: Number(searchItems.priceFrom),
   });
 
   const ageGroups = await getAgeGroups();
