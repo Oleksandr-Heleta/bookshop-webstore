@@ -72,8 +72,8 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
     minPrice: Number(searchItems.priceFrom),
   });
 
-  const ageGroups = await getAgeGroups();
-  const publishings = await getPublishings();
+  const ageGroups = await getAgeGroups({ categoryId: params.categoryId });
+  const publishings = await getPublishings({ categoryId: params.categoryId });
   const category = await getCategory(params.categoryId);
 
   return (

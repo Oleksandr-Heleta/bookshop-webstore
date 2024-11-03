@@ -49,7 +49,7 @@ const MobileFilters: React.FC<MobileFiltersProps> = ({
 
             <div className="p-4">
               <Filters
-                className="text-amber-950 mx-5"
+                className="text-amber-950 mx-5 mt-0"
                 filtersData={{ ageGroups, categories, publishings }}
               />
               {/* {categories && (

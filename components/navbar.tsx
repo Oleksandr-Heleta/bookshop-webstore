@@ -13,9 +13,9 @@ import MobileNav from './mobile-nav';
 export const revalidate = 0;
 
 const Navbar = async () => {
-  const categories = await getCategories();
-  const ageGroups = await getAgeGroups();
-  const publishings = await getPublishings();
+  const categories = await getCategories({});
+  const ageGroups = await getAgeGroups({});
+  const publishings = await getPublishings({});
   return (
     <header className="fixed top-0 left-0 right-0 z-20 md:relative border-b bg-amber-200">
       <Container>

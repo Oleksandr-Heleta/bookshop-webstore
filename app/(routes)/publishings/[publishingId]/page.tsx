@@ -73,8 +73,8 @@ const PublishingPage: React.FC<PublishingPageProps> = async ({
     minPrice: Number(searchItems.priceFrom),
   });
 
-  const ageGroups = await getAgeGroups();
-  const categories = await getCategories();
+  const ageGroups = await getAgeGroups({ publishingId: params.publishingId });
+  const categories = await getCategories({ publishingId: params.publishingId });
   const publishing = await getPublishing(params.publishingId);
 
   return (
