@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
+import { X } from 'lucide-react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { ChangeEvent, useEffect, useState } from 'react';
@@ -14,6 +15,7 @@ import Address from '@/components/ui/address';
 import Button from '@/components/ui/button';
 import Checkbox from '@/components/ui/checkbox';
 import Currency from '@/components/ui/currency';
+import IconButton from '@/components/ui/icon-button';
 import Input from '@/components/ui/input';
 import RadioInput from '@/components/ui/radio-input';
 import useCart from '@/hooks/use-cart';
@@ -70,10 +72,21 @@ export const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
+const CustomToast = ({ message }: { message: string }) => (
+  <div className="flex items-center justify-between gap-2 bg-white p-2 rounded-xl shadow-lg shadow-red-300">
+    <p>{message}</p>
+    <IconButton
+      onClick={() => toast.dismiss()}
+      className=""
+      icon={<X size={15} />}
+    />
+  </div>
+);
+
 const Summary = () => {
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
   const items = useCart((state) => state.items);
-  const removeAll = useCart((state) => state.removeAll);
+  // const removeAll = useCart((state) => state.removeAll);
   const { sale } = useInfo() || { sale: 0 };
 
   const [postType, setPostType] = useState(novaposhta);
@@ -110,40 +123,6 @@ const Summary = () => {
     resolver: zodResolver(formSchema),
   });
 
-  useEffect(() => {
-    const orderId = searchParams.get('orderId');
-    if (orderId) {
-      const success = async () => {
-        try {
-          const response = await getOrder(orderId);
-          // console.log('Full response:', response);
-          if (
-            response.orderStatus === 'paid' ||
-            response.orderState !== 'online'
-          ) {
-            // console.log(response.orderStatus, response.orderState);
-            toast.success('Замовлення успішне', {
-              duration: 10000,
-            });
-            removeAll();
-          }
-
-          if (response.orderStatus === 'failed') {
-            toast.error('Щось пішло не за планом', {
-              duration: 10000,
-            });
-          }
-        } catch (error) {
-          console.error(error);
-          toast.error('Щось пішло не за планом', {
-            duration: 10000,
-          });
-        }
-      };
-      success();
-    }
-  }, [searchParams, removeAll]);
-
   const totalPrice = items.reduce((total: number, item) => {
     const salePercent = item.product.isSale ? item.product.sale : sale;
     const price =
@@ -174,14 +153,59 @@ const Summary = () => {
       if (response.status === 200) {
         // Успішна відповідь, перенаправлення користувача
         window.location = response.data.url;
-      } else {
-        // Обробка відповіді з помилкою
-        console.error('Error during checkout:', response.statusText);
-        // Тут можна додати відображення повідомлення користувачу
       }
     } catch (error) {
-      console.error('Checkout failed:', error);
-      // Тут можна додати відображення повідомлення користувачу
+      // console.log(axios.isAxiosError(error), error);
+      if (axios.isAxiosError(error) && error.response) {
+        const { status, data } = error.response;
+
+        let productName;
+
+        if (data.productId) {
+          productName = items.find((item) => item.productId === data.productId)
+            ?.product.name;
+        }
+
+        if (status === 404) {
+          toast.custom(
+            <CustomToast message={`"${productName}" не знайдено на складі`} />,
+            {
+              duration: Infinity,
+            }
+          );
+        } else if (status === 410) {
+          toast.custom(
+            <CustomToast message={`"${productName}" немає в наявності`} />,
+            {
+              duration: Infinity,
+            }
+          );
+        } else if (status === 409) {
+          toast.custom(
+            <CustomToast
+              message={`В наявності "${productName}" менше ніж Ви замовили`}
+            />,
+            {
+              duration: Infinity,
+            }
+          );
+        } else if (status === 400) {
+          toast.custom(
+            <CustomToast message={`Інформація по замовленню не валідна`} />,
+            {
+              duration: Infinity,
+            }
+          );
+        }
+
+        console.error('Checkout failed:', data.message);
+      } else {
+        console.error('Checkout failed:', error);
+        // Обробка інших помилок
+        toast.custom(<CustomToast message={'Щось пішло не за планом'} />, {
+          duration: Infinity,
+        });
+      }
     } finally {
       setSending(false);
     }
