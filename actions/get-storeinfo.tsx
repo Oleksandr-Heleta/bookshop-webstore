@@ -21,6 +21,9 @@ const getStoreInfo = async (): Promise<Info> => {
       id: 'string',
       name: 'string',
       sale: 0,
+      description: '',
+      titleSeo: '',
+      descriptionSeo: '',
       mainbillboards: [
         {
           id: 'string',
