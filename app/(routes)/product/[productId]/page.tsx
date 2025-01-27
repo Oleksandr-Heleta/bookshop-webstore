@@ -1,4 +1,5 @@
 import { Metadata, ResolvingMetadata } from 'next';
+import Head from 'next/head';
 import Link from 'next/link';
 
 import getProduct from '@/actions/get-product';
@@ -7,6 +8,7 @@ import Info from '@/components/info';
 import ProductList from '@/components/product-list';
 import Container from '@/components/ui/container';
 import Slider from '@/components/ui/slider';
+import { generateProductSchema } from '@/lib/generate-product-shema';
 import { ProdAgeGroup, ProdCategory } from '@/type';
 
 export const revalidate = 0;
@@ -57,6 +59,9 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
   });
 
   const title = product.titleSheet == 'Solid' ? 'Тверда' : "М'яка";
+
+  const productSchema = generateProductSchema(product);
+  // console.log(productSchema);
 
   return (
     <div className="bg-white">
@@ -173,6 +178,10 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
           />
         </article>
       </Container>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
     </div>
   );
 };

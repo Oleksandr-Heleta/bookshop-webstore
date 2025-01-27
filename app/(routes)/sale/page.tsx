@@ -60,9 +60,9 @@ const SalePage: React.FC<SalePageProps> = async ({ searchParams }) => {
     ageGroupId: searchParams.ageGroupId,
   });
 
-  const ageGroups = await getAgeGroups();
-  const categories = await getCategories();
-  const publishings = await getPublishings();
+  const ageGroups = await getAgeGroups({});
+  const categories = await getCategories({});
+  const publishings = await getPublishings({});
 
   return (
     <ProductListPage

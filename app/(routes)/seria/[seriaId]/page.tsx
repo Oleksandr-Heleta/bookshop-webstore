@@ -70,7 +70,6 @@ const CategoryPage: React.FC<SeriaPageProps> = async ({ params }) => {
                   </li>
                 ))}
               </ul>
-              {seria.description && <p>{seria.description}</p>}
             </div>
           </div>
           {seria.description && (
