@@ -44,6 +44,9 @@ export const formSchema = z.object({
   }),
   orderStatus: z.string().min(1),
   payment: z.string().min(1),
+  totalPrice: z.number().min(200, {
+    message: 'Мінімальна сума замовлення 200 грн',
+  }),
   phone: z.string().refine((value) => phoneRegex.test(value), {
     message: 'Телефон повинен бути у форматі +380000000000',
   }),
@@ -108,6 +111,7 @@ const Summary = () => {
       name: '',
       surname: '',
       orderStatus: 'new',
+      totalPrice: 0,
       payment: 'byIBAN',
       isPaid: false,
       call: false,
@@ -265,16 +269,24 @@ const Summary = () => {
     <div className="mt-16 rounded-lg bg-amber-200 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
       <h2 className="text-lg font-semibold text-amber-950">Замовлення</h2>
       <div className="mt-6 space-y-4">
-        <div className="flex items-center justify-between border-t border-amber-800 pt-4">
-          <div className="text-base font-medium text-amber-950">До сплати</div>
-          <Currency value={totalPrice} />
-        </div>
-
-        <form
-          onSubmit={handleSubmit(onCheckout)}
-          className="mt-6 text-amber-950"
-        >
-          <div className="flex flex-col sm:flex-row lg:flex-col gap-2 ">
+        <form onSubmit={handleSubmit(onCheckout)} className=" text-amber-950">
+          <div className="flex items-center justify-between border-t border-amber-800 pt-4 ">
+            <div className="text-base font-medium text-amber-950">
+              До сплати
+            </div>
+            <Currency value={totalPrice} />
+            <Input
+              type="hidden"
+              {...register('totalPrice', {
+                required: "Поле є обов'язковим",
+              })}
+              value={totalPrice}
+            />
+          </div>
+          {errors.totalPrice && (
+            <p className="text-red-500">{errors.totalPrice.message}</p>
+          )}
+          <div className="flex flex-col sm:flex-row lg:flex-col gap-2 mt-6 ">
             <div className="basis-1/2">
               <Input
                 {...register('name', { required: "Поле є обов'язковим" })}

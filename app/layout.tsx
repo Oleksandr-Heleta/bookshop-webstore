@@ -23,7 +23,6 @@ export const metadata: Metadata = {
       ? new URL(`${process.env.DOMAIN}`)
       : new URL('http://localhost:3000'),
   referrer: 'origin-when-cross-origin',
-  viewport: 'width=device-width, initial-scale=1, maximum-scale=5',
 
   robots: {
     index: true,
@@ -69,6 +68,9 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
   themeColor: '#fde68a',
 };
 
