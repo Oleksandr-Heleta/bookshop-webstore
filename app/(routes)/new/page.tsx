@@ -1,15 +1,11 @@
 import { Metadata, ResolvingMetadata } from 'next';
+import qs from 'qs';
 
 import getAgeGroups from '@/actions/get-age-groups';
 import getCategories from '@/actions/get-categories';
 import getProducts from '@/actions/get-products';
 import getPublishings from '@/actions/get-publishing';
-import { Filters } from '@/components/filters';
-import MobileFilters from '@/components/mobile-filters';
-import Container from '@/components/ui/container';
-import NoResults from '@/components/ui/no-results';
-import Pagination from '@/components/ui/pagination';
-import ProductCard from '@/components/ui/product-card';
+import ProductListPage from '@/components/product-list-page';
 
 // import Filter from "./components/filter";
 
@@ -59,70 +55,38 @@ export async function generateMetadata(
 const SalePage: React.FC<SalePageProps> = async ({ searchParams }) => {
   const pageSize = 20;
   const currentPage = parseInt(searchParams.page || '1', 10);
+  const searchItems = qs.parse(searchParams, {
+    comma: true,
+  });
 
   const products = await getProducts({
     isNew: true,
-    publishingId: searchParams.publishingId,
-    categoryId: searchParams.categoryId,
-    ageGroupId: searchParams.ageGroupId,
+    categories: Array.isArray(searchItems.categories)
+      ? searchItems.categories
+      : [searchItems.categories],
+    ageGroups: Array.isArray(searchItems.ageGroups)
+      ? searchItems.ageGroups
+      : [searchItems.ageGroups],
+    publishings: Array.isArray(searchItems.publishings)
+      ? searchItems.publishings
+      : [searchItems.publishings],
+    maxPrice: Number(searchItems.priceTo),
+    minPrice: Number(searchItems.priceFrom),
   });
 
   const ageGroups = await getAgeGroups({});
-  const categories = await getCategories({});
   const publishings = await getPublishings({});
-
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  const paginatedProducts = products.slice(startIndex, endIndex);
+  const categories = await getCategories({});
 
   return (
-    <div className="bg-white">
-      <Container>
-        <article className="px-4 sm:px-6 lg:px-8 pb-24 pt-4">
-          <div className="lg:grid lg:grid-cols-5 lg:gap-x-8">
-            <MobileFilters {...{ categories, ageGroups, publishings }} />
-            <div className="hidden lg:block">
-              <Filters
-                className="text-amber-950"
-                filtersData={{ categories, ageGroups, publishings }}
-              />
-              {/* <Filter
-                valueKey="categoryId"
-                name="Категорії"
-                data={categories}
-              />
-              <Filter valueKey="ageGroupId" name="Вік" data={ageGroups} />
-              <Filter
-                valueKey="publishingId"
-                name="Видавництво"
-                data={publishings}
-              /> */}
-            </div>
-
-            <div className="mt-6 lg:col-span-4 lg:mt-0">
-              <h1 className="font-bold text-3xl text-amber-950 mb-6">
-                Новинки
-              </h1>
-              {paginatedProducts.length === 0 && <NoResults />}
-              <ul className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {paginatedProducts.map((product) => (
-                  <li key={product.id} className="flex">
-                    <ProductCard data={product} />
-                  </li>
-                ))}
-              </ul>
-              {products.length >= pageSize && (
-                <Pagination
-                  total={products.length}
-                  currentPage={currentPage}
-                  pageSize={pageSize}
-                />
-              )}
-            </div>
-          </div>
-        </article>
-      </Container>
-    </div>
+    <ProductListPage
+      title="Новинки"
+      description={undefined}
+      products={products}
+      filters={{ ageGroups, categories, publishings }}
+      currentPage={currentPage}
+      pageSize={pageSize}
+    />
   );
 };
 
