@@ -44,9 +44,13 @@ export const formSchema = z.object({
   }),
   orderStatus: z.string().min(1),
   payment: z.string().min(1),
-  totalPrice: z.number().min(200, {
-    message: 'Мінімальна сума замовлення 200 грн',
-  }),
+  totalPrice: z.preprocess(
+    (val) => Number(val),
+    z.number().min(200, {
+      message: 'Мінімальна сума замовлення 200 грн',
+    })
+  ),
+
   phone: z.string().refine((value) => phoneRegex.test(value), {
     message: 'Телефон повинен бути у форматі +380000000000',
   }),
@@ -106,6 +110,7 @@ const Summary = () => {
     // control,
     setValue,
     getValues,
+    trigger,
   } = useForm<FormValues>({
     defaultValues: {
       name: '',
@@ -135,9 +140,19 @@ const Summary = () => {
         : item.product.price;
     return total + price * item.quantity;
   }, 0);
+  setValue('totalPrice', totalPrice);
+  // console.log(typeof totalPrice, totalPrice);
 
   const onCheckout = async () => {
-    // console.log('click chechout');
+    console.log('firstErrorField');
+    const isValid = await trigger();
+    if (!isValid) {
+      const firstErrorField =
+        document.querySelector('.text-red-500')?.parentElement;
+      console.log(firstErrorField);
+      firstErrorField?.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
     setSending(true);
     try {
       const data = onSubmit(getValues());
@@ -265,23 +280,28 @@ const Summary = () => {
       setValue(field, e.target.value.trim(), { shouldValidate: true });
     };
 
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const isValid = await trigger();
+    if (!isValid) {
+      const firstErrorField =
+        document.querySelector('.text-red-500')?.parentElement;
+      firstErrorField?.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    handleSubmit(onCheckout)();
+  };
+
   return (
     <div className="mt-16 rounded-lg bg-amber-200 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-8">
       <h2 className="text-lg font-semibold text-amber-950">Замовлення</h2>
       <div className="mt-6 space-y-4">
-        <form onSubmit={handleSubmit(onCheckout)} className=" text-amber-950">
+        <form onSubmit={handleFormSubmit} className=" text-amber-950">
           <div className="flex items-center justify-between border-t border-amber-800 pt-4 ">
             <div className="text-base font-medium text-amber-950">
               До сплати
             </div>
             <Currency value={totalPrice} />
-            <Input
-              type="hidden"
-              {...register('totalPrice', {
-                required: "Поле є обов'язковим",
-              })}
-              value={totalPrice}
-            />
           </div>
           {errors.totalPrice && (
             <p className="text-red-500">{errors.totalPrice.message}</p>
